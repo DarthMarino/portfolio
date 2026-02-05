@@ -53,6 +53,7 @@
 .content .title h1 {
   letter-spacing: -5px;
   font-weight: 800;
+  line-height: 0.9;
 }
 
 .content .title h2 {
