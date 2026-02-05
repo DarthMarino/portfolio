@@ -146,27 +146,27 @@ const BackgroundScene: Component = () => {
   };
 
   const createGeometries = () => {
-    // Define 3D space bounds
+    // Define 3D space bounds - pushed further back for subtlety
     const bounds = {
       x: [-35, 35],  // Left to right
       y: [-25, 25],  // Bottom to top
-      z: [-40, -5],  // Far to near
+      z: [-70, -25],  // Far to near (pushed back significantly)
     };
 
     const existingPositions: number[][] = [];
 
-    // Create 25+ geometric shapes with variety
+    // Create 25+ geometric shapes with variety - scaled down 35% for subtlety
     const shapeTypes = [
-      () => new THREE.TorusGeometry(2 + Math.random() * 2, 0.5 + Math.random() * 0.5, 16, 100),
-      () => new THREE.OctahedronGeometry(1.5 + Math.random() * 2),
-      () => new THREE.TorusKnotGeometry(1.5 + Math.random(), 0.3 + Math.random() * 0.3, 100, 16),
-      () => new THREE.IcosahedronGeometry(1.5 + Math.random() * 1.5),
-      () => new THREE.DodecahedronGeometry(1.5 + Math.random() * 2),
-      () => new THREE.TetrahedronGeometry(2 + Math.random() * 2),
-      () => new THREE.SphereGeometry(1 + Math.random() * 2, 32, 32),
-      () => new THREE.ConeGeometry(1.5 + Math.random(), 2 + Math.random() * 2, 32),
-      () => new THREE.CylinderGeometry(1 + Math.random(), 1 + Math.random(), 2 + Math.random(), 32),
-      () => new THREE.BoxGeometry(2 + Math.random() * 2, 2 + Math.random() * 2, 2 + Math.random() * 2),
+      () => new THREE.TorusGeometry(1.3 + Math.random() * 1.3, 0.3 + Math.random() * 0.3, 16, 100),
+      () => new THREE.OctahedronGeometry(1 + Math.random() * 1.3),
+      () => new THREE.TorusKnotGeometry(1 + Math.random() * 0.65, 0.2 + Math.random() * 0.2, 100, 16),
+      () => new THREE.IcosahedronGeometry(1 + Math.random() * 1),
+      () => new THREE.DodecahedronGeometry(1 + Math.random() * 1.3),
+      () => new THREE.TetrahedronGeometry(1.3 + Math.random() * 1.3),
+      () => new THREE.SphereGeometry(0.65 + Math.random() * 1.3, 32, 32),
+      () => new THREE.ConeGeometry(1 + Math.random() * 0.65, 1.3 + Math.random() * 1.3, 32),
+      () => new THREE.CylinderGeometry(0.65 + Math.random() * 0.65, 0.65 + Math.random() * 0.65, 1.3 + Math.random() * 0.65, 32),
+      () => new THREE.BoxGeometry(1.3 + Math.random() * 1.3, 1.3 + Math.random() * 1.3, 1.3 + Math.random() * 1.3),
     ];
 
     // Grid-based positioning for even distribution
@@ -202,13 +202,13 @@ const BackgroundScene: Component = () => {
       const geometryCreator = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
       const geometry = geometryCreator();
 
-      // Create material with varied colors
+      // Create material with varied colors - very subtle opacity
       const material = new THREE.MeshStandardMaterial({
         color: new THREE.Color().setHSL((i * 0.05) % 1, 0.5 + Math.random() * 0.3, 0.4 + Math.random() * 0.2),
         roughness: 0.2 + Math.random() * 0.4,
         metalness: 0.5 + Math.random() * 0.5,
         transparent: true,
-        opacity: 0.2 + Math.random() * 0.15,
+        opacity: 0.08 + Math.random() * 0.07, // Reduced from 0.2-0.35 to 0.08-0.15
         wireframe: false,
       });
 
@@ -256,11 +256,11 @@ const BackgroundScene: Component = () => {
           { text: 'PG', color: '#336791' },     // PostgreSQL Blue
         ];
 
-        // Use same bounds as geometries
+        // Use same bounds as geometries - pushed back for subtlety
         const bounds = {
           x: [-35, 35],
           y: [-25, 25],
-          z: [-40, -5],
+          z: [-70, -25],
         };
 
         // Grid-based positioning for text meshes (2 columns x 3 rows for 6 items)
@@ -288,15 +288,15 @@ const BackgroundScene: Component = () => {
             randomZ
           ];
 
-          // Create 3D text geometry
+          // Create 3D text geometry - scaled down 35%
           const textGeometry = new TextGeometry(text, {
             font: font,
-            size: 3,
-            depth: 0.5,
+            size: 2,
+            depth: 0.3,
             curveSegments: 12,
             bevelEnabled: true,
-            bevelThickness: 0.1,
-            bevelSize: 0.1,
+            bevelThickness: 0.08,
+            bevelSize: 0.08,
             bevelSegments: 5,
           });
 
@@ -305,13 +305,13 @@ const BackgroundScene: Component = () => {
           const centerOffset = -0.5 * (textGeometry.boundingBox!.max.x - textGeometry.boundingBox!.min.x);
           textGeometry.translate(centerOffset, 0, 0);
 
-          // Create material with the language color
+          // Create material with the language color - more subtle
           const material = new THREE.MeshStandardMaterial({
             color: new THREE.Color(color),
             roughness: 0.3,
             metalness: 0.8,
             transparent: true,
-            opacity: 0.6,
+            opacity: 0.3, // Reduced from 0.6 to 0.3
           });
 
           const textMesh = new THREE.Mesh(textGeometry, material);
