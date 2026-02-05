@@ -38,6 +38,9 @@ importers:
       solid-js:
         specifier: ^1.9.3
         version: 1.9.3
+      solid-three:
+        specifier: 0.3.0-next.11
+        version: 0.3.0-next.11(@types/three@0.177.0)(solid-js@1.9.3)(three@0.173.0)
       tailwindcss:
         specifier: ^4.0.6
         version: 4.1.11
@@ -401,8 +404,33 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@solid-primitives/event-listener@2.4.3':
+    resolution: {integrity: sha512-h4VqkYFv6Gf+L7SQj+Y6puigL/5DIi7x5q07VZET7AWcS+9/G3WfIE9WheniHWJs51OEkRB43w6lDys5YeFceg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
   '@solid-primitives/i18n@2.2.1':
     resolution: {integrity: sha512-TnTnE2Ku11MGYZ1JzhJ8pYscwg1fr9MteoYxPwsfxWfh9Jp5K7RRJncJn9BhOHvNLwROjqOHZ46PT7sPHqbcXw==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/resize-observer@2.1.3':
+    resolution: {integrity: sha512-zBLje5E06TgOg93S7rGPldmhDnouNGhvfZVKOp+oG2XU8snA+GoCSSCz1M+jpNAg5Ek2EakU5UVQqL152WmdXQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/rootless@1.5.2':
+    resolution: {integrity: sha512-9HULb0QAzL2r47CCad0M+NKFtQ+LrGGNHZfteX/ThdGvKIg2o2GYhBooZubTCd/RTu2l2+Nw4s+dEfiDGvdrrQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/static-store@0.1.2':
+    resolution: {integrity: sha512-ReK+5O38lJ7fT+L6mUFvUr6igFwHBESZF+2Ug842s7fvlVeBdIVEdTCErygff6w7uR6+jrr7J8jQo+cYrEq4Iw==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/utils@6.3.2':
+    resolution: {integrity: sha512-hZ/M/qr25QOCcwDPOHtGjxTD8w2mNyVAYvcfgwzBHq2RwNqHNdDNsMZYap20+ruRwW4A3Cdkczyoz0TSxLCAPQ==}
     peerDependencies:
       solid-js: ^1.6.12
 
@@ -602,6 +630,10 @@ packages:
 
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
+
+  debounce@2.2.0:
+    resolution: {integrity: sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==}
+    engines: {node: '>=18'}
 
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
@@ -845,6 +877,13 @@ packages:
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
     peerDependencies:
       solid-js: ^1.3
+
+  solid-three@0.3.0-next.11:
+    resolution: {integrity: sha512-nai9Sf5zEO+v8JZGauB5PMt36qlj6wdef9OXfUHkh91pNDClr4i8hhhSjTEYxNzzD6nYk9Ov1Q+gh4zEgjKdsg==}
+    peerDependencies:
+      '@types/three': '*'
+      solid-js: '*'
+      three: '*'
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -1224,7 +1263,34 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.27.4':
     optional: true
 
+  '@solid-primitives/event-listener@2.4.3(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.3)
+      solid-js: 1.9.3
+
   '@solid-primitives/i18n@2.2.1(solid-js@1.9.3)':
+    dependencies:
+      solid-js: 1.9.3
+
+  '@solid-primitives/resize-observer@2.1.3(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/event-listener': 2.4.3(solid-js@1.9.3)
+      '@solid-primitives/rootless': 1.5.2(solid-js@1.9.3)
+      '@solid-primitives/static-store': 0.1.2(solid-js@1.9.3)
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/rootless@1.5.2(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/static-store@0.1.2(solid-js@1.9.3)':
+    dependencies:
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.3)
+      solid-js: 1.9.3
+
+  '@solid-primitives/utils@6.3.2(solid-js@1.9.3)':
     dependencies:
       solid-js: 1.9.3
 
@@ -1418,6 +1484,8 @@ snapshots:
   daisyui@5.0.43: {}
 
   date-fns@4.1.0: {}
+
+  debounce@2.2.0: {}
 
   debug@4.3.7:
     dependencies:
@@ -1658,6 +1726,14 @@ snapshots:
       solid-js: 1.9.3
     transitivePeerDependencies:
       - supports-color
+
+  solid-three@0.3.0-next.11(@types/three@0.177.0)(solid-js@1.9.3)(three@0.173.0):
+    dependencies:
+      '@solid-primitives/resize-observer': 2.1.3(solid-js@1.9.3)
+      '@types/three': 0.177.0
+      debounce: 2.2.0
+      solid-js: 1.9.3
+      three: 0.173.0
 
   source-map-js@1.2.1: {}
 

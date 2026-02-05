@@ -2,6 +2,7 @@ import { For, type Component } from "solid-js";
 import * as i18n from "@solid-primitives/i18n";
 import Button from "../components/Button";
 import Dropdown from "../components/Dropdown";
+import BackgroundScene from "../components/BackgroundScene";
 import { technologies } from "../statics/objects";
 import "./html.css";
 import sic1 from "../assets/images/sic-1.png";
@@ -81,6 +82,7 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
 
   return (
     <div class="bodyDiv">
+      <BackgroundScene />
       <div class="content">
         <div class="title">
           <h1>{props.t("name")}</h1>

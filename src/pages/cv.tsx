@@ -4,6 +4,7 @@ import {
   Show,
   createEffect,
   type Component,
+  type Accessor,
 } from "solid-js";
 import { jsPDF } from "jspdf";
 import * as i18n from "@solid-primitives/i18n";
@@ -23,7 +24,7 @@ import { isPhone } from "../utils/detect_phone";
 
 type CVPageProps = {
   t: i18n.Translator<i18n.Flatten<Record<string, any>>>;
-  locale: Locale;
+  locale: Accessor<Locale>;
   isDominican?: boolean;
 };
 
@@ -537,14 +538,15 @@ const CVPage: Component<CVPageProps> = (props) => {
   };
 
   onMount(() => {
-    setPreviousLocale(props.locale);
+    setPreviousLocale(props.locale());
     createPDF();
   });
 
   // Watch for locale changes and regenerate PDF
   createEffect(() => {
-    if (previousLocale() !== undefined && previousLocale() !== props.locale) {
-      setPreviousLocale(props.locale);
+    const currentLocale = props.locale(); // Track the locale signal
+    if (previousLocale() !== undefined && previousLocale() !== currentLocale) {
+      setPreviousLocale(currentLocale);
       createPDF();
     }
   });

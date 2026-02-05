@@ -14,7 +14,7 @@ const CVRoute: Component = () => {
         </div>
       }
     >
-      <CVPage t={t} locale={locale()} />
+      <CVPage t={t} locale={locale} />
     </Show>
   );
 };
