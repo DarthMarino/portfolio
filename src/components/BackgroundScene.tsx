@@ -68,10 +68,13 @@ const BackgroundScene: Component = () => {
 
       const time = Date.now() * 0.0005;
 
-      // Animate geometries
+      // Animate geometries - same speed, random directions
+      const rotationSpeed = 0.3; // Uniform rotation speed for all shapes
       geometries.forEach((mesh, i) => {
-        mesh.rotation.x = time * (0.3 + i * 0.1);
-        mesh.rotation.y = time * (0.2 + i * 0.15);
+        const speed = (mesh as any).rotationSpeed;
+        mesh.rotation.x = time * rotationSpeed * speed.x;
+        mesh.rotation.y = time * rotationSpeed * speed.y;
+        mesh.rotation.z = time * rotationSpeed * speed.z;
 
         // Floating motion
         mesh.position.y += Math.sin(time + i) * 0.002;
@@ -79,16 +82,21 @@ const BackgroundScene: Component = () => {
       });
 
       // Animate 3D text meshes with gentle floating and rotation
+      const textRotationSpeed = 0.15; // Slower uniform rotation for text
       textMeshes.forEach((mesh, i) => {
-        // Gentle rotation on all axes
-        mesh.rotation.x += 0.001 * (0.5 + i * 0.1);
-        mesh.rotation.y += 0.002 * (0.5 + i * 0.15);
-        mesh.rotation.z += 0.0005 * (0.5 + i * 0.1);
+        const speed = (mesh as any).rotationSpeed;
+        if (speed) {
+          mesh.rotation.x += textRotationSpeed * speed.x * 0.01;
+          mesh.rotation.y += textRotationSpeed * speed.y * 0.01;
+          mesh.rotation.z += textRotationSpeed * speed.z * 0.01;
+        }
 
         // Floating motion (slower than geometries)
         const initial = (mesh as any).initialPosition;
-        mesh.position.y = initial.y + Math.sin(time * 0.5 + i) * 0.5;
-        mesh.position.x = initial.x + Math.cos(time * 0.3 + i * 0.7) * 0.5;
+        if (initial) {
+          mesh.position.y = initial.y + Math.sin(time * 0.5 + i) * 0.5;
+          mesh.position.x = initial.x + Math.cos(time * 0.3 + i * 0.7) * 0.5;
+        }
       });
 
       renderer.render(scene, camera);
@@ -190,6 +198,17 @@ const BackgroundScene: Component = () => {
       mesh.rotation.y = Math.random() * Math.PI * 2;
       mesh.rotation.z = Math.random() * Math.PI * 2;
 
+      // Store random rotation direction (normalized) for consistent speed
+      const rotX = (Math.random() - 0.5) * 2;
+      const rotY = (Math.random() - 0.5) * 2;
+      const rotZ = (Math.random() - 0.5) * 2;
+      const magnitude = Math.sqrt(rotX * rotX + rotY * rotY + rotZ * rotZ);
+      (mesh as any).rotationSpeed = {
+        x: rotX / magnitude,
+        y: rotY / magnitude,
+        z: rotZ / magnitude,
+      };
+
       scene.add(mesh);
       geometries.push(mesh);
     }
@@ -266,9 +285,20 @@ const BackgroundScene: Component = () => {
           const textMesh = new THREE.Mesh(textGeometry, material);
           textMesh.position.set(position[0], position[1], position[2]);
 
-          // Random rotation for variety
+          // Random initial rotation
           textMesh.rotation.x = (Math.random() - 0.5) * 0.5;
           textMesh.rotation.y = (Math.random() - 0.5) * 0.5;
+
+          // Store random rotation direction for consistent speed
+          const rotX = (Math.random() - 0.5) * 2;
+          const rotY = (Math.random() - 0.5) * 2;
+          const rotZ = (Math.random() - 0.5) * 2;
+          const magnitude = Math.sqrt(rotX * rotX + rotY * rotY + rotZ * rotZ);
+          (textMesh as any).rotationSpeed = {
+            x: rotX / magnitude,
+            y: rotY / magnitude,
+            z: rotZ / magnitude,
+          };
 
           // Store initial position for animation
           (textMesh as any).initialPosition = { x: position[0], y: position[1], z: position[2] };
