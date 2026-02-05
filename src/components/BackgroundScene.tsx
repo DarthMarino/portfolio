@@ -1,5 +1,7 @@
 import { onMount, onCleanup, type Component } from "solid-js";
 import * as THREE from "three";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 const BackgroundScene: Component = () => {
   let canvasRef: HTMLCanvasElement | undefined;
@@ -8,30 +10,7 @@ const BackgroundScene: Component = () => {
   let renderer: THREE.WebGLRenderer;
   let animationId: number;
   let geometries: THREE.Mesh[] = [];
-  let textSprites: THREE.Sprite[] = [];
-
-  // Helper function to create a canvas texture with text
-  const createTextTexture = (text: string, color: string) => {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d')!;
-    canvas.width = 512;
-    canvas.height = 512;
-
-    // Draw text with glow effect for better visibility
-    context.fillStyle = color;
-    context.font = 'bold 200px Arial';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-
-    // Add subtle shadow/glow
-    context.shadowColor = color;
-    context.shadowBlur = 10;
-    context.fillText(text, 256, 256);
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
-    return texture;
-  };
+  let textMeshes: THREE.Mesh[] = [];
 
   const init = () => {
     if (!canvasRef) return;
@@ -72,8 +51,8 @@ const BackgroundScene: Component = () => {
     // Create floating geometric shapes
     createGeometries();
 
-    // Create programming language text sprites
-    createTextSprites();
+    // Create programming language 3D text meshes
+    createTextMeshes();
 
     // Handle resize
     const handleResize = () => {
@@ -99,15 +78,17 @@ const BackgroundScene: Component = () => {
         mesh.position.x += Math.cos(time + i * 0.5) * 0.002;
       });
 
-      // Animate text sprites with gentle floating
-      textSprites.forEach((sprite, i) => {
-        // Gentle rotation
-        sprite.material.rotation = time * (0.1 + i * 0.05);
+      // Animate 3D text meshes with gentle floating and rotation
+      textMeshes.forEach((mesh, i) => {
+        // Gentle rotation on all axes
+        mesh.rotation.x += 0.001 * (0.5 + i * 0.1);
+        mesh.rotation.y += 0.002 * (0.5 + i * 0.15);
+        mesh.rotation.z += 0.0005 * (0.5 + i * 0.1);
 
         // Floating motion (slower than geometries)
-        const initial = (sprite as any).initialPosition;
-        sprite.position.y = initial.y + Math.sin(time * 0.5 + i) * 0.5;
-        sprite.position.x = initial.x + Math.cos(time * 0.3 + i * 0.7) * 0.5;
+        const initial = (mesh as any).initialPosition;
+        mesh.position.y = initial.y + Math.sin(time * 0.5 + i) * 0.5;
+        mesh.position.x = initial.x + Math.cos(time * 0.3 + i * 0.7) * 0.5;
       });
 
       renderer.render(scene, camera);
@@ -216,59 +197,93 @@ const BackgroundScene: Component = () => {
     console.log(`Created ${geometries.length} geometric shapes with proper spacing`);
   };
 
-  const createTextSprites = () => {
-    // Programming language text sprites with their colors
-    const languages = [
-      { text: 'TS', color: '#3178c6' },     // TypeScript Blue
-      { text: 'Go', color: '#00ADD8' },     // Go Cyan/Blue
-      { text: 'C#', color: '#9b4f96' },     // C# Purple
-      { text: 'C++', color: '#00599C' },    // C++ Blue
-      { text: 'JS', color: '#f7df1e' },     // JavaScript Yellow
-      { text: 'PG', color: '#336791' },     // PostgreSQL Blue
-    ];
+  const createTextMeshes = () => {
+    // Load font and create 3D text geometries
+    const loader = new FontLoader();
 
-    // Use same bounds as geometries
-    const bounds = {
-      x: [-35, 35],
-      y: [-25, 25],
-      z: [-40, -5],
-    };
+    // Load font from CDN
+    loader.load(
+      'https://threejs.org/examples/fonts/helvetiker_bold.typeface.json',
+      (font) => {
+        // Programming language text with their colors
+        const languages = [
+          { text: 'TS', color: '#3178c6' },     // TypeScript Blue
+          { text: 'Go', color: '#00ADD8' },     // Go Cyan/Blue
+          { text: 'C#', color: '#9b4f96' },     // C# Purple
+          { text: 'C++', color: '#00599C' },    // C++ Blue
+          { text: 'JS', color: '#f7df1e' },     // JavaScript Yellow
+          { text: 'PG', color: '#336791' },     // PostgreSQL Blue
+        ];
 
-    // Get existing geometry positions for collision detection
-    const existingPositions = geometries.map(mesh => [
-      mesh.position.x,
-      mesh.position.y,
-      mesh.position.z
-    ]);
+        // Use same bounds as geometries
+        const bounds = {
+          x: [-35, 35],
+          y: [-25, 25],
+          z: [-40, -5],
+        };
 
-    languages.forEach(({ text, color }) => {
-      // Generate position that doesn't overlap with geometries or other sprites
-      const position = generateSafePosition(
-        [...existingPositions, ...textSprites.map(s => [s.position.x, s.position.y, s.position.z])],
-        bounds,
-        10 // Slightly larger minimum distance for text
-      );
+        // Get existing geometry positions for collision detection
+        const existingPositions = geometries.map(mesh => [
+          mesh.position.x,
+          mesh.position.y,
+          mesh.position.z
+        ]);
 
-      const texture = createTextTexture(text, color);
-      const material = new THREE.SpriteMaterial({
-        map: texture,
-        transparent: true,
-        opacity: 0.5,
-        depthTest: false, // Render on top of geometries
-      });
+        languages.forEach(({ text, color }) => {
+          // Generate position that doesn't overlap with geometries or other text
+          const position = generateSafePosition(
+            [...existingPositions, ...textMeshes.map(m => [m.position.x, m.position.y, m.position.z])],
+            bounds,
+            10 // Slightly larger minimum distance for text
+          );
 
-      const sprite = new THREE.Sprite(material);
-      sprite.position.set(position[0], position[1], position[2]);
-      sprite.scale.set(6, 6, 1); // Larger for better visibility
+          // Create 3D text geometry
+          const textGeometry = new TextGeometry(text, {
+            font: font,
+            size: 3,
+            depth: 0.5,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.1,
+            bevelSize: 0.1,
+            bevelSegments: 5,
+          });
 
-      // Store initial position for animation
-      (sprite as any).initialPosition = { x: position[0], y: position[1], z: position[2] };
+          // Center the text geometry
+          textGeometry.computeBoundingBox();
+          const centerOffset = -0.5 * (textGeometry.boundingBox!.max.x - textGeometry.boundingBox!.min.x);
+          textGeometry.translate(centerOffset, 0, 0);
 
-      scene.add(sprite);
-      textSprites.push(sprite);
-    });
+          // Create material with the language color
+          const material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(color),
+            roughness: 0.3,
+            metalness: 0.8,
+            transparent: true,
+            opacity: 0.6,
+          });
 
-    console.log(`Created ${textSprites.length} text sprites with proper spacing`);
+          const textMesh = new THREE.Mesh(textGeometry, material);
+          textMesh.position.set(position[0], position[1], position[2]);
+
+          // Random rotation for variety
+          textMesh.rotation.x = (Math.random() - 0.5) * 0.5;
+          textMesh.rotation.y = (Math.random() - 0.5) * 0.5;
+
+          // Store initial position for animation
+          (textMesh as any).initialPosition = { x: position[0], y: position[1], z: position[2] };
+
+          scene.add(textMesh);
+          textMeshes.push(textMesh);
+        });
+
+        console.log(`Created ${textMeshes.length} 3D text meshes with proper spacing`);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading font:', error);
+      }
+    );
   };
 
   onMount(() => {
@@ -286,9 +301,13 @@ const BackgroundScene: Component = () => {
         mesh.material.dispose();
       }
     });
-    textSprites.forEach((sprite) => {
-      if (sprite.material.map) sprite.material.map.dispose();
-      sprite.material.dispose();
+    textMeshes.forEach((mesh) => {
+      mesh.geometry.dispose();
+      if (Array.isArray(mesh.material)) {
+        mesh.material.forEach(mat => mat.dispose());
+      } else {
+        mesh.material.dispose();
+      }
     });
     window.removeEventListener("resize", () => {});
   });
