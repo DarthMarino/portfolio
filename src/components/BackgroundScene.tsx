@@ -8,6 +8,26 @@ const BackgroundScene: Component = () => {
   let renderer: THREE.WebGLRenderer;
   let animationId: number;
   let geometries: THREE.Mesh[] = [];
+  let textSprites: THREE.Sprite[] = [];
+
+  // Helper function to create a canvas texture with text
+  const createTextTexture = (text: string, color: string) => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d')!;
+    canvas.width = 256;
+    canvas.height = 256;
+
+    // Draw text
+    context.fillStyle = color;
+    context.font = 'bold 120px monospace';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(text, 128, 128);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    return texture;
+  };
 
   const init = () => {
     if (!canvasRef) return;
@@ -48,6 +68,9 @@ const BackgroundScene: Component = () => {
     // Create floating geometric shapes
     createGeometries();
 
+    // Create programming language text sprites
+    createTextSprites();
+
     // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -70,6 +93,17 @@ const BackgroundScene: Component = () => {
         // Floating motion
         mesh.position.y += Math.sin(time + i) * 0.002;
         mesh.position.x += Math.cos(time + i * 0.5) * 0.002;
+      });
+
+      // Animate text sprites with gentle floating
+      textSprites.forEach((sprite, i) => {
+        // Gentle rotation
+        sprite.material.rotation = time * (0.1 + i * 0.05);
+
+        // Floating motion (slower than geometries)
+        const initial = (sprite as any).initialPosition;
+        sprite.position.y = initial.y + Math.sin(time * 0.5 + i) * 0.5;
+        sprite.position.x = initial.x + Math.cos(time * 0.3 + i * 0.7) * 0.5;
       });
 
       renderer.render(scene, camera);
@@ -128,6 +162,37 @@ const BackgroundScene: Component = () => {
     });
   };
 
+  const createTextSprites = () => {
+    // Programming language text sprites with their colors
+    const languages = [
+      { text: 'TS', color: '#3178c6', position: [-10, 5, -8] },     // TypeScript Blue
+      { text: 'Go', color: '#00ADD8', position: [14, 8, -12] },     // Go Cyan/Blue
+      { text: 'C#', color: '#9b4f96', position: [-16, -5, -14] },   // C# Purple
+      { text: 'C++', color: '#00599C', position: [10, -10, -16] },  // C++ Blue
+      { text: 'JS', color: '#f7df1e', position: [6, 12, -10] },     // JavaScript Yellow
+      { text: 'PG', color: '#336791', position: [-8, -12, -18] },   // PostgreSQL Blue
+    ];
+
+    languages.forEach(({ text, color, position }) => {
+      const texture = createTextTexture(text, color);
+      const material = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        opacity: 0.25,
+      });
+
+      const sprite = new THREE.Sprite(material);
+      sprite.position.set(position[0], position[1], position[2]);
+      sprite.scale.set(4, 4, 1);
+
+      // Store initial position for animation
+      (sprite as any).initialPosition = { x: position[0], y: position[1], z: position[2] };
+
+      scene.add(sprite);
+      textSprites.push(sprite);
+    });
+  };
+
   onMount(() => {
     init();
   });
@@ -142,6 +207,10 @@ const BackgroundScene: Component = () => {
       } else {
         mesh.material.dispose();
       }
+    });
+    textSprites.forEach((sprite) => {
+      if (sprite.material.map) sprite.material.map.dispose();
+      sprite.material.dispose();
     });
     window.removeEventListener("resize", () => {});
   });
