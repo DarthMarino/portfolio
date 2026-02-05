@@ -153,7 +153,6 @@ const BackgroundScene: Component = () => {
       z: [-40, -5],  // Far to near
     };
 
-    const minDistance = 8; // Minimum distance between shape centers
     const existingPositions: number[][] = [];
 
     // Create 25+ geometric shapes with variety
@@ -170,15 +169,38 @@ const BackgroundScene: Component = () => {
       () => new THREE.BoxGeometry(2 + Math.random() * 2, 2 + Math.random() * 2, 2 + Math.random() * 2),
     ];
 
-    // Generate 28 shapes (to ensure we have 25+ after any filtering)
-    for (let i = 0; i < 28; i++) {
+    // Grid-based positioning for even distribution
+    const numShapes = 28;
+    const cols = 7; // 7 columns
+    const rows = 4; // 4 rows (7x4 = 28 shapes)
+
+    const cellWidth = (bounds.x[1] - bounds.x[0]) / cols;
+    const cellHeight = (bounds.y[1] - bounds.y[0]) / rows;
+
+    // Generate shapes in grid pattern
+    for (let i = 0; i < numShapes; i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+
+      // Calculate cell center
+      const cellCenterX = bounds.x[0] + (col + 0.5) * cellWidth;
+      const cellCenterY = bounds.y[0] + (row + 0.5) * cellHeight;
+
+      // Add random offset within cell (70% of cell size to prevent edge overlap)
+      const offsetX = (Math.random() - 0.5) * cellWidth * 0.7;
+      const offsetY = (Math.random() - 0.5) * cellHeight * 0.7;
+      const randomZ = bounds.z[0] + Math.random() * (bounds.z[1] - bounds.z[0]);
+
+      const position = [
+        cellCenterX + offsetX,
+        cellCenterY + offsetY,
+        randomZ
+      ];
+      existingPositions.push(position);
+
       // Select random geometry type
       const geometryCreator = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
       const geometry = geometryCreator();
-
-      // Generate safe position
-      const position = generateSafePosition(existingPositions, bounds, minDistance);
-      existingPositions.push(position);
 
       // Create material with varied colors
       const material = new THREE.MeshStandardMaterial({
@@ -241,20 +263,30 @@ const BackgroundScene: Component = () => {
           z: [-40, -5],
         };
 
-        // Get existing geometry positions for collision detection
-        const existingPositions = geometries.map(mesh => [
-          mesh.position.x,
-          mesh.position.y,
-          mesh.position.z
-        ]);
+        // Grid-based positioning for text meshes (2 columns x 3 rows for 6 items)
+        const cols = 3;
+        const rows = 2;
+        const cellWidth = (bounds.x[1] - bounds.x[0]) / cols;
+        const cellHeight = (bounds.y[1] - bounds.y[0]) / rows;
 
-        languages.forEach(({ text, color }) => {
-          // Generate position that doesn't overlap with geometries or other text
-          const position = generateSafePosition(
-            [...existingPositions, ...textMeshes.map(m => [m.position.x, m.position.y, m.position.z])],
-            bounds,
-            10 // Slightly larger minimum distance for text
-          );
+        languages.forEach(({ text, color }, i) => {
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+
+          // Calculate cell center with offset to avoid geometric shapes
+          const cellCenterX = bounds.x[0] + (col + 0.5) * cellWidth;
+          const cellCenterY = bounds.y[0] + (row + 0.5) * cellHeight;
+
+          // Add random offset within cell
+          const offsetX = (Math.random() - 0.5) * cellWidth * 0.6;
+          const offsetY = (Math.random() - 0.5) * cellHeight * 0.6;
+          const randomZ = bounds.z[0] + Math.random() * (bounds.z[1] - bounds.z[0]);
+
+          const position = [
+            cellCenterX + offsetX,
+            cellCenterY + offsetY,
+            randomZ
+          ];
 
           // Create 3D text geometry
           const textGeometry = new TextGeometry(text, {
