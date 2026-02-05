@@ -57,7 +57,7 @@
 }
 
 .content .title h2 {
-  margin-top: -25px;
+  margin-top: -10px;
   font-size: 3rem;
 }
 
@@ -385,7 +385,7 @@
     font-size: 5em;
   }
   .content .title h2 {
-    margin-top: -20px;
+    margin-top: 0px;
     font-size: x-large;
   }
 
@@ -433,7 +433,6 @@
     font-size: 3.5em;
   }
   .content .title h2 {
-    margin-top: -15px;
     font-size: large;
   }
 
