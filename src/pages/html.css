@@ -387,6 +387,12 @@
     margin-top: 0px;
     font-size: x-large;
   }
+
+  /* Reduce button size on tablets */
+  .button {
+    font-size: 1.5rem;
+    padding: 18px 20px;
+  }
 }
 
 @media only screen and (max-width: 620px) {
@@ -398,6 +404,26 @@
   }
   .content h4 {
     font-size: 1.5em;
+  }
+
+  /* Smaller buttons on phones */
+  .button {
+    font-size: 1.2rem;
+    padding: 14px 16px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Better text wrapping for long content */
+  .button .label,
+  .button .inner {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Reduce intro paragraph size */
+  .content p {
+    font-size: 1.5rem;
   }
 }
 
@@ -419,5 +445,35 @@
   .yearBox {
     font-size: 1.2em;
     height: 1.5rem;
+  }
+
+  /* Very small buttons for small phones */
+  .button {
+    font-size: 0.9rem;
+    padding: 12px 14px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .button .border {
+    border: 3px solid #fff;
+  }
+
+  /* Smaller intro text */
+  .content p {
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  /* Make contact buttons stack vertically */
+  .flex-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Reduce badge size */
+  .badge.badge-primary {
+    font-size: 1.2rem !important;
+    height: 1.8rem !important;
   }
 }
