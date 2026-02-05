@@ -14,15 +14,19 @@ const BackgroundScene: Component = () => {
   const createTextTexture = (text: string, color: string) => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d')!;
-    canvas.width = 256;
-    canvas.height = 256;
+    canvas.width = 512;
+    canvas.height = 512;
 
-    // Draw text
+    // Draw text with glow effect for better visibility
     context.fillStyle = color;
-    context.font = 'bold 120px monospace';
+    context.font = 'bold 200px Arial';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText(text, 128, 128);
+
+    // Add subtle shadow/glow
+    context.shadowColor = color;
+    context.shadowBlur = 10;
+    context.fillText(text, 256, 256);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
@@ -112,15 +116,15 @@ const BackgroundScene: Component = () => {
   };
 
   const createGeometries = () => {
-    // Create various geometric shapes
+    // Create various geometric shapes - well distributed in 3D space
     const shapes = [
-      { geometry: new THREE.TorusGeometry(3, 0.8, 16, 100), position: [-15, 8, -10] },
-      { geometry: new THREE.OctahedronGeometry(2.5), position: [15, -6, -15] },
-      { geometry: new THREE.TorusKnotGeometry(2, 0.5, 100, 16), position: [-12, -8, -12] },
-      { geometry: new THREE.IcosahedronGeometry(2), position: [12, 10, -18] },
-      { geometry: new THREE.DodecahedronGeometry(2.5), position: [0, -12, -20] },
-      { geometry: new THREE.TetrahedronGeometry(3), position: [-18, 5, -16] },
-      { geometry: new THREE.SphereGeometry(1.5, 32, 32), position: [8, 0, -14] },
+      { geometry: new THREE.TorusGeometry(3, 0.8, 16, 100), position: [-20, 10, -8] },
+      { geometry: new THREE.OctahedronGeometry(2.5), position: [18, -8, -25] },
+      { geometry: new THREE.TorusKnotGeometry(2, 0.5, 100, 16), position: [-10, -15, -30] },
+      { geometry: new THREE.IcosahedronGeometry(2), position: [15, 15, -15] },
+      { geometry: new THREE.DodecahedronGeometry(2.5), position: [5, -18, -35] },
+      { geometry: new THREE.TetrahedronGeometry(3), position: [-25, 3, -20] },
+      { geometry: new THREE.SphereGeometry(1.5, 32, 32), position: [10, 5, -28] },
     ];
 
     shapes.forEach(({ geometry, position }, i) => {
@@ -163,14 +167,14 @@ const BackgroundScene: Component = () => {
   };
 
   const createTextSprites = () => {
-    // Programming language text sprites with their colors
+    // Programming language text sprites with their colors - positioned between geometries
     const languages = [
-      { text: 'TS', color: '#3178c6', position: [-10, 5, -8] },     // TypeScript Blue
-      { text: 'Go', color: '#00ADD8', position: [14, 8, -12] },     // Go Cyan/Blue
-      { text: 'C#', color: '#9b4f96', position: [-16, -5, -14] },   // C# Purple
-      { text: 'C++', color: '#00599C', position: [10, -10, -16] },  // C++ Blue
-      { text: 'JS', color: '#f7df1e', position: [6, 12, -10] },     // JavaScript Yellow
-      { text: 'PG', color: '#336791', position: [-8, -12, -18] },   // PostgreSQL Blue
+      { text: 'TS', color: '#3178c6', position: [-15, 0, -12] },     // TypeScript Blue
+      { text: 'Go', color: '#00ADD8', position: [20, 5, -18] },      // Go Cyan/Blue
+      { text: 'C#', color: '#9b4f96', position: [-5, -10, -22] },    // C# Purple
+      { text: 'C++', color: '#00599C', position: [12, -12, -10] },   // C++ Blue
+      { text: 'JS', color: '#f7df1e', position: [0, 12, -26] },      // JavaScript Yellow
+      { text: 'PG', color: '#336791', position: [-18, -8, -16] },    // PostgreSQL Blue
     ];
 
     languages.forEach(({ text, color, position }) => {
@@ -178,12 +182,13 @@ const BackgroundScene: Component = () => {
       const material = new THREE.SpriteMaterial({
         map: texture,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.5,
+        depthTest: false, // Render on top of geometries
       });
 
       const sprite = new THREE.Sprite(material);
       sprite.position.set(position[0], position[1], position[2]);
-      sprite.scale.set(4, 4, 1);
+      sprite.scale.set(6, 6, 1); // Larger for better visibility
 
       // Store initial position for animation
       (sprite as any).initialPosition = { x: position[0], y: position[1], z: position[2] };
