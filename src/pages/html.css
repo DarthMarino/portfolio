@@ -394,6 +394,11 @@
     font-size: 1.5rem;
     padding: 18px 20px;
   }
+
+  /* Tighter spacing below section titles */
+  .content .subtitle {
+    margin-bottom: 0.5rem;
+  }
 }
 
 @media only screen and (max-width: 620px) {
@@ -426,6 +431,11 @@
   .content p {
     font-size: 1.5rem;
   }
+
+  /* Tighter spacing below section titles */
+  .content .subtitle {
+    margin-bottom: 0.5rem;
+  }
 }
 
 @media only screen and (max-width: 435px) {
@@ -438,6 +448,7 @@
 
   .content .subtitle {
     font-size: 3em;
+    margin-bottom: 0.3rem;
   }
   .content h4 {
     font-size: 1.2em;
