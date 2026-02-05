@@ -146,14 +146,18 @@ const BackgroundScene: Component = () => {
   };
 
   const createGeometries = () => {
-    // Define 3D space bounds - pushed further back for subtlety
+    // Define 3D space bounds - expanded to fill full viewport
     const bounds = {
-      x: [-35, 35],  // Left to right
-      y: [-25, 25],  // Bottom to top
-      z: [-70, -25],  // Far to near (pushed back significantly)
+      x: [-50, 50],  // Left to right (expanded)
+      y: [-35, 35],  // Bottom to top (expanded)
+      z: [-80, -15],  // Far to near (wider depth range)
     };
 
     const existingPositions: number[][] = [];
+
+    // Depth range for calculating opacity and saturation
+    const zNear = bounds.z[1];  // -15 (closest)
+    const zFar = bounds.z[0];   // -80 (furthest)
 
     // Create 25+ geometric shapes with variety - scaled down 35% for subtlety
     const shapeTypes = [
@@ -202,13 +206,26 @@ const BackgroundScene: Component = () => {
       const geometryCreator = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
       const geometry = geometryCreator();
 
-      // Create material with varied colors - very subtle opacity
+      // Calculate depth factor (0 = far, 1 = near)
+      const depthFactor = (position[2] - zFar) / (zNear - zFar);
+
+      // Depth-based opacity: far objects more transparent, near objects more opaque
+      const minOpacity = 0.05;  // Far objects barely visible
+      const maxOpacity = 0.25;  // Near objects more visible
+      const opacity = minOpacity + (maxOpacity - minOpacity) * depthFactor;
+
+      // Depth-based saturation: far objects desaturated, near objects vibrant
+      const minSaturation = 0.2;  // Far objects grey-ish
+      const maxSaturation = 0.8;  // Near objects colorful
+      const saturation = minSaturation + (maxSaturation - minSaturation) * depthFactor;
+
+      // Create material with depth-based properties
       const material = new THREE.MeshStandardMaterial({
-        color: new THREE.Color().setHSL((i * 0.05) % 1, 0.5 + Math.random() * 0.3, 0.4 + Math.random() * 0.2),
+        color: new THREE.Color().setHSL((i * 0.05) % 1, saturation, 0.4 + Math.random() * 0.2),
         roughness: 0.2 + Math.random() * 0.4,
         metalness: 0.5 + Math.random() * 0.5,
         transparent: true,
-        opacity: 0.08 + Math.random() * 0.07, // Reduced from 0.2-0.35 to 0.08-0.15
+        opacity: opacity,
         wireframe: false,
       });
 
@@ -256,12 +273,16 @@ const BackgroundScene: Component = () => {
           { text: 'PG', color: '#336791' },     // PostgreSQL Blue
         ];
 
-        // Use same bounds as geometries - pushed back for subtlety
+        // Use same expanded bounds as geometries
         const bounds = {
-          x: [-35, 35],
-          y: [-25, 25],
-          z: [-70, -25],
+          x: [-50, 50],
+          y: [-35, 35],
+          z: [-80, -15],
         };
+
+        // Depth range for calculating opacity
+        const zNear = bounds.z[1];  // -15 (closest)
+        const zFar = bounds.z[0];   // -80 (furthest)
 
         // Grid-based positioning for text meshes (2 columns x 3 rows for 6 items)
         const cols = 3;
@@ -305,13 +326,21 @@ const BackgroundScene: Component = () => {
           const centerOffset = -0.5 * (textGeometry.boundingBox!.max.x - textGeometry.boundingBox!.min.x);
           textGeometry.translate(centerOffset, 0, 0);
 
-          // Create material with the language color - more subtle
+          // Calculate depth factor for this text mesh
+          const depthFactor = (position[2] - zFar) / (zNear - zFar);
+
+          // Depth-based opacity for text: far = transparent, near = more visible
+          const minOpacity = 0.15;  // Far text barely visible
+          const maxOpacity = 0.5;   // Near text clearly visible
+          const textOpacity = minOpacity + (maxOpacity - minOpacity) * depthFactor;
+
+          // Create material with depth-based opacity
           const material = new THREE.MeshStandardMaterial({
             color: new THREE.Color(color),
             roughness: 0.3,
             metalness: 0.8,
             transparent: true,
-            opacity: 0.3, // Reduced from 0.6 to 0.3
+            opacity: textOpacity,
           });
 
           const textMesh = new THREE.Mesh(textGeometry, material);
