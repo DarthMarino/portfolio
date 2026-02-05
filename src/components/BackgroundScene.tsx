@@ -129,7 +129,7 @@ const BackgroundScene: Component = () => {
         roughness: 0.3,
         metalness: 0.7,
         transparent: true,
-        opacity: 0.15,
+        opacity: 0.25,
         wireframe: false,
       });
 
@@ -178,7 +178,7 @@ const BackgroundScene: Component = () => {
       const material = new THREE.SpriteMaterial({
         map: texture,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.35,
       });
 
       const sprite = new THREE.Sprite(material);
@@ -224,7 +224,7 @@ const BackgroundScene: Component = () => {
         left: 0,
         width: "100vw",
         height: "100vh",
-        "z-index": -1,
+        "z-index": 1,
         "pointer-events": "none",
       }}
     />
