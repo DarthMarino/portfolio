@@ -147,23 +147,6 @@ const BackgroundScene: Component = () => {
       scene.add(mesh);
       geometries.push(mesh);
     });
-
-    // Add wireframe overlays for more visual interest
-    shapes.slice(0, 4).forEach(({ geometry, position }, i) => {
-      const wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.05,
-      });
-
-      const wireframeMesh = new THREE.Mesh(geometry.clone(), wireframeMaterial);
-      wireframeMesh.position.set(position[0], position[1], position[2]);
-      wireframeMesh.rotation.copy(geometries[i].rotation);
-
-      scene.add(wireframeMesh);
-      geometries.push(wireframeMesh);
-    });
   };
 
   const createTextSprites = () => {
