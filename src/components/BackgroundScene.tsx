@@ -115,25 +115,89 @@ const BackgroundScene: Component = () => {
     animate();
   };
 
+  // Check if two positions are too close (collision detection)
+  const isTooClose = (pos1: number[], pos2: number[], minDist: number): boolean => {
+    const dx = pos1[0] - pos2[0];
+    const dy = pos1[1] - pos2[1];
+    const dz = pos1[2] - pos2[2];
+    const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+    return distance < minDist;
+  };
+
+  // Generate a random position within bounds, avoiding collisions
+  const generateSafePosition = (
+    existingPositions: number[][],
+    bounds: { x: [number, number]; y: [number, number]; z: [number, number] },
+    minDistance: number,
+    maxAttempts: number = 50
+  ): number[] => {
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const candidate = [
+        bounds.x[0] + Math.random() * (bounds.x[1] - bounds.x[0]),
+        bounds.y[0] + Math.random() * (bounds.y[1] - bounds.y[0]),
+        bounds.z[0] + Math.random() * (bounds.z[1] - bounds.z[0]),
+      ];
+
+      // Check if this position is safe (not too close to existing shapes)
+      const isSafe = existingPositions.every(
+        (pos) => !isTooClose(candidate, pos, minDistance)
+      );
+
+      if (isSafe) {
+        return candidate;
+      }
+    }
+
+    // If we couldn't find a safe position, return a random one anyway
+    return [
+      bounds.x[0] + Math.random() * (bounds.x[1] - bounds.x[0]),
+      bounds.y[0] + Math.random() * (bounds.y[1] - bounds.y[0]),
+      bounds.z[0] + Math.random() * (bounds.z[1] - bounds.z[0]),
+    ];
+  };
+
   const createGeometries = () => {
-    // Create various geometric shapes - well distributed in 3D space
-    const shapes = [
-      { geometry: new THREE.TorusGeometry(3, 0.8, 16, 100), position: [-20, 10, -8] },
-      { geometry: new THREE.OctahedronGeometry(2.5), position: [18, -8, -25] },
-      { geometry: new THREE.TorusKnotGeometry(2, 0.5, 100, 16), position: [-10, -15, -30] },
-      { geometry: new THREE.IcosahedronGeometry(2), position: [15, 15, -15] },
-      { geometry: new THREE.DodecahedronGeometry(2.5), position: [5, -18, -35] },
-      { geometry: new THREE.TetrahedronGeometry(3), position: [-25, 3, -20] },
-      { geometry: new THREE.SphereGeometry(1.5, 32, 32), position: [10, 5, -28] },
+    // Define 3D space bounds
+    const bounds = {
+      x: [-35, 35],  // Left to right
+      y: [-25, 25],  // Bottom to top
+      z: [-40, -5],  // Far to near
+    };
+
+    const minDistance = 8; // Minimum distance between shape centers
+    const existingPositions: number[][] = [];
+
+    // Create 25+ geometric shapes with variety
+    const shapeTypes = [
+      () => new THREE.TorusGeometry(2 + Math.random() * 2, 0.5 + Math.random() * 0.5, 16, 100),
+      () => new THREE.OctahedronGeometry(1.5 + Math.random() * 2),
+      () => new THREE.TorusKnotGeometry(1.5 + Math.random(), 0.3 + Math.random() * 0.3, 100, 16),
+      () => new THREE.IcosahedronGeometry(1.5 + Math.random() * 1.5),
+      () => new THREE.DodecahedronGeometry(1.5 + Math.random() * 2),
+      () => new THREE.TetrahedronGeometry(2 + Math.random() * 2),
+      () => new THREE.SphereGeometry(1 + Math.random() * 2, 32, 32),
+      () => new THREE.ConeGeometry(1.5 + Math.random(), 2 + Math.random() * 2, 32),
+      () => new THREE.CylinderGeometry(1 + Math.random(), 1 + Math.random(), 2 + Math.random(), 32),
+      () => new THREE.BoxGeometry(2 + Math.random() * 2, 2 + Math.random() * 2, 2 + Math.random() * 2),
     ];
 
-    shapes.forEach(({ geometry, position }, i) => {
+    // Generate 28 shapes (to ensure we have 25+ after any filtering)
+    for (let i = 0; i < 28; i++) {
+      // Select random geometry type
+      const geometryCreator = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+      const geometry = geometryCreator();
+
+      // Generate safe position
+      const position = generateSafePosition(existingPositions, bounds, minDistance);
+      existingPositions.push(position);
+
+      // Create material with varied colors
       const material = new THREE.MeshStandardMaterial({
-        color: new THREE.Color().setHSL((i * 0.15) % 1, 0.6, 0.5),
-        roughness: 0.3,
-        metalness: 0.7,
+        color: new THREE.Color().setHSL((i * 0.05) % 1, 0.5 + Math.random() * 0.3, 0.4 + Math.random() * 0.2),
+        roughness: 0.2 + Math.random() * 0.4,
+        metalness: 0.5 + Math.random() * 0.5,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.2 + Math.random() * 0.15,
         wireframe: false,
       });
 
@@ -141,26 +205,50 @@ const BackgroundScene: Component = () => {
       mesh.position.set(position[0], position[1], position[2]);
 
       // Random initial rotation
-      mesh.rotation.x = Math.random() * Math.PI;
-      mesh.rotation.y = Math.random() * Math.PI;
+      mesh.rotation.x = Math.random() * Math.PI * 2;
+      mesh.rotation.y = Math.random() * Math.PI * 2;
+      mesh.rotation.z = Math.random() * Math.PI * 2;
 
       scene.add(mesh);
       geometries.push(mesh);
-    });
+    }
+
+    console.log(`Created ${geometries.length} geometric shapes with proper spacing`);
   };
 
   const createTextSprites = () => {
-    // Programming language text sprites with their colors - positioned between geometries
+    // Programming language text sprites with their colors
     const languages = [
-      { text: 'TS', color: '#3178c6', position: [-15, 0, -12] },     // TypeScript Blue
-      { text: 'Go', color: '#00ADD8', position: [20, 5, -18] },      // Go Cyan/Blue
-      { text: 'C#', color: '#9b4f96', position: [-5, -10, -22] },    // C# Purple
-      { text: 'C++', color: '#00599C', position: [12, -12, -10] },   // C++ Blue
-      { text: 'JS', color: '#f7df1e', position: [0, 12, -26] },      // JavaScript Yellow
-      { text: 'PG', color: '#336791', position: [-18, -8, -16] },    // PostgreSQL Blue
+      { text: 'TS', color: '#3178c6' },     // TypeScript Blue
+      { text: 'Go', color: '#00ADD8' },     // Go Cyan/Blue
+      { text: 'C#', color: '#9b4f96' },     // C# Purple
+      { text: 'C++', color: '#00599C' },    // C++ Blue
+      { text: 'JS', color: '#f7df1e' },     // JavaScript Yellow
+      { text: 'PG', color: '#336791' },     // PostgreSQL Blue
     ];
 
-    languages.forEach(({ text, color, position }) => {
+    // Use same bounds as geometries
+    const bounds = {
+      x: [-35, 35],
+      y: [-25, 25],
+      z: [-40, -5],
+    };
+
+    // Get existing geometry positions for collision detection
+    const existingPositions = geometries.map(mesh => [
+      mesh.position.x,
+      mesh.position.y,
+      mesh.position.z
+    ]);
+
+    languages.forEach(({ text, color }) => {
+      // Generate position that doesn't overlap with geometries or other sprites
+      const position = generateSafePosition(
+        [...existingPositions, ...textSprites.map(s => [s.position.x, s.position.y, s.position.z])],
+        bounds,
+        10 // Slightly larger minimum distance for text
+      );
+
       const texture = createTextTexture(text, color);
       const material = new THREE.SpriteMaterial({
         map: texture,
@@ -179,6 +267,8 @@ const BackgroundScene: Component = () => {
       scene.add(sprite);
       textSprites.push(sprite);
     });
+
+    console.log(`Created ${textSprites.length} text sprites with proper spacing`);
   };
 
   onMount(() => {
