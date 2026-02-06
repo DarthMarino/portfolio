@@ -1,19 +1,20 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, Component } from "solid-js";
 import { A } from "@solidjs/router";
 import chevron from "../assets/chevron.svg";
 import { useImageStore } from "../stores/useImageStore";
 
-const Dropdown = ({
-  text = "",
-  images = [],
-  url,
-  slug,
-}: {
+interface DropdownProps {
   text: string;
   images: string[];
   url?: string;
   slug?: string;
-}) => {
+}
+
+const Dropdown: Component<DropdownProps> = (props) => {
+  const text = () => props.text || "";
+  const images = () => props.images || [];
+  const url = () => props.url;
+  const slug = () => props.slug;
   const [isActive, setIsActive] = createSignal(true); // Start open by default
   const { previewImage } = useImageStore();
 
@@ -22,7 +23,7 @@ const Dropdown = ({
   };
 
   const handleImageClick = (image: string) => {
-    previewImage(image, images); // Pass the entire image group for navigation
+    previewImage(image, images()); // Pass the entire image group for navigation
   };
 
   return (
@@ -32,24 +33,24 @@ const Dropdown = ({
           class={`dropdown-button ${isActive() ? "active" : ""}`}
           onClick={toggleDropdown}
         >
-          <span class="dropdown-title">{text}</span>
+          <span class="dropdown-title">{text()}</span>
           <div class="chevron">
             <img src={chevron} alt="chevron-arrow" />
           </div>
         </button>
         <div class="flex gap-4 items-center flex-wrap">
-          {slug && (
+          {slug() && (
             <A
-              href={`/project/${slug}`}
+              href={`/project/${slug()}`}
               class="project-action-link primary"
             >
               <span>View Details</span>
               <span>→</span>
             </A>
           )}
-          {url && (
+          {url() && (
             <a
-              href={url}
+              href={url()}
               target="_blank"
               rel="noreferrer"
               class="project-action-link"
@@ -63,7 +64,7 @@ const Dropdown = ({
       {isActive() && (
         <div class="carousel-container">
           <div class="carousel carousel-center w-full bg-transparent">
-            <For each={images}>
+            <For each={images()}>
             {(image, index) => (
               <div class="carousel-item">
                 <img
