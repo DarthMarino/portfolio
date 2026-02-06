@@ -1,0 +1,548 @@
+/* ============================================
+   GLOBAL VARIABLES - Site-wide Color System
+   ============================================ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #188a66;
+  --color-primary-dark: #127055;
+  --color-primary-light: #1fa87d;
+
+  /* Accent Colors */
+  --color-accent-cyan: #28b6b9;
+  --color-accent-green: #92fc94;
+  --color-accent-orange: #fcbe92;
+
+  /* Text Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.9);
+  --color-text-muted: rgba(255, 255, 255, 0.7);
+  --color-text-subtle: rgba(255, 255, 255, 0.6);
+
+  /* Background Colors */
+  --color-bg-primary: #188a66;
+  --color-bg-overlay: rgba(255, 255, 255, 0.1);
+  --color-bg-overlay-hover: rgba(255, 255, 255, 0.15);
+  --color-bg-overlay-active: rgba(255, 255, 255, 0.2);
+
+  /* Border Colors */
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-border-medium: rgba(255, 255, 255, 0.2);
+  --color-border-strong: rgba(255, 255, 255, 0.3);
+  --color-border-solid: #ffffff;
+
+  /* Gradients */
+  --gradient-green: linear-gradient(to left top, #92fc94, rgba(252, 207, 146, 0) 70%);
+  --gradient-cyan: linear-gradient(to right top, #28b6b9, rgba(250, 189, 160, 0) 70%);
+  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 5rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Effects */
+  --blur-light: blur(10px);
+  --blur-medium: blur(20px);
+  --blur-heavy: blur(30px);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.25);
+
+  /* Z-Index Scale */
+  --z-background: 0;
+  --z-content: 10;
+  --z-overlay: 50;
+  --z-sidebar: 100;
+  --z-navigation: 101;
+  --z-modal: 200;
+  --z-tooltip: 300;
+}
+
+/* ============================================
+   GLOBAL RESETS & BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Sofia Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* ============================================
+   LAYOUT UTILITIES
+   ============================================ */
+
+.main-content-with-sidebar {
+  margin-left: 0;
+  transition: margin-left var(--transition-normal);
+}
+
+@media only screen and (min-width: 1025px) {
+  .main-content-with-sidebar {
+    margin-left: 280px;
+  }
+}
+
+/* ============================================
+   SCROLL BEHAVIOR
+   ============================================ */
+
+.subtitle {
+  scroll-margin-top: 100px;
+}
+
+/* Scroll margin for hash link navigation */
+#contact {
+  scroll-margin-top: 6rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-primary-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-cyan);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-green);
+}
+
+/* ============================================
+   GLASSMORPHISM EFFECT (Reusable)
+   ============================================ */
+
+.glass-effect {
+  background: var(--color-bg-overlay);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  border: 1px solid var(--color-border-light);
+}
+
+.glass-effect-strong {
+  background: var(--color-bg-overlay-hover);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  border: 1px solid var(--color-border-medium);
+}
+
+/* ============================================
+   TEXT UTILITIES
+   ============================================ */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   BACKGROUND UTILITIES
+   ============================================ */
+
+.bg-primary {
+  background: var(--color-bg-primary);
+}
+
+.bg-overlay {
+  background: var(--color-bg-overlay);
+}
+
+/* ============================================
+   REUSABLE PAGE COMPONENTS
+   ============================================ */
+
+/* Page Container */
+.page-container {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--color-bg-primary);
+  position: relative;
+}
+
+.page-content {
+  position: relative;
+  z-index: var(--z-content);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) 5% var(--spacing-3xl) 5%;
+}
+
+/* Page Header */
+.page-header {
+  margin: var(--spacing-xl) 0 var(--spacing-2xl) 0;
+  text-align: center;
+}
+
+/* Page Title (Main heading) */
+.page-title {
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -3px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* Page Subtitle (Description below title) */
+.page-subtitle {
+  font-size: 1.4rem;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Section Title (Subsection headings) */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+/* Page Section */
+.page-section {
+  margin: var(--spacing-2xl) 0;
+}
+
+/* ============================================
+   RANGE COMPONENT - UNIFIED STYLING
+   ============================================ */
+
+/* Range header - titles container (role, "at", company) */
+.range-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.3rem;
+  row-gap: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Range header titles */
+.range-header h4 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Make the last h4 (company/institution name) take full width for cleaner wrapping */
+.range-header h4:last-of-type {
+  flex-basis: 100%;
+  margin-top: 0;
+}
+
+/* Year range - year boxes container */
+.year-range {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+/* Year boxes with high-contrast styling */
+.yearBox {
+  display: inline-flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  background: var(--color-text-primary);
+  color: var(--color-primary-dark);
+  border-radius: 0;
+  height: 2.3rem;
+}
+
+/* ============================================
+   DROPDOWN COMPONENT - UNIFIED STYLING
+   ============================================ */
+
+.dropdown-button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dropdown-button:hover {
+  cursor: pointer;
+}
+
+.dropdown-title {
+  font-size: 2rem;
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 3px;
+}
+
+.chevron {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: white;
+}
+
+.chevron img {
+  height: 1.2rem;
+  width: auto;
+}
+
+.dropdown-button .chevron {
+  transition: transform 0.15s ease-in-out;
+}
+
+.dropdown-button.active .chevron {
+  transform: rotate(90deg);
+}
+
+/* Project action links */
+.project-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-bg-overlay);
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.project-action-link:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #ffffff;
+  color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.project-action-link.primary {
+  background: var(--color-accent-cyan);
+  border-color: var(--color-accent-cyan);
+  color: var(--color-primary-dark);
+}
+
+.project-action-link.primary:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--color-primary-dark);
+}
+
+/* ============================================
+   CAROUSEL / IMAGE GALLERY
+   ============================================ */
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  width: 100%;
+  cursor: grab;
+  transition: transform 0.3s ease;
+  gap: 1rem !important; /* Override DaisyUI defaults */
+  padding: var(--spacing-sm);
+}
+
+.carousel:active {
+  cursor: grabbing;
+}
+
+.carousel-item {
+  flex-shrink: 0;
+}
+
+.carousel img {
+  max-width: 100%;
+  height: 350px;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   RESPONSIVE HELPERS
+   ============================================ */
+
+@media only screen and (max-width: 1024px) {
+  :root {
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+    --spacing-md: 1rem;
+    --spacing-lg: 1.25rem;
+    --spacing-xl: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 435px) {
+  :root {
+    --spacing-sm: 0.75rem;
+    --spacing-md: 0.85rem;
+    --spacing-lg: 1rem;
+  }
+}
+
+/* ============================================
+   REUSABLE COMPONENTS - RESPONSIVE
+   ============================================ */
+
+@media only screen and (max-width: 815px) {
+  .page-title {
+    font-size: 3.5rem;
+    letter-spacing: -2px;
+  }
+
+  .page-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .range-header h4 {
+    font-size: 1.5rem;
+  }
+
+  .yearBox {
+    font-size: 1.8rem;
+    padding: 4px 8px;
+  }
+}
+
+/* Tablet and Mobile - adjust for sidebar hamburger menu */
+@media only screen and (max-width: 1024px) {
+  .page-content {
+    padding: 4rem 5% var(--spacing-3xl) 5%;
+  }
+}
+
+@media only screen and (max-width: 620px) {
+  .page-content {
+    padding: 4rem 4% var(--spacing-xl) 4%;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+  }
+
+  .page-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .page-header {
+    margin: var(--spacing-lg) 0 var(--spacing-xl) 0;
+  }
+
+  .page-section {
+    margin: var(--spacing-xl) 0;
+  }
+
+  .range-header h4 {
+    font-size: 1.5rem;
+    flex-basis: 100%;
+    text-align: left;
+  }
+
+  .yearBox {
+    font-size: 1.5rem;
+    padding: 4px 8px;
+  }
+
+  .project-action-link {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media only screen and (max-width: 435px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+}

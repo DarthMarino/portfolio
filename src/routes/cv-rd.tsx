@@ -14,7 +14,7 @@ const CVRDRoute: Component = () => {
         </div>
       }
     >
-      <CVPage t={t} locale={locale()} isDominican={true} />
+      <CVPage t={t} locale={locale} isDominican={true} />
     </Show>
   );
 };

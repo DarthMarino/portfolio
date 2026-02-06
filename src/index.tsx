@@ -12,4 +12,17 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+// Wait for fonts and stylesheets to load before rendering
+// This prevents "layout forced before page fully loaded" warnings
+Promise.all([
+  document.fonts.ready,
+  new Promise(resolve => {
+    if (document.readyState === 'complete') {
+      resolve(true);
+    } else {
+      window.addEventListener('load', () => resolve(true));
+    }
+  })
+]).then(() => {
+  render(() => <App />, root!);
+});

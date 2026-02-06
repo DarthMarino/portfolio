@@ -1,9 +1,9 @@
 import { Show, type Component } from "solid-js";
 import { useLanguage } from "../providers/LanguageProvider";
-import CVPage from "../pages/cv";
+import ProjectDetail from "../pages/ProjectDetail";
 
-const CVRoute: Component = () => {
-  const { dict, t, locale } = useLanguage();
+const ProjectRoute: Component = () => {
+  const { dict, t } = useLanguage();
 
   return (
     <Show
@@ -14,9 +14,9 @@ const CVRoute: Component = () => {
         </div>
       }
     >
-      <CVPage t={t} locale={locale} />
+      <ProjectDetail t={t} />
     </Show>
   );
 };
 
-export default CVRoute;
+export default ProjectRoute;

@@ -1,16 +1,20 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, Component } from "solid-js";
+import { A } from "@solidjs/router";
 import chevron from "../assets/chevron.svg";
 import { useImageStore } from "../stores/useImageStore";
 
-const Dropdown = ({
-  text = "",
-  images = [],
-  url,
-}: {
+interface DropdownProps {
   text: string;
   images: string[];
   url?: string;
-}) => {
+  slug?: string;
+}
+
+const Dropdown: Component<DropdownProps> = (props) => {
+  const text = () => props.text || "";
+  const images = () => props.images || [];
+  const url = () => props.url;
+  const slug = () => props.slug;
   const [isActive, setIsActive] = createSignal(true); // Start open by default
   const { previewImage } = useImageStore();
 
@@ -19,35 +23,48 @@ const Dropdown = ({
   };
 
   const handleImageClick = (image: string) => {
-    previewImage(image, images); // Pass the entire image group for navigation
+    previewImage(image, images()); // Pass the entire image group for navigation
   };
 
   return (
     <div>
-      <div class="flex items-center justify-between w-full mb-2">
-        <button 
+      <div class="flex items-center justify-between w-full mb-6 gap-4 flex-wrap" style={{ "padding-bottom": "1rem" }}>
+        <button
           class={`dropdown-button ${isActive() ? "active" : ""}`}
           onClick={toggleDropdown}
         >
-          <span class="dropdown-title">{text}</span>
+          <span class="dropdown-title">{text()}</span>
           <div class="chevron">
             <img src={chevron} alt="chevron-arrow" />
           </div>
         </button>
-        {url && (
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            class="link link-hover ml-8"
-          >
-            <span class="dropdown-title">Link to the project</span>
-          </a>
-        )}
+        <div class="flex gap-4 items-center flex-wrap">
+          {slug() && (
+            <A
+              href={`/project/${slug()}`}
+              class="project-action-link primary"
+            >
+              <span>View Details</span>
+              <span>→</span>
+            </A>
+          )}
+          {url() && (
+            <a
+              href={url()}
+              target="_blank"
+              rel="noreferrer"
+              class="project-action-link"
+            >
+              <span>Live Project</span>
+              <span>↗</span>
+            </a>
+          )}
+        </div>
       </div>
       {isActive() && (
-        <div class="carousel carousel-center w-full space-x-4 bg-transparent">
-          <For each={images}>
+        <div class="carousel-container">
+          <div class="carousel carousel-center w-full bg-transparent">
+            <For each={images()}>
             {(image, index) => (
               <div class="carousel-item">
                 <img
@@ -59,6 +76,7 @@ const Dropdown = ({
               </div>
             )}
           </For>
+          </div>
         </div>
       )}
     </div>

@@ -1,0 +1,128 @@
+/* ============================================
+   EXPERIENCE PAGE - SPECIFIC STYLES
+   ============================================ */
+
+.company-block {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-overlay);
+  backdrop-filter: var(--blur-light);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border-light);
+}
+
+.company-description {
+  margin: var(--spacing-lg) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-item {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--color-accent-cyan);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition-fast);
+}
+
+.experience-item::before {
+  content: "▸";
+  position: absolute;
+  left: var(--spacing-xs);
+  color: var(--color-accent-cyan);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.experience-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--color-accent-green);
+  transform: translateX(4px);
+}
+
+.experience-item:hover::before {
+  color: var(--color-accent-green);
+}
+
+.projects-showcase {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.projects-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media only screen and (max-width: 815px) {
+  .experience-item {
+    font-size: 1.05rem;
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) var(--spacing-lg);
+    margin: var(--spacing-sm) 0;
+  }
+}
+
+@media only screen and (max-width: 620px) {
+  .company-block {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .experience-item {
+    font-size: 1rem;
+    line-height: 1.7;
+    padding: var(--spacing-sm) var(--spacing-xs) var(--spacing-sm) var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+  }
+
+  .experience-item::before {
+    left: var(--spacing-xs);
+    font-size: 1rem;
+  }
+
+  .projects-heading {
+    font-size: 1.3rem;
+  }
+
+  .projects-showcase {
+    gap: var(--spacing-sm);
+  }
+
+  .education-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width: 435px) {
+  .experience-item {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) calc(var(--spacing-md) + 0.25rem);
+  }
+
+  .experience-item::before {
+    font-size: 0.9rem;
+  }
+}
