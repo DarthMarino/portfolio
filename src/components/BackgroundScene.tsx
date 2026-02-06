@@ -146,18 +146,18 @@ const BackgroundScene: Component = () => {
   };
 
   const createGeometries = () => {
-    // Define 3D space bounds - expanded to fill full viewport
+    // Define 3D space bounds - expanded for more sparse distribution
     const bounds = {
-      x: [-50, 50],  // Left to right (expanded)
-      y: [-35, 35],  // Bottom to top (expanded)
-      z: [-80, -15],  // Far to near (wider depth range)
+      x: [-70, 70],   // Left to right (expanded)
+      y: [-45, 45],   // Bottom to top (expanded)
+      z: [-100, -15], // Far to near (wider depth range)
     };
 
     const existingPositions: number[][] = [];
 
     // Depth range for calculating opacity and saturation
     const zNear = bounds.z[1];  // -15 (closest)
-    const zFar = bounds.z[0];   // -80 (furthest)
+    const zFar = bounds.z[0];   // -100 (furthest)
 
     // Create 25+ geometric shapes with variety - scaled down 35% for subtlety
     const shapeTypes = [
@@ -174,9 +174,9 @@ const BackgroundScene: Component = () => {
     ];
 
     // Grid-based positioning for even distribution
-    const numShapes = 28;
+    const numShapes = 35;
     const cols = 7; // 7 columns
-    const rows = 4; // 4 rows (7x4 = 28 shapes)
+    const rows = 5; // 5 rows (7x5 = 35 shapes)
 
     const cellWidth = (bounds.x[1] - bounds.x[0]) / cols;
     const cellHeight = (bounds.y[1] - bounds.y[0]) / rows;
@@ -251,8 +251,6 @@ const BackgroundScene: Component = () => {
       scene.add(mesh);
       geometries.push(mesh);
     }
-
-    console.log(`Created ${geometries.length} geometric shapes with proper spacing`);
   };
 
   const createTextMeshes = () => {
@@ -263,30 +261,37 @@ const BackgroundScene: Component = () => {
     loader.load(
       'https://threejs.org/examples/fonts/helvetiker_bold.typeface.json',
       (font) => {
-        // Programming language text with their colors
+        // Programming language text with their colors - Your tech stack
         const languages = [
-          { text: 'TS', color: '#3178c6' },     // TypeScript Blue
-          { text: 'Go', color: '#00ADD8' },     // Go Cyan/Blue
-          { text: 'C#', color: '#9b4f96' },     // C# Purple
-          { text: 'C++', color: '#00599C' },    // C++ Blue
-          { text: 'JS', color: '#f7df1e' },     // JavaScript Yellow
-          { text: 'PG', color: '#336791' },     // PostgreSQL Blue
+          { text: 'TS', color: '#3178c6' },      // TypeScript Blue
+          { text: 'Go', color: '#00ADD8' },      // Go Cyan/Blue
+          { text: 'JS', color: '#f7df1e' },      // JavaScript Yellow
+          { text: 'SQL', color: '#4479A1' },     // SQL Blue
+          { text: 'React', color: '#61DAFB' },   // React Cyan
+          { text: 'Node', color: '#339933' },    // Node.js Green
+          { text: 'Solid', color: '#2c4f7c' },   // SolidJS Blue
+          { text: 'Flutter', color: '#02569B' }, // Flutter Blue
+          { text: 'SQLite', color: '#003B57' },  // SQLite Dark Blue
+          { text: 'PG', color: '#336791' },      // PostgreSQL Blue
+          { text: 'C#', color: '#9b4f96' },      // C# Purple
+          { text: 'C++', color: '#00599C' },     // C++ Blue
+          { text: 'Rust', color: '#CE412B' },    // Rust Orange
         ];
 
-        // Use same expanded bounds as geometries
+        // Expanded bounds for more sparse distribution
         const bounds = {
-          x: [-50, 50],
-          y: [-35, 35],
-          z: [-80, -15],
+          x: [-70, 70],
+          y: [-45, 45],
+          z: [-100, -15],
         };
 
         // Depth range for calculating opacity
         const zNear = bounds.z[1];  // -15 (closest)
-        const zFar = bounds.z[0];   // -80 (furthest)
+        const zFar = bounds.z[0];   // -100 (furthest)
 
-        // Grid-based positioning for text meshes (2 columns x 3 rows for 6 items)
-        const cols = 3;
-        const rows = 2;
+        // Grid-based positioning for text meshes (5 columns x 3 rows for 13+ items)
+        const cols = 5;
+        const rows = 3;
         const cellWidth = (bounds.x[1] - bounds.x[0]) / cols;
         const cellHeight = (bounds.y[1] - bounds.y[0]) / rows;
 
@@ -367,8 +372,6 @@ const BackgroundScene: Component = () => {
           scene.add(textMesh);
           textMeshes.push(textMesh);
         });
-
-        console.log(`Created ${textMeshes.length} 3D text meshes with proper spacing`);
       },
       undefined,
       (error) => {

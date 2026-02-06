@@ -65,6 +65,21 @@ export const dict = {
   qrking_exp_3:
     "Built responsive admin panel and customer-facing interface with payment integration, automated board management, and location-based analytics for restaurant marketing optimization.",
 
+  curbo_exp:
+    "Full-stack B2B and C2C automotive marketplace platform serving as an intermediary between car dealers and customers. Built comprehensive ecosystem including dealer dashboard for inventory management, technician integration system for vehicle inspections, customer-facing marketplace, and powerful backoffice administration tools.",
+
+  curbo_problem:
+    "Car dealers needed a modern digital platform to manage inventory and reach customers online, while buyers lacked transparency about vehicle conditions. The market required a trusted intermediary that could facilitate transactions, coordinate professional vehicle inspections, and provide comprehensive management tools for dealers.",
+
+  curbo_solution:
+    "Developed a multi-sided platform with three key components: (1) Dealer Dashboard - intuitive inventory management system allowing dealers to list, update, and track vehicles with real-time analytics; (2) Technician Integration - scheduling and coordination system connecting certified technicians with vehicles for professional condition assessments and reports; (3) Backoffice - comprehensive administrative panel for platform management, user verification, transaction oversight, and data analytics.",
+
+  curbo_challenges:
+    "Architected complex role-based access control system managing dealers, technicians, customers, and administrators. Built real-time notification system for inspection scheduling and status updates. Implemented secure document handling for vehicle reports and certifications. Optimized database queries for large vehicle inventory datasets while maintaining fast search and filtering.",
+
+  curbo_results:
+    "Successfully launched platform serving multiple car dealerships with thousands of vehicle listings. Achieved 90%+ test coverage ensuring reliability. Significantly improved page load performance through database optimization and Redis caching. Created scalable architecture supporting B2B dealer operations and C2C customer marketplace simultaneously.",
+
   curbo_exp_1:
     "Developed advanced e-commerce search and filtering algorithms improving user engagement and reducing bounce rate significantly.",
   curbo_exp_2:
@@ -112,7 +127,7 @@ export const dict = {
   lang_3_level: "Elementary Proficiency",
 
   // Enhanced Projects section
-  projects_title: "Key Projects",
+  projects_title: "Projects",
   projects_title_caps: "PROJECTS",
 
   // Project names and enhanced descriptions
@@ -130,6 +145,7 @@ export const dict = {
     "Enterprise mobile application for inventory management and sales tracking built with React Native and Node.js backend.",
 
   sic_project: "SIC Web",
+  curbo_project: "Curbo Website",
   sentinels_labs: "SentinelsLabs",
   find_machines: "Find & Supply Solutions",
 

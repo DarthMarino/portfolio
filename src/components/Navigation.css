@@ -1,0 +1,35 @@
+/* Language Toggle Button */
+.language-toggle {
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-overlay);
+  backdrop-filter: var(--blur-light);
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.language-toggle:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #ffffff;
+  color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.language-toggle:active {
+  transform: translateY(0);
+}
+
+/* Mobile responsive */
+@media only screen and (max-width: 620px) {
+  .language-toggle {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}

@@ -61,6 +61,22 @@ export const dict = {
     "Arquitecturé solución full-stack usando React, Node.js y PostgreSQL, implementando dashboard de análisis en tiempo real y sistema automatizado de gestión de campañas para optimización de marketing retail.",
   qrking_exp_3:
     "Integré servicios de geolocalización y análisis avanzado para proporcionar insights accionables sobre patrones de comportamiento de clientes, aumentando ROI de marketing hasta 40% para adoptadores tempranos.",
+
+  curbo_exp:
+    "Plataforma marketplace automotriz full-stack B2B y C2C actuando como intermediario entre concesionarios y clientes. Construí ecosistema completo incluyendo dashboard para gestión de inventario de concesionarios, sistema de integración de técnicos para inspecciones vehiculares, marketplace para clientes, y herramientas administrativas de backoffice.",
+
+  curbo_problem:
+    "Los concesionarios necesitaban una plataforma digital moderna para gestionar inventario y alcanzar clientes en línea, mientras los compradores carecían de transparencia sobre condiciones de vehículos. El mercado requería un intermediario confiable que facilitara transacciones, coordinara inspecciones profesionales y proporcionara herramientas de gestión integral para dealers.",
+
+  curbo_solution:
+    "Desarrollé plataforma multi-lateral con tres componentes clave: (1) Dashboard de Dealers - sistema intuitivo de gestión de inventario permitiendo listar, actualizar y rastrear vehículos con analíticas en tiempo real; (2) Integración de Técnicos - sistema de programación y coordinación conectando técnicos certificados con vehículos para evaluaciones profesionales e informes de condición; (3) Backoffice - panel administrativo completo para gestión de plataforma, verificación de usuarios, supervisión de transacciones y analítica de datos.",
+
+  curbo_challenges:
+    "Arquitecturé sistema complejo de control de acceso basado en roles gestionando dealers, técnicos, clientes y administradores. Construí sistema de notificaciones en tiempo real para programación de inspecciones y actualizaciones de estado. Implementé manejo seguro de documentos para reportes vehiculares y certificaciones. Optimicé consultas de base de datos para grandes conjuntos de inventario vehicular manteniendo búsqueda y filtrado rápidos.",
+
+  curbo_results:
+    "Lancé exitosamente plataforma sirviendo múltiples concesionarios con miles de listados vehiculares. Logré cobertura de pruebas 90%+ asegurando confiabilidad. Mejoré significativamente rendimiento de carga mediante optimización de base de datos y caché Redis. Creé arquitectura escalable soportando operaciones B2B de dealers y marketplace C2C de clientes simultáneamente.",
+
   curbo_exp_1:
     "Desarrollé funcionalidades e-commerce con React y Node.js, implementando algoritmos de búsqueda avanzada y filtros que mejoraron participación de usuarios.",
   curbo_exp_2:
@@ -114,7 +130,7 @@ export const dict = {
   // Project names and descriptions
   pventa_mobile: "PVenta Mobile",
   sic_project: "SIC Web",
-  curbo_project: "Curbo",
+  curbo_project: "Curbo Website",
   sentinels_labs: "SentinelsLabs",
   find_machines: "Find & Supply Solutions",
   the_qr_king: "TheQRKing",

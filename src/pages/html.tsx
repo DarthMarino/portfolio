@@ -93,7 +93,7 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             ? props.t("cv_intro")()
             : props.t("cv_intro")}
         </p>
-        <h1 class="subtitle">{props.t("contact_title")}</h1>
+        <h1 id="contact" class="subtitle">{props.t("contact_title")}</h1>
         <div class="flex flex-wrap gap-4 my-6">
           <Button
             text={props.t("github")}
@@ -108,7 +108,7 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             url="mailto:marinogomez24@gmail.com"
           />
         </div>
-        <h1 class="subtitle">{props.t("experience_title_caps")}</h1>
+        <h1 id="experience" class="subtitle">{props.t("experience_title_caps")}</h1>
         <div
           style={{
             display: "flex",
@@ -127,10 +127,12 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             text={props.t("pventa_mobile")}
             images={[pventa1, pventa2, pventa3, pventa4]}
             url={"https://play.google.com/store/apps/details?id=pventa.mobile"}
+            slug="pventa-mobile"
           />
           <Dropdown
             text={props.t("sic_project")}
             images={[sic1, sic2, sic3, sic4, sic5]}
+            slug="sic-system"
           />
 
           <Range
@@ -151,6 +153,7 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
               qrking7,
             ]}
             url={"https://www.theqrking.com/"}
+            slug="theqrking"
           />
 
           <Range
@@ -163,9 +166,10 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             text={props.t("curbo_project")}
             images={[curbo1, curbo2, curbo3, curbo4]}
             url={"https://curbo.do/"}
+            slug="curbo"
           />
         </div>
-        <h1 class="subtitle">{props.t("skills_title_caps")}</h1>
+        <h1 id="skills" class="subtitle">{props.t("skills_title_caps")}</h1>
         <Skills skillArray={technologies} />
         <h1 class="subtitle">{props.t("studies_title")}</h1>
         <div
@@ -202,7 +206,7 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             link="https://ipl.edu.do/"
           />
         </div>
-        <h1 class="subtitle">{props.t("projects_title")}</h1>
+        <h1 id="projects" class="subtitle">{props.t("projects_title")}</h1>
         <div class="flex flex-wrap items-center gap-4 my-6">
           <Button
             text={props.t("pventa_mobile")}
