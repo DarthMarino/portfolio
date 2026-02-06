@@ -93,7 +93,9 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             ? props.t("cv_intro")()
             : props.t("cv_intro")}
         </p>
-        <h1 id="contact" class="subtitle">{props.t("contact_title")}</h1>
+        <h1 id="contact" class="subtitle">
+          {props.t("contact_title")}
+        </h1>
         <div class="flex flex-wrap gap-4 my-6">
           <Button
             text={props.t("github")}
@@ -108,7 +110,9 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             url="mailto:marinogomez24@gmail.com"
           />
         </div>
-        <h1 id="experience" class="subtitle">{props.t("experience_title_caps")}</h1>
+        <h1 id="experience" class="subtitle">
+          {props.t("experience_title_caps")}
+        </h1>
         <div
           style={{
             display: "flex",
@@ -169,7 +173,9 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             slug="curbo"
           />
         </div>
-        <h1 id="skills" class="subtitle">{props.t("skills_title_caps")}</h1>
+        <h1 id="skills" class="subtitle">
+          {props.t("skills_title_caps")}
+        </h1>
         <Skills skillArray={technologies} />
         <h1 class="subtitle">{props.t("studies_title")}</h1>
         <div
@@ -206,7 +212,9 @@ const HtmlPage: Component<HtmlPageProps> = (props) => {
             link="https://ipl.edu.do/"
           />
         </div>
-        <h1 id="projects" class="subtitle">{props.t("projects_title")}</h1>
+        <h1 id="projects" class="subtitle">
+          {props.t("projects_title")}
+        </h1>
         <div class="flex flex-wrap items-center gap-4 my-6">
           <Button
             text={props.t("pventa_mobile")}
