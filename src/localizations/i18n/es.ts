@@ -1,5 +1,5 @@
 export const dict = {
-  hero_eyebrow: "Ingeniero de software · Web y móvil",
+  hero_eyebrow: "Ingeniero de software · FullStack",
   hero_intro: "Desarrollo aplicaciones full-stack escalables con tecnologías modernas.",
   hero_description: "Especializado en React, Node.js y soluciones en la nube.",
   view_work: "Explora mi trabajo",
