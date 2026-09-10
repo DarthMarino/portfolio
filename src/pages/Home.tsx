@@ -14,9 +14,9 @@ const Home: Component<{
   t: i18n.Translator<i18n.Flatten<Record<string, any>>>;
 }> = (props) => (
   <PageShell>
-    <section class="relative grid items-center gap-8 py-5 sm:py-7 md:grid-cols-[1fr_180px] xl:grid-cols-[1fr_220px]">
-      <div>
-        <p class="mb-4 pr-20 text-[10px] md:pr-0 font-medium uppercase tracking-[0.2em] text-base-content/60">
+    <section class="grid items-center gap-8 py-5 sm:py-7 lg:grid-cols-[minmax(0,1fr)_260px] xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-12">
+      <div class="min-w-0">
+        <p class="mb-4 text-[10px] font-medium uppercase tracking-[0.2em] text-base-content/60">
           {props.t("hero_eyebrow")}
         </p>
         <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl xl:text-6xl">
@@ -37,7 +37,7 @@ const Home: Component<{
           </A>
         </div>
       </div>
-      <div class="absolute top-3 right-0 w-14 md:relative md:top-auto md:right-auto md:col-start-2 md:row-start-auto md:w-full">
+      <div class="row-start-1 mx-auto w-full max-w-60 sm:max-w-72 lg:col-start-2 lg:row-start-1 lg:max-w-none">
         <ProfileImage />
       </div>
     </section>
