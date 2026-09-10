@@ -1,4 +1,12 @@
 export const galleryCaptions: Record<string, { en: string[]; es: string[] }> = {
+  "tinacos-cibao": {
+    en: ["Homepage and brand identity", "Company history page", "Warranty code verification"],
+    es: ["Página de inicio e identidad de marca", "Historia de la empresa", "Verificación del código de garantía"],
+  },
+  "find-machines": {
+    en: ["Homepage and industrial services", "Product catalog and category filters", "Product details and specifications"],
+    es: ["Página de inicio y servicios industriales", "Catálogo de productos y filtros por categoría", "Detalles y especificaciones del producto"],
+  },
   theqrking: {
     en: [
       "Restaurant directory and featured food photography",

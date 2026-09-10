@@ -1,3 +1,11 @@
+import tinacos1 from "../assets/optimized/tinacos-1.webp";
+import tinacos2 from "../assets/optimized/tinacos-2.webp";
+import tinacos3 from "../assets/optimized/tinacos-3.webp";
+import findMachines1 from "../assets/optimized/find-machines-1.webp";
+import findMachines2 from "../assets/optimized/find-machines-2.webp";
+import findMachines3 from "../assets/optimized/find-machines-3.webp";
+import tinacosCover from "../assets/optimized/tinacos-1-thumb.webp";
+import findMachinesCover from "../assets/optimized/find-machines-2-thumb.webp";
 import qrCover from "../assets/optimized/the-qr-king-1-thumb.webp";
 import pventaCover from "../assets/optimized/pventa-3-thumb.webp";
 import sicCover from "../assets/optimized/sic-2-thumb.webp";
@@ -70,7 +78,8 @@ export const projects: Project[] = [
     descriptionKey: "tinacos_cibao_desc",
     category: "contract",
     url: "https://www.tinacoscibao.com.do/",
-    images: [],
+    images: [tinacos1, tinacos2, tinacos3],
+    cover: tinacosCover,
     technologies: [
       "React",
       "TypeScript",
@@ -101,7 +110,8 @@ export const projects: Project[] = [
     descriptionKey: "find_machines_desc",
     category: "employment",
     url: "https://www.findmachines.com.do/",
-    images: [],
+    images: [findMachines1, findMachines2, findMachines3],
+    cover: findMachinesCover,
     technologies: ["Go", "CMS", "Cloud Infrastructure"],
     role: "Full-Stack Developer",
     duration: "3 months",

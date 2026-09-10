@@ -16,7 +16,7 @@ for source in files:
         image.save(target, 'WEBP', quality=86, method=6)
         original_size += source.stat().st_size
         optimized_size += target.stat().st_size
-        if source.stem in {'the-qr-king-1', 'pventa-3', 'sic-2', 'curbo-1'}:
+        if source.stem in {'the-qr-king-1', 'pventa-3', 'sic-2', 'curbo-1', 'tinacos-1', 'find-machines-2'}:
             image.thumbnail((720, 720))
             image.save(output / f'{source.stem}-thumb.webp', 'WEBP', quality=82, method=6)
 print(f'Full-size web derivatives: {original_size:,} → {optimized_size:,} bytes')
