@@ -235,7 +235,7 @@ export const projects: Project[] = [
     year: 2021,
     descriptionKey: "curbo_exp",
     category: "employment",
-    url: "https://curbo.do/",
+    url: "https://web.archive.org/web/20241115080736/https://curbo.do/",
     images: [curbo1, curbo2, curbo3, curbo4],
     technologies: ["React", "JavaScript", "Node.js", "MongoDB", "Express"],
     role: "Frontend Engineer",
