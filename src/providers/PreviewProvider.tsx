@@ -1,100 +1,93 @@
 import { createEffect, onCleanup, type Component, type JSX } from "solid-js";
 import { useImageStore } from "../stores/useImageStore";
+import { useLanguage } from "./LanguageProvider";
 
-export const ImagePreviewProvider: Component<{ children: JSX.Element }> = (props) => {
-  const { imageSrc, imageGroup, currentIndex, nextImage, prevImage, closePreview } = useImageStore();
-
-  // Handle keyboard navigation
-  const handleKeyPress = (e: KeyboardEvent) => {
-    if (!imageSrc()) return;
-    
-    switch (e.key) {
-      case "ArrowLeft":
-        e.preventDefault();
-        prevImage();
-        break;
-      case "ArrowRight":
-        e.preventDefault();
-        nextImage();
-        break;
-      case "Escape":
-        e.preventDefault();
-        closePreview();
-        break;
-    }
-  };
-
-  // Add/remove event listeners and body scroll lock
+export const ImagePreviewProvider: Component<{ children: JSX.Element }> = (
+  props,
+) => {
+  const {
+    imageSrc,
+    imageGroup,
+    currentIndex,
+    nextImage,
+    prevImage,
+    closePreview,
+  } = useImageStore();
+  const { t } = useLanguage();
+  let dialog: HTMLDialogElement | undefined;
+  let oldOverflow = "";
   createEffect(() => {
-    if (imageSrc()) {
+    if (imageSrc() && dialog && !dialog.open) {
+      oldOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", handleKeyPress);
-    } else {
-      document.body.style.overflow = "auto";
-      document.removeEventListener("keydown", handleKeyPress);
+      dialog.showModal();
+    } else if (!imageSrc() && dialog?.open) {
+      dialog.close();
+      document.body.style.overflow = oldOverflow;
     }
   });
-
   onCleanup(() => {
-    document.body.style.overflow = "auto";
-    document.removeEventListener("keydown", handleKeyPress);
+    if (dialog?.open) document.body.style.overflow = oldOverflow;
   });
-
-  const handleOverlayClick = (e: MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      closePreview();
-    }
-  };
-
   return (
     <>
       {props.children}
-      {imageSrc() && (
-        <div
-          onClick={handleOverlayClick}
-          class="fixed inset-0 bg-black/50 flex justify-center items-center z-[1000] overflow-hidden"
-        >
-          {/* Close Button */}
-          <button 
-            onClick={closePreview}
-            class="close-button"
-          >
-            ×
-          </button>
-
-          {/* Navigation Buttons */}
-          {imageGroup().length > 1 && (
-            <>
-              <button
-                onClick={prevImage}
-                class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white border-none p-3 cursor-pointer rounded-full text-2xl z-[1002] hover:bg-black/70 transition-all"
-              >
-                ‹
-              </button>
-              <button
-                onClick={nextImage}
-                class="fixed right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white border-none p-3 cursor-pointer rounded-full text-2xl z-[1002] hover:bg-black/70 transition-all"
-              >
-                ›
-              </button>
-            </>
+      <dialog
+        ref={dialog}
+        class="modal"
+        aria-label={t("project_image")}
+        onCancel={(event) => {
+          event.preventDefault();
+          closePreview();
+        }}
+        onClose={closePreview}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            prevImage();
+          }
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            nextImage();
+          }
+        }}
+      >
+        <div class="modal-box flex max-h-[95vh] w-[95vw] max-w-6xl flex-col gap-4 p-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-base-content/60">
+              {t("project_image")} · {currentIndex() + 1} /{" "}
+              {Math.max(imageGroup().length, 1)}
+            </span>
+            <button
+              class="btn btn-square btn-sm"
+              onClick={closePreview}
+              aria-label={t("close_preview")}
+            >
+              ×
+            </button>
+          </div>
+          {imageSrc() && (
+            <img
+              src={imageSrc()!}
+              alt={t("project_image")}
+              class="min-h-0 w-full flex-1 object-contain"
+            />
           )}
-
-          {/* Image Counter */}
           {imageGroup().length > 1 && (
-            <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm z-[1002]">
-              {currentIndex() + 1} / {imageGroup().length}
+            <div class="flex justify-between">
+              <button class="btn btn-sm" onClick={prevImage}>
+                {t("previous_image")} ←
+              </button>
+              <button class="btn btn-sm" onClick={nextImage}>
+                {t("next_image")} →
+              </button>
             </div>
           )}
-
-          {/* Main Image */}
-          <img
-            src={imageSrc()!}
-            alt="Preview"
-            class="max-w-[90%] max-h-[90%] border-4 border-white shadow-2xl rounded-lg z-[1001] object-contain"
-          />
         </div>
-      )}
+        <form method="dialog" class="modal-backdrop">
+          <button onClick={closePreview}>{t("close_preview")}</button>
+        </form>
+      </dialog>
     </>
   );
 };

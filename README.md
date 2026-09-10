@@ -1,34 +1,55 @@
-## Usage
+# Marino Gomez — Portfolio
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+A bilingual SolidJS portfolio with project case studies, a contact page, and generated CVs. The visual system uses Tailwind CSS 4 and daisyUI 5 with a custom green theme.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Development
 
-```bash
-$ pnpm install # or npm install or yarn install
+Use the pinned pnpm version, 10.26.2:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+If your installed pnpm uses a different dependency store, run `npx --yes pnpm@10.26.2 install --frozen-lockfile`. Avoid deleting the lockfile or changing the global store configuration.
 
-## Available Scripts
+The local development server uses port 3000.
 
-In the project directory, you can run:
+```sh
+pnpm typecheck
+pnpm check:content
+pnpm build
+pnpm serve
+```
 
-### `pnpm run dev` or `pnpm start`
+The content check verifies project and UI translation references in English and Spanish, project slugs, image imports, and gallery captions.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Content and images
 
-The page will reload if you make edits.<br>
+- Project records: `src/data/projects.ts`.
+- Bilingual text: `src/localizations/i18n/en.ts` and `es.ts`.
+- Screenshot captions: `src/data/galleryCaptions.ts`.
+- Homepage selections: the `featured` list in `src/pages/Home.tsx`.
+- Theme: `src/index.css`.
 
-### `pnpm run build`
+Keep original screenshots in `src/assets/images` and the portrait in `src/assets/profile.png`. To regenerate optimized web images, use Python with Pillow installed:
 
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
+```sh
+python3 scripts/optimize-images.py
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+The script retains originals and creates WebP derivatives in `src/assets/optimized`. Four cover thumbnails are generated for project cards. Projects without real screenshots use text cards; add actual project evidence rather than placeholder imagery.
 
-## Deployment
+## Motion and accessibility
 
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+The geometric background uses SVG and CSS, with no animation engine. It respects reduced-motion changes, pauses while the document is hidden, and provides a persistent pause control. Language selection also persists locally. Storage failures fall back to in-memory preferences.
+
+The mobile drawer supports Escape, traps keyboard focus while open, and makes background controls inert. Screenshot previews use a native modal dialog with keyboard navigation. Form inputs use native validation and retain entered data after a failed submission.
+
+## Deployment and remaining editorial work
+
+`pnpm build` outputs `dist`. Existing Vercel rewrites support direct SPA routes, including `/contact`. Unknown routes show a fallback page; the rewrite does not produce an HTTP 404. Page titles and descriptions update at runtime; prerendering and crawler-specific social previews remain future deployment work.
+
+Contact uses the existing Web3Forms endpoint. Do not send test messages without explicitly deciding to test delivery. Keep `.env` files out of version control.
+
+See `PORTFOLIO_REVIEW.md` for the initial audit and the implementation update. Real screenshots for four projects and confirmation of roles, dates, stacks, and quantitative outcomes remain editorial inputs.

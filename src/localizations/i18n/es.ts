@@ -1,4 +1,118 @@
 export const dict = {
+  hero_eyebrow: "Ingeniero de software · Web y móvil",
+  hero_intro: "Desarrollo aplicaciones full-stack escalables con tecnologías modernas.",
+  hero_description: "Especializado en React, Node.js y soluciones en la nube.",
+  view_work: "Explora mi trabajo",
+  view_cv: "Ver CV",
+  selected_work: "Trabajo seleccionado",
+  selected_intro: "Una mirada a lo que construyo.",
+  all_work: "Todos los proyectos",
+  view_project: "Ver proyecto",
+  projects_intro: "Plataformas web, herramientas móviles y los sistemas que las hacen funcionar.",
+  category_all: "Todo",
+  category_employment: "Empleo",
+  category_contract: "Contrato",
+  category_business: "Negocio",
+  category_personal: "Personal",
+  role_fullstack: "Desarrollador full-stack",
+  role_frontend_brand: "Desarrollador frontend y diseñador de marca",
+  role_frontend: "Ingeniero frontend",
+  role_brand: "Desarrollador full-stack y diseñador de marca",
+  role_founder: "Fundador y desarrollador principal",
+  duration_2: "2 meses",
+  duration_3: "3 meses",
+  duration_4: "4 meses",
+  duration_6: "6 meses",
+  duration_year: "1 año",
+  duration_current: "2022 – Actualidad",
+  summary_tinacos: "Presencia digital, nueva identidad y garantías automatizadas para una empresa de manufactura.",
+  summary_find: "Catálogo de maquinaria y CMS a medida para sustituir una plataforma WordPress.",
+  summary_event: "Descubrimiento de eventos locales con publicaciones comunitarias, moderación y calendario.",
+  summary_qr: "Una plataforma de marketing para restaurantes que conecta tableros QR con experiencias digitales.",
+  summary_caribbean: "Diseño web inicial y estructura frontend, identidad de marca, logos y selección tipográfica.",
+  summary_pventa: "Ventas, inventario y gestión de clientes desde el móvil para equipos en campo.",
+  summary_sic: "Transformación de un sistema de contabilidad y ERP de escritorio a la web.",
+  summary_curbo: "Un marketplace automotriz que conecta concesionarios, inspecciones y clientes.",
+  project_role: "Mi rol",
+  project_scope: "Duración",
+  project_stack: "Tecnologías",
+  project_challenge: "El reto",
+  project_solution: "Lo que construí",
+  project_learnings: "Retos y aprendizajes",
+  project_results: "El resultado",
+  project_gallery: "Dentro del proyecto",
+  project_visit: "Visitar proyecto",
+  project_more: "Sigue explorando",
+  project_image: "Captura del proyecto",
+  open_image: "Ampliar captura",
+  close_preview: "Cerrar vista",
+  previous_image: "Imagen anterior",
+  next_image: "Imagen siguiente",
+  cta_title: "¿Tienes algo en mente?",
+  cta_description: "Cuéntame qué problema quieres resolver. Busquemos una buena forma de construir la solución.",
+  cta_link: "Hablemos",
+  home_experience: "Desde la interfaz hasta los sistemas que la hacen funcionar.",
+  home_experience_desc: "Mi trabajo incluye herramientas empresariales en Xoultec, el marketplace Curbo y proyectos independientes para empresas y comunidades.",
+  experience_intro: "Los equipos, productos y proyectos independientes en los que he participado.",
+  experience_recent: "Trabajo independiente y reciente",
+  about_intro: "Soy Marino, ingeniero de software. Trabajo en interfaces de producto, sistemas backend y diseño visual.",
+  about_body: "Mis proyectos van desde herramientas de inventario para trabajo en campo hasta plataformas de marketing y sistemas de garantías automatizados. Me gusta conectar las piezas para crear algo útil en el trabajo diario.",
+  about_approach: "Cómo trabajo",
+  about_approach_body: "Trabajo tanto en la experiencia visible como en los servicios que la sostienen: interfaces, API, bases de datos e integraciones. Cuando el proyecto también necesita diseño visual, puedo conectar la marca y el producto.",
+  skills_intro: "Habilidades prácticas, respaldadas por el trabajo.",
+  skills_frontend: "Interfaces web",
+  skills_backend: "Backend y datos",
+  skills_mobile: "Aplicaciones móviles",
+  skills_design: "Diseño y automatización",
+  skills_frontend_desc: "Interfaces adaptables, paneles y aplicaciones web.",
+  skills_backend_desc: "API, flujos de datos y servicios que sostienen un producto.",
+  skills_mobile_desc: "Flujos de inventario y ventas para equipos móviles.",
+  skills_design_desc: "Identidades de marca y herramientas que reducen el trabajo manual.",
+  skills_evidence: "Ver en la práctica",
+  education: "Educación",
+  certificates: "Certificados y cursos",
+  show_certificate: "Ver certificado",
+  contact_direct: "¿Prefieres el correo?",
+  contact_social: "En otros sitios",
+  nav_label: "Navegación principal",
+  nav_open: "Abrir menú",
+  nav_close: "Cerrar menú",
+  skip_content: "Saltar al contenido",
+  motion_pause: "Pausar fondo",
+  motion_play: "Animar formas",
+  motion_reduced: "Movimiento reducido",
+  language_switch: "Switch to English",
+  portfolio_label: "Portafolio",
+  pdf_ready: "Tu CV está listo",
+  pdf_mobile: "Descarga el PDF para leerlo o compartirlo.",
+  pdf_download: "Descargar CV en PDF",
+
+  form_name: "Nombre",
+  form_email: "Correo electrónico",
+  form_subject: "Asunto",
+  form_message: "Mensaje",
+  form_name_hint: "Tu nombre",
+  form_email_hint: "tu@ejemplo.com",
+  form_subject_hint: "Asunto del mensaje",
+  form_message_hint: "Cuéntame sobre tu proyecto u oportunidad",
+  form_sending: "Enviando…",
+  form_send: "Enviar mensaje",
+  form_success: "¡Mensaje enviado! Te responderé pronto.",
+  form_error: "Algo salió mal. Inténtalo de nuevo o escríbeme por correo.",
+  nav_about: "Sobre mí",
+  nav_projects: "Proyectos",
+  nav_experience: "Experiencia",
+  nav_skills: "Estudios y habilidades",
+  not_found: "Página no encontrada",
+  not_found_description: "Esta página no existe. Explora mis proyectos o vuelve al inicio.",
+  back_home: "Volver al inicio",
+
+  contact_nav: "Contacto",
+  get_in_touch: "Hablemos",
+  contact_intro: "¿Tienes un proyecto en mente o quieres conversar sobre una oportunidad? Envíame un mensaje.",
+  contact_alternative: "También puedes encontrarme en:",
+  project_overview: "Resumen",
+
   // Navigation
   home: "INICIO",
   cv: "CV",
@@ -65,50 +179,50 @@ export const dict = {
 
   // PVenta Mobile - Aplicación ERP Móvil
   pventa_exp:
-    "Una aplicación ERP móvil interna diseñada para optimizar ventas, inventario y gestión de clientes para Xoultec. Construida con React Native y Node.js, con escaneo de códigos de barras en tiempo real, seguimiento de stock y operaciones de campo sincronizadas en dispositivos iOS y Android.",
+    "ERP móvil para ventas, inventario y clientes, con escaneo de códigos de barras y operaciones de campo sin conexión.",
 
   pventa_problem:
-    "El equipo de ventas de Xoultec necesitaba una solución móvil para gestionar inventario, rastrear ventas y manejar relaciones con clientes sobre la marcha. El sistema existente solo de escritorio creaba cuellos de botella, con operaciones de campo requiriendo entrada manual de datos en la oficina, causando retrasos e inconsistencias.",
+    "El personal de campo dependía de un sistema de escritorio y debía volver a registrar los datos en la oficina.",
 
   pventa_solution:
-    "Desarrollé ERP móvil multiplataforma usando React Native e Ionic con backend Node.js. Diseñé interfaz intuitiva en Figma priorizando facilidad de uso para trabajadores de campo. Implementé escaneo de códigos de barras en tiempo real para consultas instantáneas de inventario, arquitectura offline-first para operaciones de campo, y sincronización fluida al restaurar conectividad.",
+    "Desarrollé flujos móviles de consulta de inventario y ventas, con almacenamiento local y sincronización al recuperar la conexión.",
 
   pventa_challenges:
-    "Arquitecturé sincronización de datos offline-first para manejar conectividad poco confiable en campo. Construí escaneo de códigos de barras en tiempo real con integración de cámara para iOS y Android. Diseñé sistema de resolución de conflictos para actualizaciones concurrentes de inventario desde múltiples usuarios. Optimicé rendimiento móvil para dispositivos de gama baja manteniendo funcionalidad completa.",
+    "Resolví conflictos entre actualizaciones de inventario, integré el escaneo con la cámara y optimicé el rendimiento en dispositivos de gama baja.",
 
   pventa_results:
-    "Reduje tiempo de procesamiento en 35% mediante flujos de trabajo móviles optimizados. Logré mejora de más del 50% en adopción de usuarios según encuestas, atribuido a la interfaz cuidadosamente diseñada en Figma. Habilité seguimiento de inventario en tiempo real para más de 20 cuentas de clientes, mejorando significativamente la eficiencia operativa.",
+    "Habilité el seguimiento móvil de inventario para más de 20 cuentas de clientes.",
 
   // SIC System - Plataforma Web ERP y Contabilidad
   sic_exp:
-    "Una plataforma integral interna web ERP y contabilidad sirviendo a más de 20 clientes diversos en Xoultec. Modernicé un sistema contable legacy de Windows Forms a una aplicación web pulida usando React, TypeScript y Node.js, con gestión de inventario integrada y dashboard de clientes.",
+    "Migré un sistema contable de Windows Forms a un ERP web con gestión de inventario y paneles de clientes.",
 
   sic_problem:
-    "Xoultec dependía de un sistema contable legacy construido en Windows Forms que era lento, difícil de mantener y limitado a instalaciones de escritorio. Gestionar inventario para más de 20 clientes requería una solución centralizada y accesible con mejor rendimiento y UX moderna. El sistema antiguo sufría de tiempos de carga lentos y pobre escalabilidad.",
+    "El sistema de escritorio limitaba el acceso y dificultaba gestionar el inventario de varios clientes.",
 
   sic_solution:
-    "Migré el sistema contable legacy a stack web moderno usando React, TypeScript y Node.js con backend SQL Server. Construí dashboard web interno con React, Ionic y Tailwind CSS para gestión integral de inventario. Creé control de acceso basado en roles para gestión multi-cliente, dashboards de reportes en tiempo real y flujos de trabajo contables automatizados.",
+    "Desarrollé flujos de contabilidad e inventario con acceso por roles, paneles de reportes y almacenamiento en SQL Server.",
 
   sic_challenges:
-    "Gestioné migración compleja de datos desde aplicación legacy Windows Forms asegurando cero pérdida de datos. Mantuve compatibilidad retroactiva durante período de transición. Arquitecturé sistema multi-tenant soportando más de 20 clientes con datos aislados y flujos de trabajo personalizables. Optimicé consultas de base de datos e implementé estrategias de caché para grandes conjuntos de datos de inventario.",
+    "Migré los datos existentes, mantuve la compatibilidad durante la transición y separé los registros de cada cliente.",
 
   sic_results:
-    "Mejoré precisión de inventario en 40% mediante seguimiento y validación automatizados. Reduje tiempos de carga de aplicación en 45% comparado con sistema legacy mediante optimización de rendimiento. Migré exitosamente todos los más de 20 clientes a nueva plataforma sin tiempo de inactividad. Mejoré satisfacción de usuarios con interfaz moderna, responsiva y mejor accesibilidad.",
+    "Migré a más de 20 clientes a la plataforma web de contabilidad e inventario.",
 
   curbo_exp:
-    "Una plataforma marketplace automotriz full-stack B2B y C2C actuando como intermediario entre concesionarios y clientes. Construí un ecosistema completo incluyendo dashboard para gestión de inventario de concesionarios, sistema de integración de técnicos para inspecciones vehiculares, marketplace para clientes, y herramientas administrativas de backoffice.",
+    "Marketplace automotriz que conecta concesionarios y compradores, con herramientas de inventario, inspecciones y administración.",
 
   curbo_problem:
-    "Los concesionarios necesitaban una plataforma digital moderna para gestionar inventario y alcanzar clientes en línea, mientras los compradores carecían de transparencia sobre condiciones de vehículos. El mercado requería un intermediario confiable que facilitara transacciones, coordinara inspecciones profesionales y proporcionara herramientas de gestión integral para dealers.",
+    "Los concesionarios necesitaban gestionar su inventario en línea y los compradores consultar el estado de los vehículos antes de comprar.",
 
   curbo_solution:
-    "Desarrollé plataforma multi-lateral con tres componentes clave: (1) Dashboard de Dealers - sistema intuitivo de gestión de inventario permitiendo listar, actualizar y rastrear vehículos con analíticas en tiempo real; (2) Integración de Técnicos - sistema de programación y coordinación conectando técnicos certificados con vehículos para evaluaciones profesionales e informes de condición; (3) Backoffice - panel administrativo completo para gestión de plataforma, verificación de usuarios, supervisión de transacciones y analítica de datos.",
+    "Desarrollé interfaces para listados de concesionarios, programación de inspecciones y gestión administrativa.",
 
   curbo_challenges:
-    "Arquitecturé sistema complejo de control de acceso basado en roles gestionando dealers, técnicos, clientes y administradores. Construí sistema de notificaciones en tiempo real para programación de inspecciones y actualizaciones de estado. Implementé manejo seguro de documentos para reportes vehiculares y certificaciones. Optimicé consultas de base de datos para grandes conjuntos de inventario vehicular manteniendo búsqueda y filtrado rápidos.",
+    "Gestioné el acceso de concesionarios, técnicos, compradores y administradores, junto con las actualizaciones de inspecciones e informes de vehículos.",
 
   curbo_results:
-    "Lancé exitosamente plataforma sirviendo múltiples concesionarios con miles de listados vehiculares. Logré cobertura de pruebas 90%+ asegurando confiabilidad. Mejoré significativamente rendimiento de carga mediante optimización de base de datos y caché Redis. Creé arquitectura escalable soportando operaciones B2B de dealers y marketplace C2C de clientes simultáneamente.",
+    "Contribuí a las operaciones de concesionarios y a un marketplace con miles de vehículos publicados.",
 
   curbo_exp_1:
     "Arquitecturé algoritmos avanzados de búsqueda y filtros e-commerce sirviendo miles de listados vehiculares, reduciendo tiempo promedio de respuesta de búsqueda en ~35% y mejorando descubrimiento de listados.",
@@ -196,71 +310,71 @@ export const dict = {
 
   // Project descriptions
   find_machines_desc:
-    "Diseñé y desarrollé una aplicación web completa para Find & Supply Solutions (findmachines.com.do), reemplazando su sitio WordPress legacy con una plataforma personalizada basada en Go. Construí un dashboard administrativo y CMS que permite a la empresa vender y cotizar maquinaria y equipos en línea. Desarrollé una infraestructura cloud con auto-scaling que asigna recursos dinámicamente conforme la empresa crece, eliminando la dependencia de plugins de terceros obsoletos e inseguros.",
+    "Reemplacé un sitio WordPress por una plataforma en Go para ventas y cotizaciones de maquinaria. Desarrollé el CMS, panel administrativo e infraestructura con autoescalado.",
 
   // CV project bullets
   find_machines_b1:
-    "Reemplacé el sitio WordPress legacy con una plataforma personalizada basada en Go (findmachines.com.do), construyendo un dashboard administrativo y CMS que permite a la empresa vender y cotizar maquinaria en línea.",
+    "Reemplacé WordPress por una plataforma en Go con CMS para ventas y cotizaciones de maquinaria.",
   find_machines_b2:
-    "Desarrollé una infraestructura cloud con auto-escalado que asigna recursos dinámicamente conforme la empresa crece, eliminando la dependencia de plugins de terceros obsoletos e inseguros.",
+    "Desarrollé infraestructura en la nube con escalado automático de recursos.",
   tinacos_cibao_b1:
-    "Lideré la transformación digital y rebranding completo para el fabricante de tinacos Polimeros del Cibao: nuevo sitio web, rediseño de logo y etiquetas físicas con colores Pantone precisos.",
+    "Creé el sitio web, logo y etiquetas con especificaciones Pantone para Polímeros del Cibao.",
   tinacos_cibao_b2:
-    "Construí un sistema automatizado de redención de garantías con Google Apps Script y un generador de documentos de alta resolución que produce 7,000+ páginas numeradas de etiquetas desde una plantilla reusable.",
+    "Automaticé el seguimiento de garantías y desarrollé un generador de PDF de más de 7,000 páginas numeradas por plantilla.",
   event_detector_b1:
     "Construí una plataforma comunitaria de descubrimiento de eventos (React, Node.js, SQLite3) con envío de volantes por usuarios y flujos de moderación aprobar/rechazar.",
   event_detector_b2:
     "Soporta vistas de calendario y lista con notificaciones de agregar a calendario para la promoción de eventos locales.",
   the_qr_king_b1:
-    "Construí una plataforma de marketing full-stack para restaurantes (React, Node.js, PostgreSQL) con gestión de imágenes de alimentos, suscripciones de tableros QR, integración de pagos y analíticas por ubicación.",
+    "Desarrollé herramientas para imágenes de platos, suscripciones de exhibidores QR, pagos y analíticas por ubicación.",
   the_qr_king_b2:
     "Sirve a restaurantes en Staten Island, rastreando la participación de clientes mediante códigos QR físicos.",
   caribbean_coworking_b1:
-    "Desarrollé una landing page con procesamiento de pagos integrado y condicionales webhook para un espacio de coworking físico en República Dominicana.",
+    "Entregué el diseño web inicial y la estructura frontend de Caribbean Biz.",
   caribbean_coworking_b2:
-    "Soporta reservas de asientos y gestión de pagos con diseño responsivo y procesamiento seguro.",
+    "Diseñé la identidad de marca y los logos, y seleccioné las tipografías.",
 
-  caribbean_coworking: "Caribbean Business Coworking",
+  caribbean_coworking: "Caribbean Biz",
   caribbean_coworking_date: "2024",
   caribbean_coworking_desc:
-    "Landing Page con procesamiento de pagos integrado y condicionales webhook para Caribbean Business Coworking, un espacio físico de coworking en República Dominicana. Soporta reservas de asientos y gestión de pagos con diseño responsivo y procesamiento seguro.",
+    "Entregué el diseño web inicial y la estructura frontend de Caribbean Biz. También diseñé la identidad de marca y los logos, y seleccioné las tipografías.",
 
   the_qr_king_desc:
-    "Plataforma de marketing full-stack para restaurantes con React/Node.js/PostgreSQL. Soporta gestión de imágenes de alimentos, suscripciones de tableros QR, integración de pagos y analíticas basadas en ubicación, sirviendo a restaurantes en Staten Island para rastrear la participación de clientes mediante códigos QR físicos.",
+    "Plataforma de marketing para restaurantes con gestión de exhibidores QR, suscripciones, pagos y analíticas de interacción por ubicación.",
 
   // Event Detector - Plataforma de Gestión y Envío de Eventos
   event_detector: "Event Detector",
   event_detector_desc:
-    "Una plataforma de descubrimiento de eventos impulsada por la comunidad con React/Node.js/SQLite3. Los usuarios envían eventos locales con imágenes de volantes; los administradores moderan mediante flujos de trabajo aprobar/rechazar. Soporta vistas de calendario/lista y notificaciones de agregar a calendario para la promoción de eventos locales.",
+    "Directorio de eventos locales con publicaciones de usuarios, carga de volantes y moderación administrativa.",
 
   event_detector_problem:
-    "Las comunidades carecían de una plataforma centralizada para descubrir y compartir eventos locales. Los organizadores de eventos luchaban por alcanzar su audiencia objetivo, mientras los asistentes no tenían forma confiable de encontrar próximos eventos en su área. Las soluciones existentes eran demasiado complejas o no proporcionaban moderación adecuada e integración de calendario.",
+    "Los eventos enviados necesitaban revisión antes de aparecer en un calendario público compartido.",
 
   event_detector_solution:
-    "Construí plataforma full-stack de gestión de eventos con formularios de envío amigables permitiendo a organizadores subir detalles de eventos e imágenes de volantes. Implementé dashboard administrativo para revisar y moderar envíos con flujo de trabajo aprobar/rechazar. Creé opciones de visualización flexibles incluyendo vistas de calendario y lista, integré API de calendario para funcionalidad fluida de agregar a calendario con presets de notificaciones personalizables.",
+    "Desarrollé formularios de envío, un panel de aprobación y vistas de calendario y lista con recordatorios al agregar eventos al calendario.",
 
   event_detector_challenges:
-    "Diseñé sistema eficiente de carga y almacenamiento de imágenes para volantes de eventos con optimización para carga rápida. Arquitecturé flujo de trabajo de moderación asegurando control de calidad mientras mantenía tiempos de aprobación rápidos. Construí interfaz de calendario responsiva soportando múltiples modos de vista. Implementé sistema de notificaciones con tiempos de recordatorio configurables para eventos agregados. Optimicé consultas de base de datos para filtrado rápido de eventos por fecha, categoría y ubicación.",
+    "Implementé la carga de volantes, filtros por fecha y recordatorios de calendario configurables.",
 
   event_detector_results:
-    "Lancé exitosamente una plataforma sirviendo a la comunidad local con descubrimiento de eventos optimizado. Logré alto engagement de usuarios mediante un proceso de envío intuitivo y atractiva visualización de volantes. Habilité un flujo de trabajo de aprobación rápida de eventos reduciendo la sobrecarga administrativa. Entregué una integración de calendario fluida mejorando la asistencia a eventos mediante recordatorios automatizados.",
+    "Entregué un directorio moderado donde los visitantes pueden consultar eventos y guardarlos en sus calendarios.",
 
   // Tinacos Cibao - Transformación Completa de Marca y Digital
   tinacos_cibao: "Tinacos Cibao",
   tinacos_cibao_desc:
-    "Un proyecto completo de transformación digital y rebranding para el fabricante de tinacos Polímeros del Cibao. Construí un nuevo sitio web, rediseñé el logo y creé etiquetas físicas de producto con colores Pantone apropiados. Construí un sistema automatizado de redención de garantías con integración de Google Apps Script y un generador de documentos de alta resolución que produce 7,000+ páginas numeradas de etiquetas a partir de una plantilla reusable.",
+    "Sitio web, identidad de marca y herramientas de garantías para el fabricante de tinacos Polímeros del Cibao.",
 
   tinacos_cibao_problem:
-    "Polímeros del Cibao necesitaba una renovación completa de marca y presencia digital para su línea de productos de tinacos Cibao. Carecían de sitio web profesional, tenían branding desactualizado, etiquetas de producto físicas inconsistentes, y un proceso manual de seguimiento de garantías que era ineficiente y propenso a errores. La empresa necesitaba una solución cohesiva abarcando identidad de marca digital y física.",
+    "La línea de productos necesitaba una identidad visual consistente y reemplazar el seguimiento manual de garantías.",
 
   tinacos_cibao_solution:
-    "Entregué transformación completa de marca y digital: (1) Desarrollo Web - construí sitio web moderno y responsivo mostrando productos e información de la empresa; (2) Rebranding de Logo - diseñé nuevo logo profesional reflejando estándares de calidad de la empresa; (3) Diseño de Etiqueta Física - creé etiquetas de producto con especificaciones apropiadas de colores Pantone y dimensionamiento para manufactura; (4) Sistema Automatizado de Garantías - desarrollé plataforma personalizada de redención de garantías usando Google Forms para usuarios autorizados, automatización Google Apps Script para activar actualizaciones de API, y dashboard seguro de solo lectura en Google Sheets para staff de empresa monitoreando reclamos de garantía en tiempo real; (5) Generador Masivo de PDFs - creé aplicación de escritorio capaz de generar miles de certificados de garantía optimizados (ej., 7,000+ páginas) en una sola ejecución con máxima calidad dentro de los márgenes de tamaño de documento, eliminando procesamiento manual.",
+    "Diseñé el sitio web, logo y etiquetas con especificaciones Pantone. Conecté Google Forms, Apps Script y Sheets para gestionar garantías, y desarrollé un generador de PDF de escritorio.",
 
   tinacos_cibao_challenges:
-    "Diseñé identidad de marca cohesiva a través de puntos de contacto digitales y físicos manteniendo consistencia. Implementé sistema seguro de garantías con control de acceso apropiado usando verificación de email de empresa. Construí automatización confiable de Google Apps Script para conectar formularios y comunicación API. Aseguré precisión de color Pantone para impresión de etiquetas físicas coincidiendo con guías de marca digitales. Creé infraestructura escalable de seguimiento de garantías manejando envíos concurrentes y sincronización automatizada de datos. Optimicé algoritmo de generación de PDFs para manejar procesamiento masivo de miles de certificados manteniendo alta calidad y tamaños de archivo razonables.",
+    "Ajusté los colores de impresión, restringí el acceso a garantías por correo corporativo y optimicé los PDF masivos según los requisitos de calidad y tamaño de archivo.",
 
   tinacos_cibao_results:
-    "Lancé exitosamente una transformación completa de marca con presencia digital moderna en tinacoscibao.com.do. Entregué etiquetas físicas listas para producción con especificaciones Pantone precisas adoptadas por la manufactura. El sistema automatizado de redención de garantías eliminó el procesamiento manual y redujo significativamente el tiempo de procesamiento de reclamos. Proporcioné al staff de la empresa un dashboard de seguimiento de garantías en tiempo real mejorando los tiempos de respuesta de servicio al cliente y la precisión de datos. El generador de PDFs de escritorio permitió al staff producir miles de certificados de garantía en minutos con ejecución de un solo clic, reduciendo drásticamente el tiempo de preparación de impresión.",
+    "Entregué etiquetas listas para producción, un panel de seguimiento de garantías y un generador de más de 7,000 páginas numeradas a partir de una plantilla.",
 
   // Location information
   location_us: "Estados Unidos • Passaic, Nueva Jersey",

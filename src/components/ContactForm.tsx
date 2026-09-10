@@ -1,158 +1,123 @@
-import { type Component, createSignal } from "solid-js";
-import "./ContactForm.css";
+import { createSignal, For, onCleanup, type Component } from "solid-js";
+import type * as i18n from "@solid-primitives/i18n";
 
-type ContactFormProps = {
-  t: any;
-};
+const ContactForm: Component<{
+  t: i18n.Translator<i18n.Flatten<Record<string, any>>>;
+}> = (props) => {
+  const [submitting, setSubmitting] = createSignal(false);
+  const [status, setStatus] = createSignal<"success" | "error" | null>(null);
+  let request: AbortController | undefined;
+  onCleanup(() => request?.abort());
 
-const ContactForm: Component<ContactFormProps> = (props) => {
-  const [isSubmitting, setIsSubmitting] = createSignal(false);
-  const [submitStatus, setSubmitStatus] = createSignal<"success" | "error" | null>(null);
-  const [formData, setFormData] = createSignal({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const handleSubmit = async (e: Event) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    const form = e.target as HTMLFormElement;
+  const submit = async (event: SubmitEvent) => {
+    event.preventDefault();
+    if (submitting()) return;
+    const form = event.currentTarget as HTMLFormElement;
     const data = new FormData(form);
-
+    setSubmitting(true);
+    setStatus(null);
+    request = new AbortController();
+    const timeout = window.setTimeout(() => request?.abort(), 20000);
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: data,
+        signal: request.signal,
       });
-
       const result = await response.json();
-
-      if (result.success) {
-        setSubmitStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        form.reset();
-
-        // Hide success message after 5 seconds
-        setTimeout(() => setSubmitStatus(null), 5000);
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitStatus("error");
+      if (!response.ok || !result.success) throw new Error("Submission failed");
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
     } finally {
-      setIsSubmitting(false);
+      clearTimeout(timeout);
+      setSubmitting(false);
     }
   };
-
   return (
-    <div class="contact-form-wrapper">
-      <form class="contact-form" onSubmit={handleSubmit}>
-        {/* Web3Forms Access Key */}
-        <input type="hidden" name="access_key" value="bb461d35-303f-420c-b3c6-233ebd2f9397" />
-
-        {/* Honeypot spam protection (invisible to users) */}
-        <input type="checkbox" name="botcheck" class="hidden" style={{ display: "none" }} />
-
-        {/* Name Field */}
-        <div class="form-group">
-          <label for="name" class="form-label">NAME</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            class="form-input"
-            placeholder="Your name"
-            required
-            value={formData().name}
-            onInput={(e) => setFormData({ ...formData(), name: e.currentTarget.value })}
-          />
-        </div>
-
-        {/* Email Field */}
-        <div class="form-group">
-          <label for="email" class="form-label">EMAIL</label>
-          <div class="input-with-icon">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="form-input"
-              placeholder="example@example.com"
-              required
-              value={formData().email}
-              onInput={(e) => setFormData({ ...formData(), email: e.currentTarget.value })}
-            />
-            <span class="input-icon">📧</span>
-          </div>
-        </div>
-
-        {/* Subject Field */}
-        <div class="form-group">
-          <label for="subject" class="form-label">SUBJECT</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            class="form-input"
-            placeholder="Message subject"
-            required
-            value={formData().subject}
-            onInput={(e) => setFormData({ ...formData(), subject: e.currentTarget.value })}
-          />
-        </div>
-
-        {/* Message Field */}
-        <div class="form-group">
-          <label for="message" class="form-label">MESSAGE</label>
-          <textarea
-            id="message"
-            name="message"
-            class="form-textarea"
-            placeholder="Message Content"
-            rows={8}
-            required
-            value={formData().message}
-            onInput={(e) => setFormData({ ...formData(), message: e.currentTarget.value })}
-          ></textarea>
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          class="form-submit-btn"
-          disabled={isSubmitting()}
+    <form onSubmit={submit} class="grid gap-5" aria-busy={submitting()}>
+      <input
+        type="hidden"
+        name="access_key"
+        value="bb461d35-303f-420c-b3c6-233ebd2f9397"
+      />
+      <input
+        type="checkbox"
+        name="botcheck"
+        class="hidden"
+        tabindex="-1"
+        aria-hidden="true"
+      />
+      <div class="grid gap-5 sm:grid-cols-2">
+        <For
+          each={[
+            { name: "name", type: "text" },
+            { name: "email", type: "email" },
+          ]}
         >
-          {isSubmitting() ? (
-            <>
-              <span class="spinner"></span>
-              <span>Sending...</span>
-            </>
-          ) : (
-            "Send Message"
+          {(field) => (
+            <label
+              class="grid gap-2 text-xs font-medium"
+              for={`contact-${field.name}`}
+            >
+              {props.t(`form_${field.name}`)}
+              <input
+                id={`contact-${field.name}`}
+                name={field.name}
+                type={field.type}
+                autocomplete={field.name}
+                required
+                readOnly={submitting()}
+                class="input h-12 w-full bg-base-100 text-sm"
+                placeholder={props.t(`form_${field.name}_hint`)}
+              />
+            </label>
           )}
-        </button>
-
-        {/* Success Message */}
-        {submitStatus() === "success" && (
-          <div class="form-message form-success">
-            ✓ Message sent successfully! I'll get back to you soon.
-          </div>
+        </For>
+      </div>
+      <label class="grid gap-2 text-xs font-medium" for="contact-subject">
+        {props.t("form_subject")}
+        <input
+          id="contact-subject"
+          name="subject"
+          required
+          readOnly={submitting()}
+          class="input h-12 w-full bg-base-100 text-sm"
+          placeholder={props.t("form_subject_hint")}
+        />
+      </label>
+      <label class="grid gap-2 text-xs font-medium" for="contact-message">
+        {props.t("form_message")}
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          readOnly={submitting()}
+          class="textarea min-h-40 w-full bg-base-100 text-sm"
+          rows={6}
+          placeholder={props.t("form_message_hint")}
+        />
+      </label>
+      <button
+        type="submit"
+        class="btn btn-primary justify-self-start"
+        disabled={submitting()}
+      >
+        {submitting() && <span class="loading loading-spinner loading-xs" />}
+        {props.t(submitting() ? "form_sending" : "form_send")}
+        <span aria-hidden="true">↗</span>
+      </button>
+      <div aria-live="polite" aria-atomic="true">
+        {status() && (
+          <p
+            class={`rounded-lg border p-4 text-sm ${status() === "success" ? "border-success/30 text-success" : "border-error/30 text-error"}`}
+          >
+            {props.t(status() === "success" ? "form_success" : "form_error")}
+          </p>
         )}
-
-        {/* Error Message */}
-        {submitStatus() === "error" && (
-          <div class="form-message form-error">
-            ✗ Something went wrong. Please try again or email me directly.
-          </div>
-        )}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
-
 export default ContactForm;

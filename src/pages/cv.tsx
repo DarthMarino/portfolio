@@ -1,6 +1,7 @@
 import {
   createSignal,
   onMount,
+  onCleanup,
   Show,
   createEffect,
   type Component,
@@ -165,22 +166,35 @@ const CVPage: Component<CVPageProps> = (props) => {
         doc.text(`, ${company}, ${dates}`, MARGIN + roleWidth, y);
         y += 5.5;
       };
-      const eduRow = (boldTitle: string, rest: string) => {
-        need(10);
+      const eduRow = (degree: string, school: string, dates: string) => {
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(10);
+        const degreeLines = doc.splitTextToSize(degree, CONTENT_WIDTH) as string[];
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(9.5);
+        const dateWidth = doc.getTextWidth(dates);
+        const schoolLines = doc.splitTextToSize(
+          school,
+          CONTENT_WIDTH - dateWidth - 6,
+        ) as string[];
+        need((degreeLines.length + schoolLines.length) * 4.2 + 3);
+
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(10);
         doc.setTextColor(DARK[0], DARK[1], DARK[2]);
-        const titleWidth = doc.getTextWidth(boldTitle);
-        doc.text(boldTitle, MARGIN, y);
-        doc.setFont("Helvetica", "normal");
-        const lines = doc.splitTextToSize(
-          rest,
-          CONTENT_WIDTH - titleWidth,
-        ) as string[];
-        lines.forEach((line: string, i: number) => {
-          doc.text(line, MARGIN + titleWidth, y + i * 4.2);
+        degreeLines.forEach((line) => {
+          doc.text(line, MARGIN, y);
+          y += 4.2;
         });
-        y += lines.length * 4.2 + 1.6;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(9.5);
+        doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+        doc.text(dates, MARGIN + CONTENT_WIDTH, y, { align: "right" });
+        schoolLines.forEach((line) => {
+          doc.text(line, MARGIN, y);
+          y += 4.2;
+        });
+        y += 3;
       };
       const skillRow = (label: string, values: string) => {
         need(8);
@@ -363,7 +377,11 @@ const CVPage: Component<CVPageProps> = (props) => {
 
       // PROJECTS -----------------------------------------------------------------
       section(props.t("projects_title"));
-      const projects: Array<{ title: string; year: string; bullets: string[] }> = [
+      const projects: Array<{
+        title: string;
+        year: string;
+        bullets: string[];
+      }> = [
         {
           title: props.t("find_machines"),
           year: props.t("find_machines_date"),
@@ -402,11 +420,13 @@ const CVPage: Component<CVPageProps> = (props) => {
       section(props.t("education_title"));
       eduRow(
         props.t("software_eng"),
-        `, ${props.t("intec")} | ${props.t("intec_date")}`,
+        props.t("intec"),
+        props.t("intec_date"),
       );
       eduRow(
         props.t("digital_electronics"),
-        `, ${props.t("loyola")} | ${props.t("loyola_date")}`,
+        props.t("loyola"),
+        props.t("loyola_date"),
       );
 
       // CERTIFICATIONS ---------------------------------------------------------------
@@ -439,6 +459,7 @@ const CVPage: Component<CVPageProps> = (props) => {
         type: "application/pdf",
       });
       const url = URL.createObjectURL(blob);
+      if (pdfUrl()) URL.revokeObjectURL(pdfUrl()!.split("#")[0]);
       setPdfUrl(url + `#filename=${filename}.pdf`);
       setIsLoading(false);
     } catch (error) {
@@ -446,6 +467,10 @@ const CVPage: Component<CVPageProps> = (props) => {
       setIsLoading(false);
     }
   };
+
+  onCleanup(() => {
+    if (pdfUrl()) URL.revokeObjectURL(pdfUrl()!.split("#")[0]);
+  });
 
   onMount(() => {
     setPreviousLocale(props.locale());
@@ -487,18 +512,17 @@ const CVPage: Component<CVPageProps> = (props) => {
             fallback={
               <div class="flex flex-col justify-center items-center min-h-screen gap-4 p-8">
                 <div class="text-center">
-                  <h2 class="text-2xl font-bold mb-2">PDF Ready</h2>
-                  <p class="text-lg mb-4">
-                    Mobile browsers don't support PDF viewing. Download the PDF
-                    to view it.
-                  </p>
+                  <h2 class="text-2xl font-bold mb-2">
+                    {props.t("pdf_ready")}
+                  </h2>
+                  <p class="text-lg mb-4">{props.t("pdf_mobile")}</p>
                 </div>
                 <a
                   href={pdfUrl()!}
                   download={`${props.isDominican ? "marino_gomez_cv_rd" : "marino_gomez_cv"}.pdf`}
                   class="btn btn-primary btn-lg"
                 >
-                  Download CV PDF
+                  {props.t("pdf_download")}
                 </a>
               </div>
             }

@@ -1,4 +1,118 @@
 export const dict = {
+  hero_eyebrow: "Software engineer · Web & mobile",
+  hero_intro: "Building scalable full-stack applications with modern technologies.",
+  hero_description: "Specialized in React, Node.js, and cloud solutions.",
+  view_work: "Explore my work",
+  view_cv: "View CV",
+  selected_work: "Selected work",
+  selected_intro: "A closer look at what I build.",
+  all_work: "All projects",
+  view_project: "View project",
+  projects_intro: "Web platforms, mobile tools, and the systems behind them.",
+  category_all: "All work",
+  category_employment: "Employment",
+  category_contract: "Contract",
+  category_business: "Business",
+  category_personal: "Personal",
+  role_fullstack: "Full-stack developer",
+  role_frontend_brand: "Frontend Developer & Brand Designer",
+  role_frontend: "Frontend engineer",
+  role_brand: "Full-stack developer & brand designer",
+  role_founder: "Founder & lead developer",
+  duration_2: "2 months",
+  duration_3: "3 months",
+  duration_4: "4 months",
+  duration_6: "6 months",
+  duration_year: "1 year",
+  duration_current: "2022 – Present",
+  summary_tinacos: "A digital presence, a new identity, and automated warranty workflows for a manufacturer.",
+  summary_find: "A machinery catalog and custom CMS, built to replace a legacy WordPress platform.",
+  summary_event: "Local event discovery with community submissions, moderation, and calendar views.",
+  summary_qr: "A restaurant marketing platform connecting physical QR boards to digital experiences.",
+  summary_caribbean: "Initial web design and frontend structure, branding, logos, and font selection.",
+  summary_pventa: "Mobile sales, inventory, and customer management for teams in the field.",
+  summary_sic: "Bringing a desktop accounting and ERP system to the web.",
+  summary_curbo: "An automotive marketplace connecting dealers, inspections, and customers.",
+  project_role: "My role",
+  project_scope: "Duration",
+  project_stack: "Built with",
+  project_challenge: "The challenge",
+  project_solution: "What I built",
+  project_learnings: "Challenges & learnings",
+  project_results: "The outcome",
+  project_gallery: "Inside the project",
+  project_visit: "Visit live project",
+  project_more: "Keep exploring",
+  project_image: "Project screenshot",
+  open_image: "Enlarge screenshot",
+  close_preview: "Close preview",
+  previous_image: "Previous image",
+  next_image: "Next image",
+  cta_title: "Have something in mind?",
+  cta_description: "Tell me about the problem you want to solve. Let’s find a good way to build it.",
+  cta_link: "Let’s talk",
+  home_experience: "From the interface to the systems behind it.",
+  home_experience_desc: "My work spans enterprise tools at Xoultec, the Curbo marketplace, and independent projects for businesses and communities.",
+  experience_intro: "The teams, products, and independent projects I have contributed to.",
+  experience_recent: "Independent & recent work",
+  about_intro: "I’m Marino, a software engineer who works across product interfaces, backend systems, and visual design.",
+  about_body: "My projects range from inventory tools used in the field to restaurant marketing platforms and automated warranty systems. I enjoy connecting the pieces into something people can use in their everyday work.",
+  about_approach: "How I work",
+  about_approach_body: "I work on both the experience people see and the services that support it: interfaces, APIs, databases, and integrations. When a project needs visual design too, I can connect the brand and the product.",
+  skills_intro: "Practical skills, grounded in the work.",
+  skills_frontend: "Web interfaces",
+  skills_backend: "Backend & data",
+  skills_mobile: "Mobile applications",
+  skills_design: "Design & automation",
+  skills_frontend_desc: "Responsive interfaces, dashboards, and web applications.",
+  skills_backend_desc: "APIs, data workflows, and the services behind a product.",
+  skills_mobile_desc: "Inventory and sales workflows for mobile teams.",
+  skills_design_desc: "Brand identities and tools that reduce manual work.",
+  skills_evidence: "See it in practice",
+  education: "Education",
+  certificates: "Certificates & courses",
+  show_certificate: "View certificate",
+  contact_direct: "Prefer email?",
+  contact_social: "Elsewhere",
+  nav_label: "Main navigation",
+  nav_open: "Open menu",
+  nav_close: "Close menu",
+  skip_content: "Skip to content",
+  motion_pause: "Pause background",
+  motion_play: "Animate shapes",
+  motion_reduced: "Motion reduced",
+  language_switch: "Cambiar a español",
+  portfolio_label: "Portfolio",
+  pdf_ready: "Your CV is ready",
+  pdf_mobile: "Download the PDF to read or share it.",
+  pdf_download: "Download CV PDF",
+
+  form_name: "Name",
+  form_email: "Email",
+  form_subject: "Subject",
+  form_message: "Message",
+  form_name_hint: "Your name",
+  form_email_hint: "you@example.com",
+  form_subject_hint: "Message subject",
+  form_message_hint: "Tell me about your project or opportunity",
+  form_sending: "Sending…",
+  form_send: "Send Message",
+  form_success: "Message sent successfully! I'll get back to you soon.",
+  form_error: "Something went wrong. Please try again or email me directly.",
+  nav_about: "About Me",
+  nav_projects: "Projects",
+  nav_experience: "Experience",
+  nav_skills: "Studies & Skills",
+  not_found: "Page not found",
+  not_found_description: "This page does not exist. Browse my projects or return home.",
+  back_home: "Back to Home",
+
+  contact_nav: "Contact",
+  get_in_touch: "Get In Touch",
+  contact_intro: "Have a project in mind or want to discuss an opportunity? Send me a message.",
+  contact_alternative: "Or connect with me on:",
+  project_overview: "Overview",
+
   // Navigation
   home: "HOME",
   cv: "CV",
@@ -68,50 +182,50 @@ export const dict = {
 
   // PVenta Mobile - Mobile ERP Application
   pventa_exp:
-    "Internal mobile ERP application designed to optimize sales, inventory, and client management for Xoultec. Built with React Native and Node.js, featuring real-time barcode scanning, stock tracking, and field operations synchronized across iOS and Android devices.",
+    "Mobile ERP for sales, inventory, and customer management, with barcode scanning and offline field operations.",
 
   pventa_problem:
-    "Xoultec's sales team needed a mobile solution to manage inventory, track sales, and handle client relationships on the go. The existing desktop-only system created bottlenecks, with field operations requiring manual data entry back at the office, leading to delays and data inconsistencies.",
+    "Field staff relied on a desktop system and had to re-enter data at the office.",
 
   pventa_solution:
-    "Developed a cross-platform mobile ERP using React Native and Ionic with a Node.js backend. Designed an intuitive UI in Figma that prioritized ease of use for field workers. Implemented real-time barcode scanning for instant inventory lookups, offline-first architecture for field operations, and seamless synchronization when connectivity was restored.",
+    "Built mobile workflows for inventory lookup and sales, with local storage and synchronization when connectivity returns.",
 
   pventa_challenges:
-    "Architected offline-first data synchronization to handle unreliable connectivity in the field. Built real-time barcode scanning with camera integration for both iOS and Android. Designed conflict resolution system for concurrent inventory updates from multiple users. Optimized mobile performance for low-end devices while maintaining rich functionality.",
+    "Handled conflicting inventory updates, camera-based barcode scanning, and performance on low-end devices.",
 
   pventa_results:
-    "Reduced processing time by 35% through streamlined mobile workflows. Achieved over 50% improvement in user adoption based on user surveys, attributed to the carefully designed Figma interface. Enabled real-time inventory tracking across 20+ client accounts, significantly improving operational efficiency.",
+    "Enabled mobile inventory tracking across 20+ client accounts.",
 
   // SIC System - Web ERP & Accounting Platform
   sic_exp:
-    "Comprehensive internal web ERP and accounting platform serving 20+ diverse clients at Xoultec. Modernized a legacy Windows Forms accounting system into a polished web application using React, TypeScript, and Node.js, with integrated inventory management and client dashboard.",
+    "Migrated a Windows Forms accounting system to a web ERP with inventory management and client dashboards.",
 
   sic_problem:
-    "Xoultec relied on a legacy accounting system built in Windows Forms that was slow, difficult to maintain, and limited to desktop installations. Managing inventory for 20+ clients required a centralized, accessible solution with better performance and modern UX. The old system suffered from slow load times and poor scalability.",
+    "The desktop system limited access and made multi-client inventory management difficult.",
 
   sic_solution:
-    "Migrated the legacy accounting system to a modern web stack using React, TypeScript, and Node.js with SQL Server backend. Built an internal web dashboard with React, Ionic, and Tailwind CSS for comprehensive inventory management. Created role-based access control for multi-client management, real-time reporting dashboards, and automated accounting workflows.",
+    "Built accounting and inventory workflows with role-based access, reporting dashboards, and SQL Server storage.",
 
   sic_challenges:
-    "Managed complex data migration from legacy Windows Forms application while ensuring zero data loss. Maintained backward compatibility during the transition period. Architected multi-tenant system supporting 20+ clients with isolated data and customizable workflows. Optimized database queries and implemented caching strategies for large inventory datasets.",
+    "Migrated legacy data, preserved compatibility during the transition, and isolated each client’s records.",
 
   sic_results:
-    "Improved inventory accuracy by 40% through automated tracking and validation. Reduced application load times by 45% compared to the legacy system through performance optimization. Successfully migrated all 20+ clients to the new platform without downtime. Enhanced user satisfaction with modern, responsive interface and improved accessibility.",
+    "Moved 20+ clients to the web platform for accounting and inventory management.",
 
   curbo_exp:
-    "Full-stack B2B and C2C automotive marketplace platform serving as an intermediary between car dealers and customers. Built comprehensive ecosystem including dealer dashboard for inventory management, technician integration system for vehicle inspections, customer-facing marketplace, and powerful backoffice administration tools.",
+    "Automotive marketplace connecting dealers and buyers, with tools for vehicle inventory, inspections, and administration.",
 
   curbo_problem:
-    "Car dealers needed a modern digital platform to manage inventory and reach customers online, while buyers lacked transparency about vehicle conditions. The market required a trusted intermediary that could facilitate transactions, coordinate professional vehicle inspections, and provide comprehensive management tools for dealers.",
+    "Dealers needed online inventory tools; buyers needed vehicle condition information before purchasing.",
 
   curbo_solution:
-    "Developed a multi-sided platform with three key components: (1) Dealer Dashboard - intuitive inventory management system allowing dealers to list, update, and track vehicles with real-time analytics; (2) Technician Integration - scheduling and coordination system connecting certified technicians with vehicles for professional condition assessments and reports; (3) Backoffice - comprehensive administrative panel for platform management, user verification, transaction oversight, and data analytics.",
+    "Built interfaces for dealer listings, technician inspection scheduling, and backoffice management.",
 
   curbo_challenges:
-    "Architected complex role-based access control system managing dealers, technicians, customers, and administrators. Built real-time notification system for inspection scheduling and status updates. Implemented secure document handling for vehicle reports and certifications. Optimized database queries for large vehicle inventory datasets while maintaining fast search and filtering.",
+    "Handled access for dealers, technicians, buyers, and administrators, alongside inspection updates and vehicle reports.",
 
   curbo_results:
-    "Successfully launched platform serving multiple car dealerships with thousands of vehicle listings. Achieved 90%+ test coverage ensuring reliability. Significantly improved page load performance through database optimization and Redis caching. Created scalable architecture supporting B2B dealer operations and C2C customer marketplace simultaneously.",
+    "Supported dealership operations and a customer marketplace with thousands of vehicle listings.",
 
   curbo_exp_1:
     "Engineered advanced e-commerce search and filtering algorithms serving thousands of vehicle listings, reducing average search response time by ~35% and improving listing discoverability.",
@@ -192,46 +306,46 @@ export const dict = {
   the_qr_king: "TheQRKing Platform",
   the_qr_king_date: "2024",
   the_qr_king_desc:
-    "Full-stack restaurant marketing platform with React/Node.js/PostgreSQL. Supports food image management, QR board subscriptions, payment integration, and location-based analytics, serving restaurants across Staten Island to track customer engagement through physical QR placements.",
+    "Restaurant marketing platform for managing QR displays, subscriptions, payments, and engagement analytics by location.",
 
   // Event Detector - Event Submission & Management Platform
   event_detector: "Event Detector",
   event_detector_desc:
-    "Community-driven event discovery platform with React/Node.js/SQLite3. Users submit local events with flier images; admins moderate via approve/decline workflows. Supports calendar/list views and add-to-calendar notifications for local event promotion.",
+    "Local event directory with user submissions, flier uploads, and admin moderation.",
 
   event_detector_problem:
-    "Communities lacked a centralized platform for discovering and sharing local events. Event organizers struggled to reach their target audience, while attendees had no reliable way to find upcoming events in their area. Existing solutions were either too complex or didn't provide adequate moderation and calendar integration.",
+    "Event submissions needed review before appearing in a shared public calendar.",
 
   event_detector_solution:
-    "Built a full-stack event management platform with user-friendly event submission forms allowing organizers to upload event details and flier images. Implemented admin dashboard for reviewing and moderating submissions with approve/decline workflow. Created flexible viewing options including calendar and list views, integrated calendar API for seamless add-to-calendar functionality with customizable notification presets.",
+    "Built submission forms, an approval dashboard, and calendar and list views with add-to-calendar reminders.",
 
   event_detector_challenges:
-    "Designed efficient image upload and storage system for event fliers with optimization for fast loading. Architected moderation workflow ensuring quality control while maintaining quick approval times. Built responsive calendar interface supporting multiple view modes. Implemented notification system with configurable reminder times for added events. Optimized database queries for fast event filtering by date, category, and location.",
+    "Handled flier uploads, date filtering, and configurable calendar reminders.",
 
   event_detector_results:
-    "Successfully launched platform serving local community with streamlined event discovery. Achieved high user engagement through intuitive submission process and attractive flier display. Enabled quick event approval workflow reducing admin overhead. Delivered seamless calendar integration improving event attendance through automated reminders.",
+    "Delivered a moderated event directory where visitors can browse events and save them to their calendars.",
 
   // Tinacos Cibao - Complete Brand & Digital Transformation
   tinacos_cibao: "Tinacos Cibao",
   tinacos_cibao_desc:
-    "Complete digital transformation and rebranding project for water-tank manufacturer Polímeros del Cibao. Built a new website, redesigned the logo, and created physical product labels with proper Pantone colors. Built an automated warranty redemption system with Google Apps Script integration and a high-resolution document generator that produces 7,000+ numbered label pages from a reusable template.",
+    "Website, brand identity, and warranty tools for water-tank manufacturer Polímeros del Cibao.",
 
   tinacos_cibao_problem:
-    "Polímeros del Cibao needed a complete brand refresh and digital presence for their Tinacos Cibao water tank product line. They lacked a professional website, had outdated branding, inconsistent physical product labels, and a manual warranty tracking process that was inefficient and error-prone. The company needed a cohesive solution spanning digital and physical brand identity.",
+    "The product line needed consistent branding and a replacement for manual warranty tracking.",
 
   tinacos_cibao_solution:
-    "Delivered comprehensive brand and digital transformation: (1) Website Development - built modern, responsive website showcasing products and company information; (2) Logo Rebranding - designed new professional logo reflecting the company's quality standards; (3) Physical Label Design - created product labels with proper Pantone color specifications and sizing for manufacturing; (4) Automated Warranty System - developed custom warranty redemption platform using Google Forms for authorized users, Google Apps Script automation to trigger API updates, and secure view-only Google Sheets dashboard for company staff to monitor warranty claims in real-time; (5) Bulk PDF Generator - created desktop application capable of generating thousands of optimized warranty certificates (e.g., 7,000+ pages) in a single execution with maximum quality within document size margins, eliminating manual processing.",
+    "Designed the website, logo, and Pantone-specified product labels. Connected Google Forms, Apps Script, and Sheets for warranty claims, and built a desktop PDF generator.",
 
   tinacos_cibao_challenges:
-    "Designed cohesive brand identity across digital and physical touchpoints maintaining consistency. Implemented secure warranty system with proper access control using company email verification. Built reliable Google Apps Script automation to bridge forms and API communication. Ensured Pantone color accuracy for physical label printing matching digital brand guidelines. Created scalable warranty tracking infrastructure handling concurrent submissions and automated data synchronization. Optimized PDF generation algorithm to handle bulk processing of thousands of certificates while maintaining high quality and reasonable file sizes.",
+    "Matched print colors, restricted warranty access by company email, and kept bulk PDFs within print-quality and file-size requirements.",
 
   tinacos_cibao_results:
-    "Successfully launched complete brand transformation with modern digital presence at tinacoscibao.com.do. Delivered production-ready physical labels with accurate Pantone specifications adopted by manufacturing. Automated warranty redemption system eliminating manual processing and reducing claim processing time significantly. Provided company staff with real-time warranty tracking dashboard improving customer service response times and data accuracy. Desktop PDF generator enabled staff to produce thousands of warranty certificates in minutes with single-click execution, dramatically reducing printing preparation time.",
+    "Delivered production-ready labels, a warranty tracking dashboard, and a generator that produces 7,000+ numbered pages from one template.",
 
-  caribbean_coworking: "Caribbean Business Coworking",
+  caribbean_coworking: "Caribbean Biz",
   caribbean_coworking_date: "2024",
   caribbean_coworking_desc:
-    "Landing page with integrated payment processing and webhook conditionals for Caribbean Business Coworking, a physical coworking space in the Dominican Republic. Supports seat reservations and payment management with responsive design and secure payment handling.",
+    "Delivered the initial web design and frontend structure for Caribbean Biz. Also designed the branding and logos, and selected the fonts.",
 
   // Additional projects you might want to add
   pventa_mobile: "PVenta Mobile ERP",
@@ -244,33 +358,33 @@ export const dict = {
   find_machines: "Find & Supply Solutions",
 
   find_machines_desc:
-    "Designed and developed a comprehensive web application for Find & Supply Solutions (findmachines.com.do), replacing their legacy WordPress site with a custom Go-based platform. Built an admin dashboard and CMS enabling the company to sell and quote machinery and equipment online. Developed an auto-scaling cloud infrastructure that dynamically assigns resources as the company grows, eliminating dependency on outdated and insecure third-party plugins.",
+    "Replaced a WordPress site with a Go platform for machinery sales and quotes. Built its CMS, admin dashboard, and auto-scaling cloud infrastructure.",
 
   // CV project bullets
   find_machines_b1:
-    "Replaced a legacy WordPress site with a custom Go-based platform (findmachines.com.do), building an admin dashboard and CMS enabling the company to sell and quote machinery online.",
+    "Replaced WordPress with a Go platform and CMS for machinery sales and quotes.",
   find_machines_b2:
-    "Developed auto-scaling cloud infrastructure that dynamically assigns resources as the company grows, eliminating dependency on outdated and insecure third-party plugins.",
+    "Built cloud infrastructure with automatic resource scaling.",
   tinacos_cibao_b1:
-    "Led complete digital transformation and rebranding for water-tank manufacturer Polimeros del Cibao: new website, logo redesign, and Pantone-accurate product labels.",
+    "Created the website, logo, and Pantone-specified product labels for Polímeros del Cibao.",
   tinacos_cibao_b2:
-    "Built an automated warranty redemption system with Google Apps Script and a high-resolution document generator producing 7,000+ numbered label pages from a reusable template.",
+    "Automated warranty tracking and built a PDF generator for 7,000+ numbered pages per template.",
   event_detector_b1:
     "Built a community-driven event discovery platform (React, Node.js, SQLite3) with user-submitted event fliers and admin approve/decline moderation workflows.",
   event_detector_b2:
     "Supports calendar and list views with add-to-calendar notifications for local event promotion.",
   the_qr_king_b1:
-    "Built a full-stack restaurant marketing platform (React, Node.js, PostgreSQL) with food image management, QR board subscriptions, payment integration, and location-based analytics.",
+    "Built tools for food images, QR display subscriptions, payments, and location analytics.",
   the_qr_king_b2:
     "Serves restaurants across Staten Island, tracking customer engagement through physical QR placements.",
   caribbean_coworking_b1:
-    "Developed a landing page with integrated payment processing and webhook conditionals for a physical coworking space in the Dominican Republic.",
+    "Delivered the initial web design and frontend structure for Caribbean Biz.",
   caribbean_coworking_b2:
-    "Supports seat reservations and payment management with responsive design and secure payment handling.",
+    "Designed the branding and logos, and selected the fonts.",
 
   personal_portfolio: "Personal Portfolio",
   personal_portfolio_desc:
-    "Interactive vector-animated portfolio website built with Two.js, SolidJS, and Tailwind CSS. Features dynamic animations, responsive design, bilingual support, and automatically generates the PDF CV from up-to-date content.",
+    "Interactive vector-animated portfolio website built with SVG, SolidJS, and Tailwind CSS. Features dynamic animations, responsive design, bilingual support, and automatically generates the PDF CV from up-to-date content.",
 
   // Achievement metrics for better impact
   achievements_title: "Key Achievements",

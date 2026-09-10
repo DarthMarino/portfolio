@@ -1,555 +1,182 @@
-import { type Component, For, createSignal } from "solid-js";
+import { For, type Component } from "solid-js";
+import { A } from "@solidjs/router";
 import * as i18n from "@solid-primitives/i18n";
-import BackgroundScene from "../components/BackgroundScene";
-import Breadcrumb, { type BreadcrumbItem } from "../components/Breadcrumb";
-import Range from "../components/Range";
-import Dropdown from "../components/Dropdown";
-import "./StudiesSkills.css";
+import PageShell from "../components/PageShell";
+import ContactCTA from "../components/ContactCTA";
 
-type StudiesSkillsProps = {
+const groups = [
+  {
+    key: "frontend",
+    tools: [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "SolidJS",
+      "Tailwind CSS",
+      "HTML / CSS",
+      "Three.js",
+    ],
+    project: "curbo",
+    name: "curbo_project",
+  },
+  {
+    key: "backend",
+    tools: [
+      "Node.js",
+      "Go",
+      "Rust",
+      "C#",
+      "Express",
+      "REST APIs",
+      "GraphQL",
+      "PostgreSQL",
+      "SQL Server",
+      "MongoDB",
+      "Redis",
+    ],
+    project: "find-machines",
+    name: "find_machines",
+  },
+  {
+    key: "mobile",
+    tools: ["React Native", "Flutter", "Ionic"],
+    project: "pventa-mobile",
+    name: "pventa_mobile",
+  },
+  {
+    key: "design",
+    tools: ["Figma", "Affinity", "Google Apps Script", "PDF Generation"],
+    project: "tinacos-cibao",
+    name: "tinacos_cibao",
+  },
+];
+const StudiesSkills: Component<{
   t: i18n.Translator<i18n.Flatten<Record<string, any>>>;
-};
-
-type Skill = {
-  name: string;
-  category:
-    | "frontend"
-    | "backend"
-    | "mobile"
-    | "devops"
-    | "database"
-    | "design"
-    | "other";
-  description: string;
-  color: string;
-  level: "expert" | "advanced" | "intermediate";
-};
-
-type Certificate = {
-  title: string;
-  issuer: string;
-  date: string;
-  credentialId: string;
-  credentialUrl?: string;
-  skills?: string[];
-};
-
-const StudiesSkills: Component<StudiesSkillsProps> = (props) => {
-  const [hoveredSkill, setHoveredSkill] = createSignal<string | null>(null);
-
-  const breadcrumbItems = (): BreadcrumbItem[] => [
-    { label: props.t("home"), href: "/" },
-    { label: "Studies & Skills" },
-  ];
-
-  const certificates: Certificate[] = [
-    {
-      title: "Three.js Journey",
-      issuer: "Three.js Journey",
-      date: "Jan 2023",
-      credentialId: "1913",
-      credentialUrl: "https://threejs-journey.com/certificate/view/1913",
-      skills: ["Three.js", "React.js", "Blender"],
-    },
-    {
-      title: "UI/UX Course Completion",
-      issuer: "DesignCourse.com",
-      date: "Dec 2022",
-      credentialId: "63968757b7b36500195474bc",
-      credentialUrl:
-        "https://designcourse.com/certificate/63968757b7b36500195474bc",
-      skills: ["Figma", "HTML/CSS"],
-    },
-  ];
-
-  const skills: Skill[] = [
-    // Frontend
-    {
-      name: "React",
-      category: "frontend",
-      description:
-        "JavaScript library for building user interfaces with component-based architecture",
-      color: "#61DAFB",
-      level: "expert",
-    },
-    {
-      name: "TypeScript",
-      category: "frontend",
-      description:
-        "Typed superset of JavaScript that compiles to plain JavaScript, enhancing code quality",
-      color: "#3178C6",
-      level: "expert",
-    },
-    {
-      name: "JavaScript",
-      category: "frontend",
-      description:
-        "Core programming language for web development, enabling interactive web pages",
-      color: "#F7DF1E",
-      level: "expert",
-    },
-    {
-      name: "TailwindCSS",
-      category: "frontend",
-      description:
-        "Utility-first CSS framework for rapidly building custom user interfaces",
-      color: "#06B6D4",
-      level: "advanced",
-    },
-    {
-      name: "Three.js",
-      category: "frontend",
-      description:
-        "JavaScript 3D library for creating and displaying animated 3D graphics in the browser",
-      color: "#000000",
-      level: "advanced",
-    },
-    {
-      name: "HTML5/CSS3",
-      category: "frontend",
-      description:
-        "Modern web markup and styling languages for structuring and presenting content",
-      color: "#E34F26",
-      level: "expert",
-    },
-    {
-      name: "SolidJS",
-      category: "frontend",
-      description:
-        "Reactive JavaScript library for building user interfaces with fine-grained reactivity",
-      color: "#2C4F7C",
-      level: "advanced",
-    },
-
-    // Backend
-    {
-      name: "Node.js",
-      category: "backend",
-      description:
-        "JavaScript runtime built on Chrome's V8 engine for server-side applications",
-      color: "#339933",
-      level: "expert",
-    },
-    {
-      name: "Express.js",
-      category: "backend",
-      description: "Fast, minimalist web framework for Node.js applications",
-      color: "#000000",
-      level: "expert",
-    },
-    {
-      name: "Rust",
-      category: "backend",
-      description:
-        "Systems programming language focused on safety, speed, and concurrency",
-      color: "#CE412B",
-      level: "advanced",
-    },
-    {
-      name: "Go",
-      category: "backend",
-      description:
-        "Statically typed language designed for simplicity and efficient concurrent programming",
-      color: "#00ADD8",
-      level: "intermediate",
-    },
-    {
-      name: "GraphQL",
-      category: "backend",
-      description:
-        "Query language and runtime for APIs, providing efficient data fetching",
-      color: "#E10098",
-      level: "advanced",
-    },
-    {
-      name: "RESTful APIs",
-      category: "backend",
-      description:
-        "Architectural style for designing networked applications using HTTP methods",
-      color: "#009688",
-      level: "expert",
-    },
-    {
-      name: "C#",
-      category: "backend",
-      description:
-        "Object-oriented language for building Windows applications and backend services",
-      color: "#239120",
-      level: "advanced",
-    },
-
-    // Mobile
-    {
-      name: "React Native",
-      category: "mobile",
-      description:
-        "Framework for building native mobile apps using React and JavaScript",
-      color: "#61DAFB",
-      level: "expert",
-    },
-    {
-      name: "Flutter",
-      category: "mobile",
-      description:
-        "Google's UI toolkit for building natively compiled applications for mobile, web, and desktop",
-      color: "#02569B",
-      level: "advanced",
-    },
-    {
-      name: "Ionic",
-      category: "mobile",
-      description:
-        "Cross-platform framework for building mobile apps using web technologies",
-      color: "#3880FF",
-      level: "advanced",
-    },
-
-    // Database
-    {
-      name: "MongoDB",
-      category: "database",
-      description:
-        "NoSQL document database designed for scalability and flexibility",
-      color: "#47A248",
-      level: "advanced",
-    },
-    {
-      name: "PostgreSQL",
-      category: "database",
-      description:
-        "Advanced open-source relational database with strong SQL compliance",
-      color: "#4169E1",
-      level: "advanced",
-    },
-    {
-      name: "Redis",
-      category: "database",
-      description:
-        "In-memory data structure store used as cache, database, and message broker",
-      color: "#DC382D",
-      level: "intermediate",
-    },
-    {
-      name: "SQL Server",
-      category: "database",
-      description:
-        "Microsoft's relational database management system for enterprise applications",
-      color: "#CC2927",
-      level: "advanced",
-    },
-
-    // DevOps & Cloud
-    {
-      name: "AWS",
-      category: "devops",
-      description:
-        "Amazon Web Services cloud platform offering compute, storage, and networking services",
-      color: "#FF9900",
-      level: "intermediate",
-    },
-    {
-      name: "Docker",
-      category: "devops",
-      description:
-        "Platform for developing, shipping, and running applications in containers",
-      color: "#2496ED",
-      level: "advanced",
-    },
-    {
-      name: "CI/CD",
-      category: "devops",
-      description:
-        "Continuous Integration and Deployment practices for automating software delivery",
-      color: "#2088FF",
-      level: "advanced",
-    },
-    {
-      name: "Git",
-      category: "devops",
-      description:
-        "Distributed version control system for tracking changes in source code",
-      color: "#F05032",
-      level: "expert",
-    },
-    {
-      name: "GitHub Actions",
-      category: "devops",
-      description:
-        "Automation platform for CI/CD workflows directly in GitHub repositories",
-      color: "#2088FF",
-      level: "advanced",
-    },
-
-    // Design
-    {
-      name: "Vector Design",
-      category: "design",
-      description:
-        "Creating scalable graphics for logos, icons, and brand identity using vector tools",
-      color: "#FF6B6B",
-      level: "expert",
-    },
-    {
-      name: "Logo Design",
-      category: "design",
-      description:
-        "Crafting unique brand identities and memorable logo designs",
-      color: "#4ECDC4",
-      level: "expert",
-    },
-    {
-      name: "Icon Design",
-      category: "design",
-      description:
-        "Designing custom icon sets for applications and user interfaces",
-      color: "#95E1D3",
-      level: "expert",
-    },
-    {
-      name: "Social Media Design",
-      category: "design",
-      description:
-        "Creating engaging visual content for social media platforms and campaigns",
-      color: "#F38181",
-      level: "expert",
-    },
-    {
-      name: "Web Advertising",
-      category: "design",
-      description:
-        "Designing banner ads, promotional graphics, and marketing materials for web",
-      color: "#AA96DA",
-      level: "advanced",
-    },
-    {
-      name: "Affinity",
-      category: "design",
-      description:
-        "Professional creative suite for vector graphics, photo editing, and digital design (Designer & Photo)",
-      color: "#7AB800",
-      level: "expert",
-    },
-    {
-      name: "Figma",
-      category: "design",
-      description: "Collaborative design tool for UI/UX design and prototyping",
-      color: "#F24E1E",
-      level: "advanced",
-    },
-
-    // Other
-    {
-      name: "Jest",
-      category: "other",
-      description:
-        "JavaScript testing framework with focus on simplicity and developer experience",
-      color: "#C21325",
-      level: "advanced",
-    },
-    {
-      name: "Playwright",
-      category: "other",
-      description: "End-to-end testing framework for modern web applications",
-      color: "#2EAD33",
-      level: "advanced",
-    },
-    {
-      name: "Cypress",
-      category: "other",
-      description:
-        "JavaScript-based end-to-end testing framework for web applications",
-      color: "#17202C",
-      level: "advanced",
-    },
-  ];
-
-  const getSkillsByCategory = (category: Skill["category"]) => {
-    return skills.filter((skill) => skill.category === category);
-  };
-
-  const categoryLabels = {
-    frontend: "Frontend Development",
-    backend: "Backend Development",
-    mobile: "Mobile Development",
-    database: "Databases",
-    devops: "DevOps & Cloud",
-    design: "Design & Graphics",
-    other: "Testing & Tools",
-  };
-
-  return (
-    <div class="page-container">
-      <BackgroundScene />
-
-      <div class="page-content">
-        {/* Breadcrumb Navigation */}
-        <Breadcrumb items={breadcrumbItems()} />
-
-        {/* Header */}
-        <div class="page-header">
-          <h1 class="page-title">Studies & Skills</h1>
-          <p class="page-subtitle">
-            Academic background and technical expertise across full-stack
-            development.
-          </p>
-        </div>
-
-        {/* Studies Section */}
-        <div class="page-section">
-          <h2 class="section-title">Education</h2>
-
-          {/* INTEC - Software Engineering */}
-          <div class="education-block">
-            <Range
-              t={props.t}
-              year1={2017}
-              year2={2021}
-              roleKey="software_eng"
-              companyKey="intec"
-              link="https://www.intec.edu.do/en/"
-            />
-            <div class="education-details">
-              <p class="education-description">
-                Bachelor's degree in Software Engineering from Instituto
-                Tecnológico de Santo Domingo (INTEC). Comprehensive program
-                covering full-stack development, software architecture, and
-                modern development practices.
+}> = (props) => (
+  <PageShell title={props.t("nav_skills")} intro={props.t("skills_intro")}>
+    <div class="grid gap-5 sm:grid-cols-2">
+      <For each={groups}>
+        {(group) => (
+          <section class="card card-border bg-base-200">
+            <div class="card-body gap-4 p-6">
+              <h2 class="card-title text-xl font-medium">
+                {props.t(`skills_${group.key}`)}
+              </h2>
+              <p class="text-sm text-base-content/65">
+                {props.t(`skills_${group.key}_desc`)}
               </p>
-              <ul class="education-highlights">
-                <li>Object-Oriented Programming & Design Patterns</li>
-                <li>Database Design & Management</li>
-                <li>Web Development (Frontend & Backend)</li>
-                <li>Software Project Management</li>
-                <li>Mobile Application Development</li>
-                <li>Algorithms & Data Structures</li>
-              </ul>
-              <Dropdown
-                text="Campus & Projects Gallery"
-                images={[
-                  "https://www.intec.edu.do/media/com_rsseo/images/webp/f7a2ded0e61fa3ccf50c616e2619dea1.webp",
-                  "https://www.intec.edu.do/images/background/centros-estudios.jpg",
-                ]}
-              />
-            </div>
-          </div>
-
-          {/* Loyola - Digital Electronics */}
-          <div class="education-block">
-            <Range
-              t={props.t}
-              year1={2014}
-              year2={2017}
-              roleKey="digital_electronics"
-              companyKey="loyola"
-              link="https://ipl.edu.do/"
-            />
-            <div class="education-details">
-              <p class="education-description">
-                Technical degree in Digital Electronics & Microcomputing from
-                Instituto Politécnico Loyola. Focused on electronics, circuit
-                design, microcontrollers, and embedded computing systems.
-              </p>
-              <ul class="education-highlights">
-                <li>Digital & Analog Circuit Design</li>
-                <li>Microcontroller Programming (Arduino, PIC)</li>
-                <li>Embedded Systems & Microcomputing</li>
-                <li>Electronics Repair & Maintenance</li>
-                <li>Sensor Integration & Control Systems</li>
-                <li>Signal Processing & Logic Design</li>
-              </ul>
-              <Dropdown
-                text="Projects & Lab Work Gallery"
-                images={[
-                  "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800",
-                  "https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=800",
-                  "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?w=800",
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Certificates Section */}
-        <div class="page-section">
-          <h2 class="section-title">Certificates & Courses</h2>
-          <div class="certificates-grid">
-            <For each={certificates}>
-              {(cert) => (
-                <div class="certificate-card">
-                  <h3 class="certificate-title">{cert.title}</h3>
-                  <p class="certificate-issuer">{cert.issuer}</p>
-                  <p class="certificate-date">{cert.date}</p>
-                  <div class="certificate-credential">
-                    <span class="credential-label">Credential ID:</span>
-                    <span class="credential-id">{cert.credentialId}</span>
-                  </div>
-                  {cert.credentialUrl && (
-                    <a
-                      href={cert.credentialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="certificate-link"
-                    >
-                      Show certificate →
-                    </a>
+              <ul class="flex flex-wrap gap-2">
+                <For each={group.tools}>
+                  {(tool) => (
+                    <li class="badge badge-outline border-base-content/20 text-xs text-base-content/80">
+                      {tool}
+                    </li>
                   )}
-                  {cert.skills && cert.skills.length > 0 && (
-                    <div class="certificate-skills">
-                      <For each={cert.skills}>
-                        {(skill) => (
-                          <span class="certificate-skill-tag">{skill}</span>
-                        )}
-                      </For>
-                    </div>
-                  )}
-                </div>
-              )}
-            </For>
-          </div>
-        </div>
-
-        {/* Skills Section */}
-        <div class="page-section">
-          <h2 class="section-title">Technical Skills</h2>
-
-          <For each={Object.entries(categoryLabels)}>
-            {([category, label]) => {
-              const categorySkills = getSkillsByCategory(
-                category as Skill["category"],
-              );
-              return categorySkills.length > 0 ? (
-                <div class="skills-category">
-                  <h3 class="category-heading">{label}</h3>
-                  <div class="skills-grid">
-                    <For each={categorySkills}>
-                      {(skill) => (
-                        <div
-                          class="skill-badge"
-                          style={{ "border-left": `4px solid ${skill.color}` }}
-                          onMouseEnter={() => setHoveredSkill(skill.name)}
-                          onMouseLeave={() => setHoveredSkill(null)}
-                        >
-                          <span class="skill-name">{skill.name}</span>
-                          {hoveredSkill() === skill.name && (
-                            <div class="skill-tooltip">
-                              <p class="tooltip-text">{skill.description}</p>
-                              <span class="tooltip-level">
-                                Level: {skill.level}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </For>
-                  </div>
-                </div>
-              ) : null;
-            }}
-          </For>
-        </div>
-      </div>
+                </For>
+              </ul>
+              <div class="mt-3 border-t border-base-content/10 pt-4">
+                <p class="mb-2 text-[10px] uppercase tracking-widest text-base-content/45">
+                  {props.t("skills_evidence")}
+                </p>
+                <A
+                  class="link link-hover text-sm"
+                  href={`/project/${group.project}`}
+                >
+                  {props.t(group.name)} ↗
+                </A>
+              </div>
+            </div>
+          </section>
+        )}
+      </For>
     </div>
-  );
-};
-
+    <section class="mt-8 rounded-xl border border-base-content/15 p-6">
+      <h2 class="mb-4 text-base font-medium">
+        {props.t("cloud_devops_skills")} & {props.t("testing_skills")}
+      </h2>
+      <p class="text-sm leading-7 text-base-content/65">
+        AWS · Docker · Git · GitHub Actions · CI/CD · Jest · Playwright ·
+        Cypress
+      </p>
+    </section>
+    <section class="mt-14">
+      <h2 class="mb-6 text-2xl font-medium">{props.t("education")}</h2>
+      <div class="space-y-6">
+        <For
+          each={[
+            {
+              dates: "2017 – 2021",
+              degree: "software_eng",
+              school: "intec",
+              url: "https://www.intec.edu.do/en/",
+            },
+            {
+              dates: "2014 – 2017",
+              degree: "digital_electronics",
+              school: "loyola",
+              url: "https://ipl.edu.do/",
+            },
+          ]}
+        >
+          {(study) => (
+            <div class="grid gap-3 border-t border-base-content/15 pt-6 sm:grid-cols-[150px_1fr]">
+              <p class="text-xs text-base-content/55">{study.dates}</p>
+              <div>
+                <h3 class="text-base font-medium">{props.t(study.degree)}</h3>
+                <a
+                  class="link link-hover mt-2 inline-block text-sm text-base-content/60"
+                  href={study.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {props.t(study.school)} ↗
+                </a>
+              </div>
+            </div>
+          )}
+        </For>
+      </div>
+    </section>
+    <section class="mt-14">
+      <h2 class="mb-6 text-2xl font-medium">{props.t("certificates")}</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <For
+          each={[
+            {
+              title: "Three.js Journey",
+              date: "2023",
+              tools: "Three.js · React · Blender",
+              url: "https://threejs-journey.com/certificate/view/1913",
+            },
+            {
+              title: "DesignCourse — UI/UX",
+              date: "2022",
+              tools: "Figma · HTML / CSS",
+              url: "https://designcourse.com/certificate/63968757b7b36500195474bc",
+            },
+          ]}
+        >
+          {(cert) => (
+            <div class="card card-border bg-base-200">
+              <div class="card-body p-6">
+                <p class="text-xs text-base-content/50">{cert.date}</p>
+                <h3 class="card-title text-base font-medium">{cert.title}</h3>
+                <p class="text-xs text-base-content/65">{cert.tools}</p>
+                <a
+                  class="link link-hover mt-4 text-sm"
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {props.t("show_certificate")} ↗
+                </a>
+              </div>
+            </div>
+          )}
+        </For>
+      </div>
+    </section>
+    <ContactCTA />
+  </PageShell>
+);
 export default StudiesSkills;

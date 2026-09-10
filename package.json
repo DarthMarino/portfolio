@@ -7,10 +7,13 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "check:content": "node scripts/check-content.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^22.20.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.0",
     "vite-plugin-solid": "^2.11.1"
@@ -19,14 +22,11 @@
     "@solid-primitives/i18n": "^2.2.0",
     "@solidjs/router": "^0.15.3",
     "@tailwindcss/vite": "^4.0.6",
-    "@tsparticles/solid": "^3.0.0",
     "daisyui": "^5.0.0-beta.7",
     "date-fns": "^4.1.0",
-    "gsap": "^3.13.0",
     "jspdf": "^3.0.1",
-    "simple-icons": "^16.13.0",
     "solid-js": "^1.9.3",
-    "tailwindcss": "^4.0.6",
-    "two.js": "^0.8.14"
-  }
+    "tailwindcss": "^4.0.6"
+  },
+  "packageManager": "pnpm@10.26.2"
 }

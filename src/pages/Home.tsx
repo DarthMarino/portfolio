@@ -1,106 +1,88 @@
-import { type Component } from "solid-js";
+import { For, type Component } from "solid-js";
 import { A } from "@solidjs/router";
 import * as i18n from "@solid-primitives/i18n";
-import BackgroundScene from "../components/BackgroundScene";
-import profileImage from "../assets/profile.png";
-import {
-  siReact,
-  siTypescript,
-  siNodedotjs,
-  siMysql,
-  siDocker,
-  siGo,
-  siFlutter,
-  siCplusplus,
-} from "simple-icons";
-import "./Home.css";
+import ProfileImage from "../components/ProfileImage";
+import { projects } from "../data/projects";
+import ProjectCard from "../components/ProjectCard";
+import PageShell from "../components/PageShell";
+import ContactCTA from "../components/ContactCTA";
 
-type HomeProps = {
-  t: i18n.Translator<i18n.Flatten<Record<string, any>>>;
-};
-
-type SimpleIcon = { path: string; hex: string };
-
-const TechIcon = (props: { icon: SimpleIcon }) => (
-  <svg
-    viewBox="0 0 24 24"
-    class="skill-icon"
-    fill={`#${props.icon.hex}`}
-    aria-hidden="true"
-  >
-    <path d={props.icon.path} />
-  </svg>
+const featured = ["theqrking", "pventa-mobile", "curbo"].map(
+  (id) => projects.find((p) => p.id === id)!,
 );
-
-const SKILLS = [
-  { icon: siReact, label: "React" },
-  { icon: siTypescript, label: "TypeScript" },
-  { icon: siNodedotjs, label: "Node.js" },
-  { icon: siMysql, label: "SQL" },
-  { icon: siDocker, label: "Docker" },
-  { icon: siGo, label: "Go" },
-  { icon: siFlutter, label: "Flutter" },
-  { icon: siCplusplus, label: "C++" },
-];
-
-const Home: Component<HomeProps> = (props) => {
-  return (
-    <div class="home-container">
-      <BackgroundScene />
-
-      <div class="page-content">
-        {/* Hero Section */}
-        <div class="hero-section">
-          <div class="hero-profile-image">
-            <img src={profileImage} alt="Marino Gomez, Full-stack Developer" />
-          </div>
-          <h1 class="hero-name">Marino Gomez</h1>
-          <h2 class="hero-title">{props.t("title")}</h2>
-          <p class="hero-tagline">
-            Building scalable full-stack applications with modern technologies.
-            Specialized in React, Node.js, and cloud solutions.
-          </p>
-          <div class="hero-cta">
-            <A href="/projects" class="cta-button primary">
-              View Projects →
-            </A>
-            <A href="/about#contact" class="cta-button secondary">
-              Contact Me
-            </A>
-          </div>
-        </div>
-
-        {/* Featured Skills */}
-        <div class="featured-skills">
-          <h3 class="skills-heading">Core Technologies</h3>
-          <div class="skills-grid">
-            {SKILLS.map(({ icon, label }) => (
-              <div class="skill-pill">
-                <TechIcon icon={icon} />
-                <span>{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Quick Links */}
-        <div class="quick-links">
-          <A href="/experience" class="quick-link-card">
-            <h4>Experience</h4>
-            <p>5+ years building enterprise solutions</p>
+const Home: Component<{
+  t: i18n.Translator<i18n.Flatten<Record<string, any>>>;
+}> = (props) => (
+  <PageShell>
+    <section class="relative grid items-center gap-8 py-5 sm:py-7 md:grid-cols-[1fr_180px] xl:grid-cols-[1fr_220px]">
+      <div>
+        <p class="mb-4 pr-20 text-[10px] md:pr-0 font-medium uppercase tracking-[0.2em] text-base-content/60">
+          {props.t("hero_eyebrow")}
+        </p>
+        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl xl:text-6xl">
+          Marino Gomez<span class="text-primary">.</span>
+        </h1>
+        <h2 class="mt-5 max-w-xl text-xl font-normal leading-snug text-base-content/90 sm:text-2xl">
+          {props.t("hero_intro")}
+        </h2>
+        <p class="mt-4 max-w-xl text-sm leading-relaxed text-base-content/65">
+          {props.t("hero_description")}
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <A href="/projects" class="btn btn-primary">
+            {props.t("view_work")} <span aria-hidden="true">↗</span>
           </A>
-          <A href="/skills" class="quick-link-card">
-            <h4>Skills & Education</h4>
-            <p>Full-stack expertise across platforms</p>
-          </A>
-          <A href="/cv" class="quick-link-card">
-            <h4>Download CV</h4>
-            <p>Get my complete resume</p>
+          <A href="/contact" class="btn btn-ghost">
+            {props.t("cta_link")} <span aria-hidden="true">→</span>
           </A>
         </div>
       </div>
-    </div>
-  );
-};
-
+      <div class="absolute top-3 right-0 w-14 md:relative md:top-auto md:right-auto md:col-start-2 md:row-start-auto md:w-full">
+        <ProfileImage />
+      </div>
+    </section>
+    <section class="mt-10 border-t border-base-content/15 pt-8">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="mb-2 text-[10px] uppercase tracking-widest text-base-content/50">
+            01 / {props.t("selected_work")}
+          </p>
+          <h2 class="text-2xl font-medium tracking-tight">
+            {props.t("selected_intro")}
+          </h2>
+        </div>
+        <A
+          href="/projects"
+          class="link link-hover text-xs text-base-content/70"
+        >
+          {props.t("all_work")} ↗
+        </A>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <For each={featured}>
+          {(project) => <ProjectCard project={project} compact />}
+        </For>
+      </div>
+    </section>
+    <section class="mt-14 grid gap-6 border-t border-base-content/15 pt-8 md:grid-cols-2">
+      <div>
+        <p class="mb-3 text-[10px] uppercase tracking-widest text-base-content/50">
+          02 / {props.t("nav_experience")}
+        </p>
+        <h2 class="max-w-sm text-2xl font-medium leading-snug tracking-tight">
+          {props.t("home_experience")}
+        </h2>
+      </div>
+      <div>
+        <p class="text-sm leading-relaxed text-base-content/70">
+          {props.t("home_experience_desc")}
+        </p>
+        <A href="/experience" class="link link-hover mt-5 inline-block text-sm">
+          {props.t("nav_experience")} →
+        </A>
+      </div>
+    </section>
+    <ContactCTA />
+  </PageShell>
+);
 export default Home;

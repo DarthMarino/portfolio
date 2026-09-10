@@ -1,3 +1,39 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: false;
+}
+@plugin "daisyui/theme" {
+  name: "portfolio";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #10231d;
+  --color-base-200: #142c24;
+  --color-base-300: #244237;
+  --color-base-content: #f4f7f5;
+  --color-primary: #6fe0bc;
+  --color-primary-content: #10231d;
+  --color-secondary: #c5dbcf;
+  --color-secondary-content: #10231d;
+  --color-accent: #6fe0bc;
+  --color-accent-content: #10231d;
+  --color-neutral: #19352b;
+  --color-neutral-content: #f4f7f5;
+  --color-info: #a5d8e8;
+  --color-info-content: #10231d;
+  --color-success: #6fe0bc;
+  --color-success-content: #10231d;
+  --color-warning: #ecd2a0;
+  --color-warning-content: #10231d;
+  --color-error: #f5aaaa;
+  --color-error-content: #10231d;
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
 @import "./styles/globals.css";
