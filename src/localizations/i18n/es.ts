@@ -13,7 +13,11 @@ export const dict = {
   name: "MARINO GOMEZ",
   title: "Ingeniero de Software",
   cv_intro:
-    "Ingeniero de Software Full-Stack con más de 4 años de experiencia construyendo aplicaciones web y móviles escalables con React, TypeScript, Node.js, Next.js y React Native. Sólido historial liderando proyectos cross-funcionales desde la concepción hasta el despliegue, optimizando el rendimiento, implementando pipelines de CI/CD y entregando pruebas unitarias y de integración comprehensivas.",
+    "Ingeniero de Software Full-Stack con más de 5 años de experiencia construyendo aplicaciones web y móviles rápidas, accesibles y escalables con TypeScript, React, Node.js, Next.js, Go y React Native. Sólido historial liderando proyectos cross-funcionales desde la concepción hasta el despliegue: optimizando el rendimiento, implementando pipelines de CI/CD y entregando pruebas unitarias y de integración comprehensivas.",
+
+  // CV header
+  cv_title: "Ingeniero de Software Full-Stack",
+  summary_title: "Resumen",
 
   // Contact section
   contact_title: "CONTACTO",
@@ -28,12 +32,12 @@ export const dict = {
   frontend_eng_title: "Ingeniero Frontend",
 
   // Work dates and companies
-  tecno_date: "02/2022 –\nPresente",
+  tecno_date: "02/2022 – Presente",
   tecno_company: "Xoultec",
   qrking_date: "01/2024 –\nPresente",
   qrking_company: "TheQRKing",
-  curbo_date: "06/2021 –\n03/2023",
-  curbo_company: "Curbo Technologies (Contrato)",
+  curbo_date: "06/2021 – 03/2023",
+  curbo_company: "Curbo Technologies (Contrato a tiempo parcial)",
   find_machines_date: "2025",
   find_machines_company: "Find & Supply Solutions",
   event_detector_date: "2025",
@@ -141,15 +145,20 @@ export const dict = {
   backend_skills: "Backend",
   cloud_devops_skills: "Cloud & DevOps",
   mobile_other_skills: "Mobile & Otros",
+  languages_skills: "Lenguajes",
+  testing_skills: "Testing y Prácticas",
 
+  languages_skills_list: "TypeScript, JavaScript, Go, Rust, SQL, HTML5/CSS3",
   frontend_skills_list:
-    "React, TypeScript, JavaScript, Next.js, Flutter, TailwindCSS, Three.js, HTML5/CSS3, Diseño UI/UX",
+    "React, Next.js, Solid.js, React Native, Tailwind CSS, Three.js, Diseño UI/UX",
   backend_skills_list:
-    "Node.js, Express.js, Rust, Go, GraphQL, APIs RESTful, SQL, MongoDB, PostgreSQL, Redis",
+    "Node.js, Go, Rust, GraphQL, APIs REST, PostgreSQL, MongoDB, Redis",
   cloud_devops_skills_list:
-    "AWS, GCP, Azure, Docker, CI/CD, Git, GitHub Actions, Optimización de Rendimiento",
+    "AWS, GCP, Azure, Docker, CI/CD, GitHub Actions, Git, Optimización de Rendimiento",
   mobile_other_skills_list:
     "React Native, Flutter, Jest, Playwright, Cypress, Pruebas Unitarias, Pruebas de Integración, MCP, Agile/Scrum, Blender, Affinity",
+  testing_skills_list:
+    "Jest, Playwright, Cypress, Pruebas Unitarias, Pruebas de Integración, Agile/Scrum, MCP",
 
   // Education section
   education_title: "Educación",
@@ -171,7 +180,7 @@ export const dict = {
   lang_3: "Mandarín",
   lang_1_level: "Profesional",
   lang_2_level: "Nativo",
-  lang_3_level: "Básico",
+  lang_3_level: "Básico (Aprendiendo)",
 
   // Projects section
   projects_title: "PROYECTOS",
@@ -188,6 +197,28 @@ export const dict = {
   // Project descriptions
   find_machines_desc:
     "Diseñé y desarrollé una aplicación web completa para Find & Supply Solutions (findmachines.com.do), reemplazando su sitio WordPress legacy con una plataforma personalizada basada en Go. Construí un dashboard administrativo y CMS que permite a la empresa vender y cotizar maquinaria y equipos en línea. Desarrollé una infraestructura cloud con auto-scaling que asigna recursos dinámicamente conforme la empresa crece, eliminando la dependencia de plugins de terceros obsoletos e inseguros.",
+
+  // CV project bullets
+  find_machines_b1:
+    "Reemplacé el sitio WordPress legacy con una plataforma personalizada basada en Go (findmachines.com.do), construyendo un dashboard administrativo y CMS que permite a la empresa vender y cotizar maquinaria en línea.",
+  find_machines_b2:
+    "Desarrollé una infraestructura cloud con auto-escalado que asigna recursos dinámicamente conforme la empresa crece, eliminando la dependencia de plugins de terceros obsoletos e inseguros.",
+  tinacos_cibao_b1:
+    "Lideré la transformación digital y rebranding completo para el fabricante de tinacos Polimeros del Cibao: nuevo sitio web, rediseño de logo y etiquetas físicas con colores Pantone precisos.",
+  tinacos_cibao_b2:
+    "Construí un sistema automatizado de redención de garantías con Google Apps Script y un generador de documentos de alta resolución que produce 7,000+ páginas numeradas de etiquetas desde una plantilla reusable.",
+  event_detector_b1:
+    "Construí una plataforma comunitaria de descubrimiento de eventos (React, Node.js, SQLite3) con envío de volantes por usuarios y flujos de moderación aprobar/rechazar.",
+  event_detector_b2:
+    "Soporta vistas de calendario y lista con notificaciones de agregar a calendario para la promoción de eventos locales.",
+  the_qr_king_b1:
+    "Construí una plataforma de marketing full-stack para restaurantes (React, Node.js, PostgreSQL) con gestión de imágenes de alimentos, suscripciones de tableros QR, integración de pagos y analíticas por ubicación.",
+  the_qr_king_b2:
+    "Sirve a restaurantes en Staten Island, rastreando la participación de clientes mediante códigos QR físicos.",
+  caribbean_coworking_b1:
+    "Desarrollé una landing page con procesamiento de pagos integrado y condicionales webhook para un espacio de coworking físico en República Dominicana.",
+  caribbean_coworking_b2:
+    "Soporta reservas de asientos y gestión de pagos con diseño responsivo y procesamiento seguro.",
 
   caribbean_coworking: "Caribbean Business Coworking",
   caribbean_coworking_date: "2024",

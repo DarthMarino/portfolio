@@ -13,7 +13,11 @@ export const dict = {
   name: "MARINO GOMEZ",
   title: "Software Engineer",
   cv_intro:
-    "Full-Stack Software Engineer with 4+ years of experience building scalable web and mobile applications using React, TypeScript, Node.js, Next.js, and React Native. Proven track record leading cross-functional projects from conception to deployment, optimizing performance, implementing CI/CD pipelines, and delivering comprehensive unit and integration tests.",
+    "Full-Stack Software Engineer with 5+ years of experience building fast, accessible, scalable web and mobile applications using TypeScript, React, Node.js, Next.js, Go, and React Native. Proven track record leading cross-functional projects from conception to deployment: optimizing performance, implementing CI/CD pipelines, and delivering comprehensive unit and integration tests.",
+
+  // CV header
+  cv_title: "Full-Stack Software Engineer",
+  summary_title: "Summary",
 
   // Contact section
   contact_title: "CONTACT",
@@ -29,12 +33,12 @@ export const dict = {
   fullstack_eng_title: "Full-Stack Engineer",
 
   // Work dates and companies
-  tecno_date: "02/2022 –\nPresent",
+  tecno_date: "02/2022 – Present",
   tecno_company: "Xoultec",
   qrking_date: "01/2024 –\nPresent",
   qrking_company: "TheQRKing (Contract)",
-  curbo_date: "06/2021 –\n03/2023",
-  curbo_company: "Curbo Technologies (Contract)",
+  curbo_date: "06/2021 – 03/2023",
+  curbo_company: "Curbo Technologies (Part-time Contract)",
   find_machines_date: "2025",
   find_machines_company: "Find & Supply Solutions",
   event_detector_date: "2025",
@@ -143,15 +147,20 @@ export const dict = {
   backend_skills: "Backend",
   cloud_devops_skills: "Cloud & DevOps",
   mobile_other_skills: "Mobile & Other",
+  languages_skills: "Languages",
+  testing_skills: "Testing & Practices",
 
+  languages_skills_list: "TypeScript, JavaScript, Go, Rust, SQL, HTML5/CSS3",
   frontend_skills_list:
-    "React, TypeScript, JavaScript, Next.js, Flutter, Tailwind CSS, Three.js, HTML5/CSS3, UI/UX Design",
+    "React, Next.js, Solid.js, React Native, Tailwind CSS, Three.js, UI/UX Design",
   backend_skills_list:
-    "Node.js, Express.js, Rust, Go, GraphQL, RESTful APIs, SQL, MongoDB, PostgreSQL, Redis",
+    "Node.js, Go, Rust, GraphQL, REST APIs, PostgreSQL, MongoDB, Redis",
   cloud_devops_skills_list:
-    "AWS, GCP, Azure, Docker, CI/CD, Git, GitHub Actions, Performance Optimization",
+    "AWS, GCP, Azure, Docker, CI/CD, GitHub Actions, Git, Performance Optimization",
   mobile_other_skills_list:
     "React Native, Jest, Playwright, Cypress, Unit Testing, Integration Testing, MCP, Agile/Scrum, Blender, Affinity",
+  testing_skills_list:
+    "Jest, Playwright, Cypress, Unit Testing, Integration Testing, Agile/Scrum, MCP",
 
   // Education section
   education_title: "Education",
@@ -173,7 +182,7 @@ export const dict = {
   lang_3: "Mandarin Chinese",
   lang_1_level: "Professional Working Proficiency",
   lang_2_level: "Native Speaker",
-  lang_3_level: "Elementary Proficiency",
+  lang_3_level: "Basic (Learning)",
 
   // Enhanced Projects section
   projects_title: "Projects",
@@ -236,6 +245,28 @@ export const dict = {
 
   find_machines_desc:
     "Designed and developed a comprehensive web application for Find & Supply Solutions (findmachines.com.do), replacing their legacy WordPress site with a custom Go-based platform. Built an admin dashboard and CMS enabling the company to sell and quote machinery and equipment online. Developed an auto-scaling cloud infrastructure that dynamically assigns resources as the company grows, eliminating dependency on outdated and insecure third-party plugins.",
+
+  // CV project bullets
+  find_machines_b1:
+    "Replaced a legacy WordPress site with a custom Go-based platform (findmachines.com.do), building an admin dashboard and CMS enabling the company to sell and quote machinery online.",
+  find_machines_b2:
+    "Developed auto-scaling cloud infrastructure that dynamically assigns resources as the company grows, eliminating dependency on outdated and insecure third-party plugins.",
+  tinacos_cibao_b1:
+    "Led complete digital transformation and rebranding for water-tank manufacturer Polimeros del Cibao: new website, logo redesign, and Pantone-accurate product labels.",
+  tinacos_cibao_b2:
+    "Built an automated warranty redemption system with Google Apps Script and a high-resolution document generator producing 7,000+ numbered label pages from a reusable template.",
+  event_detector_b1:
+    "Built a community-driven event discovery platform (React, Node.js, SQLite3) with user-submitted event fliers and admin approve/decline moderation workflows.",
+  event_detector_b2:
+    "Supports calendar and list views with add-to-calendar notifications for local event promotion.",
+  the_qr_king_b1:
+    "Built a full-stack restaurant marketing platform (React, Node.js, PostgreSQL) with food image management, QR board subscriptions, payment integration, and location-based analytics.",
+  the_qr_king_b2:
+    "Serves restaurants across Staten Island, tracking customer engagement through physical QR placements.",
+  caribbean_coworking_b1:
+    "Developed a landing page with integrated payment processing and webhook conditionals for a physical coworking space in the Dominican Republic.",
+  caribbean_coworking_b2:
+    "Supports seat reservations and payment management with responsive design and secure payment handling.",
 
   personal_portfolio: "Personal Portfolio",
   personal_portfolio_desc:

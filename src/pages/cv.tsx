@@ -9,16 +9,7 @@ import {
 import { jsPDF } from "jspdf";
 import * as i18n from "@solid-primitives/i18n";
 import { type Locale } from "../localizations/resources";
-import {
-  genPdfBoldRow,
-  genPdfBoldRowWithLink,
-  genPdfRow,
-  genPdfSection,
-  genPdfWorkExp,
-  loadFonts,
-  PDF_SPACING,
-} from "../utils/pdf_templates";
-import { certifications, technologies } from "../statics/objects";
+import { certifications } from "../statics/objects";
 import { format } from "date-fns";
 import { isPhone } from "../utils/detect_phone";
 import profileImage from "../assets/profile.png";
@@ -30,289 +21,242 @@ type CVPageProps = {
   withImage?: boolean;
 };
 
+type RGB = [number, number, number];
+
+const DARK: RGB = [26, 26, 26];
+const GRAY: RGB = [85, 85, 85];
+
+// Convert "MMM yyyy" (e.g. "Jan 2023") to "MM/yyyy" for ATS-consistent dates
+const certDateToMMYY = (date: string | Date): string => {
+  if (typeof date === "string") {
+    const match = date.match(/^(\w{3})\s+(\d{4})$/);
+    if (match) {
+      const monthIndex = new Date(Date.parse(`${match[1]} 1, 2000`)).getMonth();
+      return `${("0" + (monthIndex + 1)).slice(-2)}/${match[2]}`;
+    }
+    return date;
+  }
+  return format(date, "MM/yyyy");
+};
+
 const CVPage: Component<CVPageProps> = (props) => {
   const [pdfUrl, setPdfUrl] = createSignal<string>();
   const [isLoading, setIsLoading] = createSignal(true);
   const [previousLocale, setPreviousLocale] = createSignal<Locale>();
   const [isMobile] = createSignal(isPhone());
 
-  const leftSide = 14;
-  const pageHeight = 279; // Letter size height in mm
-  const pageWidth = 216; // Letter size width in mm
-  const rightMargin = 14;
-  const contentWidth = pageWidth - leftSide - rightMargin;
-
-  // Function to check if content fits on current page
-  const checkPageBreak = (
-    doc: jsPDF,
-    currentY: number,
-    requiredSpace: number,
-  ) => {
-    if (currentY + requiredSpace > pageHeight - 20) {
-      // 20mm bottom margin
-      doc.addPage();
-      return 25; // Top margin for new page
-    }
-    return currentY;
-  };
-
-  // Fixed layout function for projects only
-  const genPdfBoldRowWithLinkFixed = ({
-    doc,
-    x,
-    y,
-    title,
-    boldText,
-    description,
-    url,
-    tight = false,
-  }: any): number => {
-    doc.setFont("Satoshi", "regular");
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(11);
-    doc.setCharSpace(-0.005);
-
-    // Render the title (date) on the right
-    if (title) doc.text(title, x + 22, y, { align: "right" });
-
-    // Fixed width for project titles (based on "TheQRKing Platform" length)
-    doc.setFont("Satoshi", "bold");
-    const referenceText = "TheQRKing Platform,";
-    const fixedTitleWidth = doc.getTextWidth(referenceText) + 2;
-    const boldTextToDisplay = description ? `${boldText},` : boldText;
-
-    // Split the project title if it's too long for the fixed width
-    const titleLines = doc.splitTextToSize(
-      boldTextToDisplay,
-      fixedTitleWidth - 2,
-    );
-
-    // Render the project title with link
-    if (url) {
-      titleLines.forEach((line: string, index: number) => {
-        doc.textWithLink(line, x + 26, y + index * PDF_SPACING.LINE_HEIGHT, {
-          url: url,
-          align: "left",
-        });
-      });
-    } else {
-      titleLines.forEach((line: string, index: number) => {
-        doc.text(line, x + 26, y + index * PDF_SPACING.LINE_HEIGHT, {
-          align: "left",
-        });
-      });
-    }
-
-    // Calculate where description should start (always at fixed position)
-    const descriptionStartX = x + 26 + fixedTitleWidth;
-    const titleHeight = titleLines.length * PDF_SPACING.LINE_HEIGHT;
-
-    // Render the description (plain text, no link) starting at fixed position
-    doc.setFont("Satoshi", "regular");
-    if (description) {
-      const availableWidth = 160 - fixedTitleWidth;
-      const descriptionLines = doc.splitTextToSize(description, availableWidth);
-
-      descriptionLines.forEach((line: string, index: number) => {
-        doc.text(line, descriptionStartX, y + index * PDF_SPACING.LINE_HEIGHT, {
-          align: "left",
-        });
-      });
-
-      // Return the maximum height used by either title or description
-      const descriptionHeight =
-        descriptionLines.length * PDF_SPACING.LINE_HEIGHT;
-      const maxHeight = Math.max(titleHeight, descriptionHeight);
-      const spacing = tight
-        ? PDF_SPACING.BOLD_ROW_TIGHT
-        : PDF_SPACING.BOLD_ROW_SPACING;
-      return y + maxHeight + spacing;
-    } else {
-      // No description, just return with title height
-      const spacing = tight
-        ? PDF_SPACING.BOLD_ROW_TIGHT
-        : PDF_SPACING.BOLD_ROW_SPACING;
-      return y + titleHeight + spacing;
-    }
-  };
-
-  // Fixed genPdfBoldRowWithLink for certifications (link on boldText, not description)
-  const genPdfBoldRowWithLinkCerts = ({
-    doc,
-    x,
-    y,
-    title,
-    boldText,
-    description,
-    url,
-    tight = false,
-  }: any): number => {
-    doc.setFont("Satoshi", "regular");
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(11);
-    doc.setCharSpace(-0.005);
-
-    // Render the title (date) on the right
-    if (title) doc.text(title, x + 22, y, { align: "right" });
-
-    // Render the boldText with link (certification name should be clickable)
-    doc.setFont("Satoshi", "bold");
-    const boldTextToDisplay = description ? `${boldText},` : boldText;
-    const boldTextWidth = doc.getTextWidth(boldTextToDisplay) + 2;
-
-    if (url) {
-      // Make the boldText (certification name) clickable
-      doc.textWithLink(boldTextToDisplay, x + 26, y, {
-        url: url,
-        align: "left",
-      });
-    } else {
-      // No link, just regular bold text
-      doc.text(boldTextToDisplay, x + 26, y, { align: "left" });
-    }
-
-    // Render the description (plain text, no link)
-    doc.setFont("Satoshi", "regular");
-    if (description) {
-      const lines = doc.splitTextToSize(description, 160 - boldTextWidth);
-      lines.forEach((line: string, index: number) => {
-        doc.text(
-          line,
-          x + 26 + boldTextWidth,
-          y + index * PDF_SPACING.LINE_HEIGHT,
-          { align: "left" },
-        );
-      });
-
-      const spacing = tight
-        ? PDF_SPACING.BOLD_ROW_TIGHT
-        : PDF_SPACING.BOLD_ROW_SPACING;
-      return y + Math.max(1, lines.length) * PDF_SPACING.LINE_HEIGHT + spacing;
-    } else {
-      // No description, just return with spacing
-      const spacing = tight
-        ? PDF_SPACING.BOLD_ROW_TIGHT
-        : PDF_SPACING.BOLD_ROW_SPACING;
-      return y + PDF_SPACING.LINE_HEIGHT + spacing;
-    }
-  };
+  const MARGIN = 14;
+  const PAGE_HEIGHT = 279; // Letter height in mm
+  const PAGE_WIDTH = 216; // Letter width in mm
+  const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
+  const BOTTOM = PAGE_HEIGHT - 16;
 
   const createPDF = async () => {
     try {
       setIsLoading(true);
 
-      // Initialize jsPDF with Letter size
       const doc = new jsPDF({
         orientation: "portrait",
         unit: "mm",
         format: "letter",
       });
 
-      const filename = props.isDominican
-        ? "marino_gomez_cv_rd"
-        : "marino_gomez_cv";
+      const isDr = props.isDominican;
+      const filename = isDr ? "marino_gomez_cv_rd" : "marino_gomez_cv";
       doc.setProperties({
-        title: filename,
+        title: "Marino Gomez - Full-Stack Software Engineer Resume",
         author: "Marino Gomez",
-        subject: "Software Engineer CV",
+        subject: "Full-Stack Software Engineer Resume",
         keywords:
-          "Software Engineer, React, TypeScript, Node.js, Full-Stack Developer",
+          "Full-Stack Software Engineer, TypeScript, Go, React, Node.js, Next.js, React Native, PostgreSQL, AWS, Docker, CI/CD, Accessibility",
         creator: "Marino Gomez Portfolio",
       });
 
-      // Add custom fonts to jsPDF
-      await loadFonts(doc);
+      // Single-column, ATS-safe helpers -------------------------------------
+      let y = 0;
 
-      // HEADER SECTION - More compact
-      doc.setFont("Satoshi", "medium");
-      doc.setFontSize(30); // Smaller from 32
-      doc.setCharSpace(-0.5);
-      doc.text("Marino Gomez", leftSide, 12 + 6); // Aligned with contactInfo height
+      const addPage = () => {
+        doc.addPage();
+        y = 18;
+      };
+      const need = (space: number) => {
+        if (y + space > BOTTOM) addPage();
+      };
+      const text = (
+        s: string,
+        size = 10,
+        font: "normal" | "bold" = "normal",
+        color: RGB = DARK,
+        x = MARGIN,
+        leading = 4.2,
+      ) => {
+        doc.setFont("Helvetica", font);
+        doc.setFontSize(size);
+        doc.setTextColor(color[0], color[1], color[2]);
+        doc.text(s, x, y);
+        y += leading;
+      };
+      const wrap = (
+        s: string,
+        size = 10,
+        leading = 4.4,
+        x = MARGIN,
+        width = CONTENT_WIDTH,
+      ) => {
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(size);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        const lines = doc.splitTextToSize(s, width) as string[];
+        lines.forEach((line: string) => {
+          doc.text(line, x, y);
+          y += leading;
+        });
+      };
+      const rule = () => {
+        y += 1;
+        doc.setDrawColor(140, 140, 140);
+        doc.setLineWidth(0.3);
+        doc.line(MARGIN, y, MARGIN + CONTENT_WIDTH, y);
+        y += 3.5;
+      };
+      const section = (title: string) => {
+        need(22);
+        y += 3.5;
+        text(title.toUpperCase(), 12, "bold", DARK, MARGIN, 1.2);
+        rule();
+        y += 1;
+      };
+      const bullet = (s: string) => {
+        need(6);
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        const lines = doc.splitTextToSize(s, CONTENT_WIDTH - 4) as string[];
+        doc.text("-", MARGIN, y);
+        lines.forEach((line: string, i: number) => {
+          doc.text(line, MARGIN + 4, y + i * 4.2);
+        });
+        y += lines.length * 4.2 + 1.4;
+      };
+      const headerRow = (title: string, dates: string) => {
+        need(12);
+        y += 2.2;
+        text(title + " | " + dates, 10.5, "bold", DARK, MARGIN, 5.5);
+      };
+      const workRow = (role: string, company: string, dates: string) => {
+        need(12);
+        y += 2.2;
+        let size = 10.5;
+        let roleWidth = 0;
+        let restWidth = 0;
+        for (; size >= 9; size -= 0.5) {
+          doc.setFont("Helvetica", "bold");
+          doc.setFontSize(size);
+          roleWidth = doc.getTextWidth(role);
+          doc.setFont("Helvetica", "normal");
+          restWidth = doc.getTextWidth(`, ${company}, ${dates}`);
+          if (roleWidth + restWidth <= CONTENT_WIDTH) break;
+        }
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(size);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        doc.text(role, MARGIN, y);
+        doc.setFont("Helvetica", "normal");
+        doc.text(`, ${company}, ${dates}`, MARGIN + roleWidth, y);
+        y += 5.5;
+      };
+      const eduRow = (boldTitle: string, rest: string) => {
+        need(10);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        const titleWidth = doc.getTextWidth(boldTitle);
+        doc.text(boldTitle, MARGIN, y);
+        doc.setFont("Helvetica", "normal");
+        const lines = doc.splitTextToSize(
+          rest,
+          CONTENT_WIDTH - titleWidth,
+        ) as string[];
+        lines.forEach((line: string, i: number) => {
+          doc.text(line, MARGIN + titleWidth, y + i * 4.2);
+        });
+        y += lines.length * 4.2 + 1.6;
+      };
+      const skillRow = (label: string, values: string) => {
+        need(8);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        const labelWidth = doc.getTextWidth(label + ": ");
+        doc.text(label + ": ", MARGIN, y);
+        doc.setFont("Helvetica", "normal");
+        const lines = doc.splitTextToSize(
+          values,
+          CONTENT_WIDTH - labelWidth,
+        ) as string[];
+        lines.forEach((line: string, i: number) => {
+          doc.text(line, MARGIN + labelWidth, y + i * 4.2);
+        });
+        y += lines.length * 4.2 + 1.6;
+      };
 
-      // Add website URL under name
-      doc.setFont("Satoshi", "italic");
-      doc.setFontSize(8.5);
-      doc.setCharSpace(0);
-      doc.text("Website:", leftSide, 23, { align: "left" });
-      const websiteLabelWidth = doc.getTextWidth("Website:  ");
-      doc.textWithLink(
-        "www.marinogomez.dev",
-        leftSide + websiteLabelWidth,
-        23,
-        {
-          url: "https://www.marinogomez.dev/",
-          align: "left",
-        },
-      );
+      // HEADER ---------------------------------------------------------------
+      y = 16;
 
-      // Add profile image if withImage is true - positioned under website URL
       if (props.withImage) {
-        const imageSize = 28; // 28mm diameter
-        const imageX = leftSide;
-        const imageY = 26; // Position under website URL
+        const imageSize = 24;
+        const imageX = MARGIN;
+        const imageY = 14;
         const centerX = imageX + imageSize / 2;
         const centerY = imageY + imageSize / 2;
         const radius = imageSize / 2;
-
-        // Circular profile image with proper clipping
-        const profileImageUrl = profileImage;
         try {
-          // Save graphics state
           doc.saveGraphicsState();
-
-          // Create circular clipping path using internal API
           const pageHeight = doc.internal.pageSize.height;
-          (doc.internal as any).write("q"); // Save state
-
-          // Draw circle path and use as clipping path
-          // Convert mm to points for PDF (1mm = 2.83465 points)
           const scale = 2.83465;
-          const pdfCenterX = centerX * scale;
-          const pdfCenterY = (pageHeight - centerY) * scale;
-          const pdfRadius = radius * scale;
-
-          // Bezier circle approximation
+          (doc.internal as any).write("q");
+          const cx = centerX * scale;
+          const cy = (pageHeight - centerY) * scale;
+          const r = radius * scale;
           const k = 0.5522848;
           (doc.internal as any).write(
             [
-              pdfCenterX + pdfRadius,
-              pdfCenterY,
+              cx + r,
+              cy,
               "m",
-              pdfCenterX + pdfRadius,
-              pdfCenterY + pdfRadius * k,
-              pdfCenterX + pdfRadius * k,
-              pdfCenterY + pdfRadius,
-              pdfCenterX,
-              pdfCenterY + pdfRadius,
+              cx + r,
+              cy + r * k,
+              cx + r * k,
+              cy + r,
+              cx,
+              cy + r,
               "c",
-              pdfCenterX - pdfRadius * k,
-              pdfCenterY + pdfRadius,
-              pdfCenterX - pdfRadius,
-              pdfCenterY + pdfRadius * k,
-              pdfCenterX - pdfRadius,
-              pdfCenterY,
+              cx - r * k,
+              cy + r,
+              cx - r,
+              cy + r * k,
+              cx - r,
+              cy,
               "c",
-              pdfCenterX - pdfRadius,
-              pdfCenterY - pdfRadius * k,
-              pdfCenterX - pdfRadius * k,
-              pdfCenterY - pdfRadius,
-              pdfCenterX,
-              pdfCenterY - pdfRadius,
+              cx - r,
+              cy - r * k,
+              cx - r * k,
+              cy - r,
+              cx,
+              cy - r,
               "c",
-              pdfCenterX + pdfRadius * k,
-              pdfCenterY - pdfRadius,
-              pdfCenterX + pdfRadius,
-              pdfCenterY - pdfRadius * k,
-              pdfCenterX + pdfRadius,
-              pdfCenterY,
+              cx + r * k,
+              cy - r,
+              cx + r,
+              cy - r * k,
+              cx + r,
+              cy,
               "c",
-              "W n", // Clip and end path
+              "W n",
             ].join(" "),
           );
-
-          // Add image inside clipping path
           doc.addImage(
-            profileImageUrl,
+            profileImage,
             "JPEG",
             imageX,
             imageY,
@@ -322,369 +266,178 @@ const CVPage: Component<CVPageProps> = (props) => {
             "NONE",
             0,
           );
-
-          (doc.internal as any).write("Q"); // Restore state
+          (doc.internal as any).write("Q");
           doc.restoreGraphicsState();
-
-          // Draw circle border
-          doc.setDrawColor(200, 200, 200);
-          doc.setLineWidth(0.3);
-          doc.circle(centerX, centerY, radius, "S");
         } catch (error) {
           console.warn("Profile image not loaded:", error);
         }
+
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(22);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        doc.text("Marino Gomez", MARGIN + imageSize + 6, y + 6);
+        y += 9;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+        doc.text(props.t("cv_title"), MARGIN + imageSize + 6, y);
+        y = Math.max(y + 6, imageY + imageSize + 4);
+      } else {
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(22);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        doc.text("Marino Gomez", MARGIN, y);
+        y += 8;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+        doc.text(props.t("cv_title"), MARGIN, y);
+        y += 5;
       }
 
-      // Contact info - more compact
-      doc.setCharSpace(0);
-      doc.setFont("Satoshi", "italic");
-      doc.setFontSize(8.5); // Smaller from 9
-      const contactInfo = [
-        props.isDominican ? props.t("location_dr") : props.t("location_us"),
-        props.isDominican
-          ? "+1 (829) 926-5003"
-          : "+1 (829) 926-5003 • +1 (862) 287-1241",
-        "marinogomez24@gmail.com",
-      ];
-
-      // Contact info stays in same position
-      const contactStartY = 12;
-
-      contactInfo.forEach((info, index) => {
-        doc.text(info, pageWidth - rightMargin, contactStartY + index * 3.2, {
-          align: "right",
-        }); // Tighter spacing
-      });
-
-      // Add clickable GitHub and LinkedIn links
-      const linkY = contactStartY + contactInfo.length * 3.2;
-
-      // GitHub link
-      doc.textWithLink(
-        "github.com/DarthMarino",
-        pageWidth - rightMargin,
-        linkY,
-        {
-          url: "https://github.com/DarthMarino",
-          align: "right",
-        },
+      const location = isDr ? props.t("location_dr") : "Passaic, NJ";
+      text(
+        `${location} | +1 (829) 926-5003 | ${props.t("email")}`,
+        10,
+        "normal",
+        DARK,
+        MARGIN,
+        4.4,
       );
 
-      // LinkedIn link
-      doc.textWithLink(
-        "linkedin.com/in/maghiworks",
-        pageWidth - rightMargin,
-        linkY + 3.2,
+      // Clickable links line
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+      const links: Array<[string, string]> = [
+        ["linkedin.com/in/maghiworks", "https://linkedin.com/in/maghiworks"],
+        ["github.com/DarthMarino", "https://github.com/DarthMarino"],
+        ["www.marinogomez.dev", "https://www.marinogomez.dev"],
+      ];
+      let linkX = MARGIN;
+      links.forEach(([label, url]) => {
+        doc.textWithLink(label, linkX, y, { url });
+        linkX += doc.getTextWidth(label) + 9;
+      });
+      y += 6;
+
+      // SUMMARY ---------------------------------------------------------------
+      section(props.t("summary_title"));
+      wrap(props.t("cv_intro"), 10, 4.4);
+
+      // TECHNICAL SKILLS -------------------------------------------------------
+      section(props.t("skills_title"));
+      const skillRows: Array<[string, string]> = [
+        [props.t("languages_skills"), props.t("languages_skills_list")],
+        [props.t("frontend_skills"), props.t("frontend_skills_list")],
+        [props.t("backend_skills"), props.t("backend_skills_list")],
+        [props.t("cloud_devops_skills"), props.t("cloud_devops_skills_list")],
+        [props.t("testing_skills"), props.t("testing_skills_list")],
+      ];
+      skillRows.forEach(([label, values]) => skillRow(label, values));
+
+      // WORK EXPERIENCE --------------------------------------------------------
+      section(props.t("experience_title"));
+      workRow(
+        props.t("software_eng_title"),
+        props.t("tecno_company"),
+        props.t("tecno_date"),
+      );
+      [
+        props.t("tecno_exp_1"),
+        props.t("tecno_exp_2"),
+        props.t("tecno_exp_3"),
+        props.t("tecno_exp_4"),
+      ].forEach(bullet);
+      workRow(
+        props.t("frontend_eng_title"),
+        props.t("curbo_company"),
+        props.t("curbo_date"),
+      );
+      [
+        props.t("curbo_exp_1"),
+        props.t("curbo_exp_2"),
+        props.t("curbo_exp_3"),
+        props.t("curbo_exp_4"),
+      ].forEach(bullet);
+
+      // PROJECTS -----------------------------------------------------------------
+      section(props.t("projects_title"));
+      const projects: Array<{ title: string; year: string; bullets: string[] }> = [
         {
-          url: "https://linkedin.com/in/maghiworks",
-          align: "right",
+          title: props.t("find_machines"),
+          year: props.t("find_machines_date"),
+          bullets: [props.t("find_machines_b1"), props.t("find_machines_b2")],
         },
+        {
+          title: props.t("tinacos_cibao"),
+          year: props.t("tinacos_cibao_date"),
+          bullets: [props.t("tinacos_cibao_b1"), props.t("tinacos_cibao_b2")],
+        },
+        {
+          title: props.t("event_detector"),
+          year: props.t("event_detector_date"),
+          bullets: [props.t("event_detector_b1"), props.t("event_detector_b2")],
+        },
+        {
+          title: props.t("the_qr_king"),
+          year: props.t("the_qr_king_date"),
+          bullets: [props.t("the_qr_king_b1"), props.t("the_qr_king_b2")],
+        },
+        {
+          title: props.t("caribbean_coworking"),
+          year: props.t("caribbean_coworking_date"),
+          bullets: [
+            props.t("caribbean_coworking_b1"),
+            props.t("caribbean_coworking_b2"),
+          ],
+        },
+      ];
+      projects.forEach((project) => {
+        headerRow(project.title, project.year);
+        project.bullets.forEach(bullet);
+      });
+
+      // EDUCATION ------------------------------------------------------------------
+      section(props.t("education_title"));
+      eduRow(
+        props.t("software_eng"),
+        `, ${props.t("intec")} | ${props.t("intec_date")}`,
+      );
+      eduRow(
+        props.t("digital_electronics"),
+        `, ${props.t("loyola")} | ${props.t("loyola_date")}`,
       );
 
-      // PROFESSIONAL SUMMARY - Enhanced with proper spacing
-      doc.setFont("Satoshi", "regular");
-      doc.setFontSize(11); // Back to standard size like other sections
-      doc.setCharSpace(0.07); // Match the spacing from other sections
-
-      // Enhanced summary - authentic and personal
-      const enhancedSummary = props.t("cv_intro");
-
-      let currentY: number;
-
-      if (props.withImage) {
-        // When image is present, position intro next to it
-        const imageSize = 28;
-        const imageMargin = 4;
-        const introX = leftSide + imageSize + imageMargin; // Start after image
-        const introWidth = contentWidth - imageSize - imageMargin - 38; // Narrower width (1.5 inches less) for vertical flow
-        const introLines = doc.splitTextToSize(enhancedSummary, introWidth);
-
-        const introY = 34; // Centered vertically with image (~0.5 rem down)
-        introLines.forEach((line: string, index: number) => {
-          doc.text(line, introX, introY + index * 4.2, { align: "justify" });
-        });
-
-        // Continue below both image and intro (whichever is taller)
-        const introEndY = introY + introLines.length * 4.2;
-        const imageEndY = 26 + imageSize;
-        currentY = Math.max(introEndY, imageEndY) + 4; // ~0.5 rem padding before Work Experience
-      } else {
-        // Normal layout without image
-        const introLines = doc.splitTextToSize(enhancedSummary, contentWidth);
-        currentY = 32;
-        introLines.forEach((line: string, index: number) => {
-          doc.text(line, leftSide, currentY + index * 4.2, {
-            align: "justify",
-          });
-        });
-        currentY += introLines.length * 4.2 + 2;
+      // CERTIFICATIONS ---------------------------------------------------------------
+      section(props.t("certifications_title"));
+      need(8);
+      const cert =
+        certifications.find((c) => c.title === "Three.js Journey") ??
+        certifications[0];
+      if (cert) {
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        const titleWidth = doc.getTextWidth(cert.title);
+        doc.textWithLink(cert.title, MARGIN, y, { url: cert.credentialUrl });
+        doc.setFont("Helvetica", "normal");
+        doc.text(` | ${certDateToMMYY(cert.date)}`, MARGIN + titleWidth, y);
+        y += 4.2;
       }
 
-      // WORK EXPERIENCE SECTION
-      currentY = checkPageBreak(doc, currentY, 25); // Reduced more
-      currentY = genPdfSection({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("experience_title"),
-      });
+      // LANGUAGES ---------------------------------------------------------------------
+      section(props.t("languages"));
+      need(8);
+      wrap(
+        `${props.t("lang_1")} (${props.t("lang_1_level")}), ${props.t("lang_2")} (${props.t("lang_2_level")}), ${props.t("lang_3")} (${props.t("lang_3_level")})`,
+      );
 
-      // Work experience entries - more compact
-      currentY = checkPageBreak(doc, currentY, 18); // Reduced more
-      currentY = genPdfWorkExp({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("tecno_date"),
-        boldText: props.t("software_eng_title"),
-        company: props.t("tecno_company"),
-        list: [
-          props.t("tecno_exp_1"),
-          props.t("tecno_exp_2"),
-          props.t("tecno_exp_3"),
-          props.t("tecno_exp_4"),
-        ],
-      });
-
-      currentY = checkPageBreak(doc, currentY, 15); // Reduced more
-      currentY = genPdfWorkExp({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("curbo_date"),
-        boldText: props.t("frontend_eng_title"),
-        company: props.t("curbo_company"),
-        list: [
-          props.t("curbo_exp_1"),
-          props.t("curbo_exp_2"),
-          props.t("curbo_exp_3"),
-          props.t("curbo_exp_4"),
-        ],
-      });
-
-      // TECHNICAL SKILLS - More compact
-      currentY = checkPageBreak(doc, currentY, 18); // Reduced more
-      currentY = genPdfSection({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("skills_title"),
-      });
-
-      // Categorized skills - with even tighter spacing
-      const skillCategories = [
-        {
-          title: props.t("frontend_skills"),
-          skills: props.t("frontend_skills_list"),
-        },
-        {
-          title: props.t("backend_skills"),
-          skills: props.t("backend_skills_list"),
-        },
-        {
-          title: props.t("cloud_devops_skills"),
-          skills: props.t("cloud_devops_skills_list"),
-        },
-        {
-          title: props.t("mobile_other_skills"),
-          skills: props.t("mobile_other_skills_list"),
-        },
-      ];
-
-      skillCategories.forEach(({ title, skills }) => {
-        currentY = checkPageBreak(doc, currentY, 5); // Reduced more
-        currentY = genPdfRow({
-          doc,
-          x: leftSide,
-          y: currentY,
-          title: title,
-          description: skills,
-        });
-      });
-
-      // EDUCATION SECTION
-      currentY = checkPageBreak(doc, currentY, 12); // Reduced more
-      currentY = genPdfSection({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("education_title"),
-      });
-
-      currentY = genPdfBoldRow({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("intec_date"),
-        boldText: props.t("software_eng"),
-        description: props.t("intec"),
-      });
-
-      currentY = genPdfBoldRow({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("loyola_date"),
-        boldText: props.t("digital_electronics"),
-        description: props.t("loyola"),
-      });
-
-      // CERTIFICATIONS SECTION
-      currentY = checkPageBreak(doc, currentY, 12); // Reduced more
-      currentY = genPdfSection({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("certifications_title"),
-      });
-
-      certifications.forEach((cert) => {
-        currentY = checkPageBreak(doc, currentY, 4); // Reduced more
-        currentY = genPdfBoldRowWithLinkCerts({
-          doc,
-          x: leftSide,
-          y: currentY,
-          boldText: cert.title,
-          title:
-            typeof cert.date === "string"
-              ? cert.date
-              : format(cert.date, "MMM yyyy"),
-          description: cert.description || "",
-          url: cert.credentialUrl,
-          tight: true,
-        });
-      });
-
-      // LANGUAGES SECTION - Move to page 2 if withImage is true
-      if (props.withImage) {
-        // Force languages to page 2 when image is present
-        doc.addPage();
-        currentY = 25; // Top margin for new page
-      } else {
-        // Keep on first page if no image
-        currentY = checkPageBreak(doc, currentY, 10);
-      }
-
-      currentY = genPdfSection({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("languages"),
-      });
-
-      const languages = [
-        { lang: props.t("lang_1"), level: props.t("lang_1_level") },
-        { lang: props.t("lang_2"), level: props.t("lang_2_level") },
-        { lang: props.t("lang_3"), level: props.t("lang_3_level") },
-      ];
-
-      languages.forEach(({ lang, level }) => {
-        currentY = checkPageBreak(doc, currentY, 4);
-        currentY = genPdfBoldRow({
-          doc,
-          x: leftSide,
-          y: currentY,
-          boldText: lang,
-          description: level,
-        });
-      });
-
-      // PROJECTS SECTION
-      // Continue right after languages
-      currentY = checkPageBreak(doc, currentY, 25);
-
-      currentY = genPdfSection({
-        doc,
-        x: leftSide,
-        y: currentY,
-        title: props.t("projects_title"),
-      });
-
-      // Tinacos Cibao project with fixed layout
-      currentY = checkPageBreak(doc, currentY, 10);
-      currentY = genPdfBoldRowWithLinkFixed({
-        doc,
-        x: leftSide,
-        y: currentY,
-        boldText: props.t("tinacos_cibao"),
-        title: props.t("tinacos_cibao_date"),
-        description: props.t("tinacos_cibao_desc"),
-        url: "https://www.tinacoscibao.com.do/",
-        tight: false,
-      });
-
-      // Find & Supply Solutions project with fixed layout
-      currentY = checkPageBreak(doc, currentY + 4, 8);
-      currentY = genPdfBoldRowWithLinkFixed({
-        doc,
-        x: leftSide,
-        y: currentY,
-        boldText: props.t("find_machines"),
-        title: props.t("find_machines_date"),
-        description: props.t("find_machines_desc"),
-        url: "https://www.findmachines.com.do/",
-        tight: false,
-      });
-
-      // Event Detector project with fixed layout
-      currentY = checkPageBreak(doc, currentY + 4, 8);
-      currentY = genPdfBoldRowWithLinkFixed({
-        doc,
-        x: leftSide,
-        y: currentY,
-        boldText: props.t("event_detector"),
-        title: props.t("event_detector_date"),
-        description: props.t("event_detector_desc"),
-        url: "https://www.eventdetector.com/",
-        tight: false,
-      });
-
-      // TheQRKing project with fixed layout
-      currentY = checkPageBreak(doc, currentY + 4, 8);
-      currentY = genPdfBoldRowWithLinkFixed({
-        doc,
-        x: leftSide,
-        y: currentY,
-        boldText: props.t("the_qr_king"),
-        title: props.t("the_qr_king_date"),
-        description: props.t("the_qr_king_desc"),
-        url: "https://www.theqrking.com/",
-        tight: false,
-      });
-
-      // Caribbean Coworking project with fixed layout
-      currentY = checkPageBreak(doc, currentY + 4, 8);
-      currentY = genPdfBoldRowWithLinkFixed({
-        doc,
-        x: leftSide,
-        y: currentY,
-        boldText: props.t("caribbean_coworking"),
-        title: props.t("caribbean_coworking_date"),
-        description: props.t("caribbean_coworking_desc"),
-        url: "https://coworking.caribbeanbiz.com/",
-        tight: false,
-      });
-
-      // Add more projects if you have them
-      // currentY = checkPageBreak(doc, currentY, 8);
-      // currentY = genPdfBoldRowWithLink({
-      //   doc,
-      //   x: leftSide,
-      //   y: currentY,
-      //   boldText: "Personal Portfolio",
-      //   title: "2023",
-      //   description: "Interactive 3D portfolio with Three.js and SolidJS",
-      //   url: "https://your-portfolio-url.com",
-      //   tight: true,
-      // });
-
-      // Generate PDF and create blob URL with filename hint
+      // Output ------------------------------------------------------------------------
       const pdfArrayBuffer = doc.output("arraybuffer");
       const blob = new Blob([pdfArrayBuffer], {
         type: "application/pdf",
       });
-
-      // Create object URL
       const url = URL.createObjectURL(blob);
       setPdfUrl(url + `#filename=${filename}.pdf`);
       setIsLoading(false);
